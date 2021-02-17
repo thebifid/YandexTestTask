@@ -3,27 +3,31 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A9F7093CD9C87301A789C5C /* Pods_YandexTestTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */; };
 		C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */; };
 		C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */; };
 		C11C6CEC25DCFB85002F5EB6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6CEB25DCFB85002F5EB6 /* ViewController.swift */; };
-		C11C6CEF25DCFB85002F5EB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C11C6CED25DCFB85002F5EB6 /* Main.storyboard */; };
 		C11C6CF125DCFB87002F5EB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */; };
-		C11C6CF425DCFB87002F5EB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C11C6CF225DCFB87002F5EB6 /* LaunchScreen.storyboard */; };
+		C11C6D6525DD2B75002F5EB6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C11C6D6425DD2B75002F5EB6 /* LaunchScreen.storyboard */; };
+		C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D6E25DD31CD002F5EB6 /* R.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B3A807B9087AC7587D5956F /* Pods-YandexTestTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexTestTask.release.xcconfig"; path = "Target Support Files/Pods-YandexTestTask/Pods-YandexTestTask.release.xcconfig"; sourceTree = "<group>"; };
+		A6F1A2E74ED6AA9AD7BBDDAA /* Pods-YandexTestTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexTestTask.debug.xcconfig"; path = "Target Support Files/Pods-YandexTestTask/Pods-YandexTestTask.debug.xcconfig"; sourceTree = "<group>"; };
 		C11C6CE425DCFB85002F5EB6 /* YandexTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C11C6CEB25DCFB85002F5EB6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C11C6CEE25DCFB85002F5EB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C11C6CF325DCFB87002F5EB6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C11C6CF525DCFB87002F5EB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C11C6D6425DD2B75002F5EB6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C11C6D6E25DD31CD002F5EB6 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A9F7093CD9C87301A789C5C /* Pods_YandexTestTask.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8286CB3A0A27EB8788DEC3D8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A6F1A2E74ED6AA9AD7BBDDAA /* Pods-YandexTestTask.debug.xcconfig */,
+				7B3A807B9087AC7587D5956F /* Pods-YandexTestTask.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B9DBBA605EA9492A255EA222 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C11C6CDB25DCFB85002F5EB6 = {
 			isa = PBXGroup;
 			children = (
 				C11C6CE625DCFB85002F5EB6 /* YandexTestTask */,
 				C11C6CE525DCFB85002F5EB6 /* Products */,
+				8286CB3A0A27EB8788DEC3D8 /* Pods */,
+				B9DBBA605EA9492A255EA222 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +80,31 @@
 		C11C6CE625DCFB85002F5EB6 /* YandexTestTask */ = {
 			isa = PBXGroup;
 			children = (
-				C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */,
-				C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */,
+				C11C6D6A25DD2CCE002F5EB6 /* Resources */,
+				C11C6D6725DD2B8D002F5EB6 /* Commons */,
 				C11C6CEB25DCFB85002F5EB6 /* ViewController.swift */,
-				C11C6CED25DCFB85002F5EB6 /* Main.storyboard */,
-				C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */,
-				C11C6CF225DCFB87002F5EB6 /* LaunchScreen.storyboard */,
-				C11C6CF525DCFB87002F5EB6 /* Info.plist */,
 			);
 			path = YandexTestTask;
+			sourceTree = "<group>";
+		};
+		C11C6D6725DD2B8D002F5EB6 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				C11C6D6E25DD31CD002F5EB6 /* R.generated.swift */,
+				C11C6CF525DCFB87002F5EB6 /* Info.plist */,
+				C11C6D6425DD2B75002F5EB6 /* LaunchScreen.storyboard */,
+				C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */,
+				C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */,
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		C11C6D6A25DD2CCE002F5EB6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +114,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C11C6CF825DCFB87002F5EB6 /* Build configuration list for PBXNativeTarget "YandexTestTask" */;
 			buildPhases = (
+				24CB7B55A16ADCD8A181153A /* [CP] Check Pods Manifest.lock */,
+				C11C6D1525DCFDEF002F5EB6 /* SwiftFormat */,
+				C11C6D2A25DCFFB2002F5EB6 /* SwiftLint */,
+				C11C6D3925DD0152002F5EB6 /* RSwift */,
 				C11C6CE025DCFB85002F5EB6 /* Sources */,
 				C11C6CE125DCFB85002F5EB6 /* Frameworks */,
 				C11C6CE225DCFB85002F5EB6 /* Resources */,
+				980E0A6FD01B2699A9AADC34 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -124,13 +169,110 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C11C6CF425DCFB87002F5EB6 /* LaunchScreen.storyboard in Resources */,
+				C11C6D6525DD2B75002F5EB6 /* LaunchScreen.storyboard in Resources */,
 				C11C6CF125DCFB87002F5EB6 /* Assets.xcassets in Resources */,
-				C11C6CEF25DCFB85002F5EB6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		24CB7B55A16ADCD8A181153A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YandexTestTask-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		980E0A6FD01B2699A9AADC34 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YandexTestTask/Pods-YandexTestTask-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YandexTestTask/Pods-YandexTestTask-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YandexTestTask/Pods-YandexTestTask-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C11C6D1525DCFDEF002F5EB6 /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"$SRCROOT\"\n";
+		};
+		C11C6D2A25DCFFB2002F5EB6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		C11C6D3925DD0152002F5EB6 /* RSwift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			name = RSwift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/R.generated.swift\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C11C6CE025DCFB85002F5EB6 /* Sources */ = {
@@ -140,29 +282,11 @@
 				C11C6CEC25DCFB85002F5EB6 /* ViewController.swift in Sources */,
 				C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */,
 				C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */,
+				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		C11C6CED25DCFB85002F5EB6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C11C6CEE25DCFB85002F5EB6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C11C6CF225DCFB87002F5EB6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C11C6CF325DCFB87002F5EB6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C11C6CF625DCFB87002F5EB6 /* Debug */ = {
@@ -283,12 +407,13 @@
 		};
 		C11C6CF925DCFB87002F5EB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6F1A2E74ED6AA9AD7BBDDAA /* Pods-YandexTestTask.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 658L6ZPG56;
-				INFOPLIST_FILE = YandexTestTask/Info.plist;
+				INFOPLIST_FILE = YandexTestTask/Commons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,18 +421,19 @@
 				PRODUCT_BUNDLE_IDENTIFIER = vasilymatveev.YandexTestTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		C11C6CFA25DCFB87002F5EB6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B3A807B9087AC7587D5956F /* Pods-YandexTestTask.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 658L6ZPG56;
-				INFOPLIST_FILE = YandexTestTask/Info.plist;
+				INFOPLIST_FILE = YandexTestTask/Commons/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +441,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = vasilymatveev.YandexTestTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
