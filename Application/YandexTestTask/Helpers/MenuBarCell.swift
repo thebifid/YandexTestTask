@@ -9,13 +9,17 @@ import Cartography
 import UIKit
 
 class MenuBarCell: UICollectionViewCell {
+    // MARK: - Private Properties
+
+    private var selectedFontSize: CGFloat = 0
+    private var deselectedFontSize: CGFloat = 0
+
     // MARK: - UI Controls
 
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.baselineAdjustment = .alignCenters
-        label.font = .boldSystemFont(ofSize: 25)
         return label
     }()
 
@@ -32,9 +36,14 @@ class MenuBarCell: UICollectionViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(label: String) {
+    func setupCell(label: String, selectedFontSize: CGFloat, deselectedFontSize: CGFloat) {
         self.label.text = label
+        self.label.font = .boldSystemFont(ofSize: deselectedFontSize)
+        self.selectedFontSize = selectedFontSize
+        self.deselectedFontSize = deselectedFontSize
     }
+
+    // MARK: - UI Actions
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
         -> UICollectionViewLayoutAttributes {
@@ -48,14 +57,14 @@ class MenuBarCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            label.font = isSelected ? .boldSystemFont(ofSize: 30) : .boldSystemFont(ofSize: 25)
+            label.font = isSelected ? .boldSystemFont(ofSize: selectedFontSize) : .boldSystemFont(ofSize: 25)
             label.textColor = isSelected ? .black : .lightGray
         }
     }
 
     override var isHighlighted: Bool {
         didSet {
-            label.font = isHighlighted ? .boldSystemFont(ofSize: 30) : .boldSystemFont(ofSize: 25)
+            label.font = isHighlighted ? .boldSystemFont(ofSize: selectedFontSize) : .boldSystemFont(ofSize: 25)
         }
     }
 

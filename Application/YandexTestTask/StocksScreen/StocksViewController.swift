@@ -29,12 +29,11 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
     // MARK: - UI Actions
 
     private func setupSearchBar() {
+        // Разобраться когда дойду
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
-
         // Include the search bar within the navigation bar.
         navigationItem.titleView = searchController.searchBar
-
         definesPresentationContext = true
     }
 
@@ -47,8 +46,8 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
             stockFavView.height == 60
         }
 
-        stockFavView.setupCells(labels: ["Stocks", "Favourite"])
-        stockFavView.stocksController = self
+        stockFavView.setupCells(labels: ["Stocks", "Favourite"], selectedFontSize: 40, deselectedFontSize: 30)
+        stockFavView.delegate = self
     }
 
     func setupCollectionView() {
@@ -70,6 +69,8 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
             flowLayout.minimumLineSpacing = 0
         }
     }
+
+    // MARK: - CollectionView
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2

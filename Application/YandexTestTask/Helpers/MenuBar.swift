@@ -12,10 +12,12 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     // MARK: - Private Properties
 
     private var labels = [String]()
+    private var selectedFontSize: CGFloat = 0
+    private var deselectedFontSize: CGFloat = 0
 
     // MARK: - Public Properties
 
-    weak var stocksController: StocksViewController?
+    weak var delegate: UICollectionViewController?
 
     // MARK: - UI Controls
 
@@ -46,10 +48,14 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
 
     // MARK: Public Methods
 
-    func setupCells(labels: [String]) {
+    func setupCells(labels: [String], selectedFontSize: CGFloat, deselectedFontSize: CGFloat,
+                    selectedElement: Int = 0) {
         self.labels = labels
-        collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .centeredHorizontally)
+        self.selectedFontSize = selectedFontSize
+        self.deselectedFontSize = deselectedFontSize
     }
+
+    // MARK: - CollectionView
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return labels.count
@@ -57,13 +63,13 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MenuBarCell
-        cell.setupCell(label: labels[indexPath.item])
+        cell.setupCell(label: labels[indexPath.item], selectedFontSize: selectedFontSize, deselectedFontSize: deselectedFontSize)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.collectionViewLayout.invalidateLayout()
-        stocksController?.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        delegate?.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
 
     // MARK: - Init
