@@ -17,7 +17,8 @@
 		C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */; };
 		C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */; };
 		C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8225DD5031002F5EB6 /* Constants.swift */; };
-		C11C6D8625DE66CE002F5EB6 /* StockFavouriteHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8525DE66CE002F5EB6 /* StockFavouriteHeaderView.swift */; };
+		C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */; };
+		C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +35,8 @@
 		C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSnappingController.swift; sourceTree = "<group>"; };
 		C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSappingLayout.swift; sourceTree = "<group>"; };
 		C11C6D8225DD5031002F5EB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		C11C6D8525DE66CE002F5EB6 /* StockFavouriteHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockFavouriteHeaderView.swift; sourceTree = "<group>"; };
+		C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				C11C6CE625DCFB85002F5EB6 /* YandexTestTask */,
+				C11C6D8D25DEA69F002F5EB6 /* Trash */,
 				C11C6CE525DCFB85002F5EB6 /* Products */,
 				8286CB3A0A27EB8788DEC3D8 /* Pods */,
 				B9DBBA605EA9492A255EA222 /* Frameworks */,
@@ -121,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
-				C11C6D8525DE66CE002F5EB6 /* StockFavouriteHeaderView.swift */,
 			);
 			path = StocksScreen;
 			sourceTree = "<group>";
@@ -136,11 +138,20 @@
 		C11C6D7A25DD451E002F5EB6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */,
-				C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */,
 				C11C6D8225DD5031002F5EB6 /* Constants.swift */,
+				C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */,
+				C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C11C6D8D25DEA69F002F5EB6 /* Trash */ = {
+			isa = PBXGroup;
+			children = (
+				C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */,
+				C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */,
+			);
+			path = Trash;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,8 +331,9 @@
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
+				C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */,
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
-				C11C6D8625DE66CE002F5EB6 /* StockFavouriteHeaderView.swift in Sources */,
+				C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,7 +12,7 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
     // MARK: - UI Controls
 
     private let searchController = UISearchController()
-    private let stockFavView = StockFavouriteHeaderView()
+    private lazy var stockFavView = MenuBar()
 
     // MARK: - LifeCycle
 
@@ -46,6 +46,9 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
             stockFavView.top == stockFavView.superview!.safeAreaLayoutGuide.top
             stockFavView.height == 60
         }
+
+        stockFavView.setupCells(labels: ["Stocks", "Favourite"])
+        stockFavView.stocksController = self
     }
 
     func setupCollectionView() {
@@ -73,7 +76,7 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let color = [UIColor.white, UIColor.gray]
+        let color = [UIColor.white, UIColor.gray, UIColor.white, UIColor.gray, UIColor.white, UIColor.gray, UIColor.white, UIColor.gray]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
         cell.backgroundColor = color[indexPath.item]
         return cell
@@ -82,6 +85,14 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint,
+                                            targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let index = Int(targetContentOffset.pointee.x / view.frame.width)
+        let indexPath = IndexPath(item: index, section: 0)
+        stockFavView.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        stockFavView.collectionView(stockFavView.collectionView, didSelectItemAt: indexPath)
     }
 
     // MARK: - Init
