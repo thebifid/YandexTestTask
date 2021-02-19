@@ -19,6 +19,7 @@ class MenuBarCell: UICollectionViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
+        label.font = .boldSystemFont(ofSize: 20)
         label.baselineAdjustment = .alignCenters
         return label
     }()
@@ -38,7 +39,6 @@ class MenuBarCell: UICollectionViewCell {
 
     func setupCell(label: String, selectedFontSize: CGFloat, deselectedFontSize: CGFloat) {
         self.label.text = label
-        self.label.font = .boldSystemFont(ofSize: deselectedFontSize)
         self.selectedFontSize = selectedFontSize
         self.deselectedFontSize = deselectedFontSize
     }
@@ -57,6 +57,7 @@ class MenuBarCell: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
+            print(label.text, isSelected)
             label.font = isSelected ? .boldSystemFont(ofSize: selectedFontSize) : .boldSystemFont(ofSize: 25)
             label.textColor = isSelected ? .black : .lightGray
         }

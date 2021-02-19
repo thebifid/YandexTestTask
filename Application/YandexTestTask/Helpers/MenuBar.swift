@@ -48,8 +48,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
 
     // MARK: Public Methods
 
-    func setupCells(labels: [String], selectedFontSize: CGFloat, deselectedFontSize: CGFloat,
-                    selectedElement: Int = 0) {
+    func setupCells(labels: [String], selectedFontSize: CGFloat, deselectedFontSize: CGFloat) {
         self.labels = labels
         self.selectedFontSize = selectedFontSize
         self.deselectedFontSize = deselectedFontSize
@@ -64,6 +63,12 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MenuBarCell
         cell.setupCell(label: labels[indexPath.item], selectedFontSize: selectedFontSize, deselectedFontSize: deselectedFontSize)
+
+        if indexPath.item == 0 {
+            cell.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        }
+
         return cell
     }
 
