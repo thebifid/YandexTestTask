@@ -19,8 +19,8 @@ class MenuBarCell: UICollectionViewCell {
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
-        label.font = .boldSystemFont(ofSize: 20)
-        label.baselineAdjustment = .alignCenters
+//        label.font = .boldSystemFont(ofSize: 20)
+        label.contentMode = .center
         return label
     }()
 
@@ -39,6 +39,7 @@ class MenuBarCell: UICollectionViewCell {
 
     func setupCell(label: String, selectedFontSize: CGFloat, deselectedFontSize: CGFloat) {
         self.label.text = label
+        self.label.font = .boldSystemFont(ofSize: deselectedFontSize)
         self.selectedFontSize = selectedFontSize
         self.deselectedFontSize = deselectedFontSize
     }
@@ -49,23 +50,23 @@ class MenuBarCell: UICollectionViewCell {
         -> UICollectionViewLayoutAttributes {
         let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
         layoutIfNeeded()
-        UIView.animate(withDuration: 0.9) {
-            attributes.size.width = self.label.frame.width
-        }
+        attributes.size.width = label.frame.width
         return attributes
     }
 
     override var isSelected: Bool {
         didSet {
-            print(label.text, isSelected)
-            label.font = isSelected ? .boldSystemFont(ofSize: selectedFontSize) : .boldSystemFont(ofSize: 25)
-            label.textColor = isSelected ? .black : .lightGray
+            UIView.transition(with: self.label, duration: 0.1, options: .transitionFlipFromTop, animations: {
+                self.label.font = self.isSelected ? .boldSystemFont(ofSize: self.selectedFontSize) :
+                    .boldSystemFont(ofSize: self.deselectedFontSize)
+                self.label.textColor = self.isSelected ? UIColor.black : .lightGray
+            }, completion: nil)
         }
     }
 
     override var isHighlighted: Bool {
         didSet {
-            label.font = isHighlighted ? .boldSystemFont(ofSize: selectedFontSize) : .boldSystemFont(ofSize: 25)
+            label.textColor = isHighlighted ? .black : .lightGray
         }
     }
 

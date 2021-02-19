@@ -63,7 +63,6 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! MenuBarCell
         cell.setupCell(label: labels[indexPath.item], selectedFontSize: selectedFontSize, deselectedFontSize: deselectedFontSize)
-
         if indexPath.item == 0 {
             cell.isSelected = true
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
