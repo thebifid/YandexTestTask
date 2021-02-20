@@ -62,7 +62,7 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
     }
 
     func setupCollectionView() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
+        collectionView.register(TableViewStockCell.self, forCellWithReuseIdentifier: "cellId")
 
         constrain(collectionView, stockFavView) { cv, stockFavView in
             cv.top == stockFavView.bottom

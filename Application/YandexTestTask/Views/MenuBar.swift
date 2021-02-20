@@ -73,7 +73,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.collectionViewLayout.invalidateLayout()
-        delegate?.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        delegate?.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 
     // MARK: - Init

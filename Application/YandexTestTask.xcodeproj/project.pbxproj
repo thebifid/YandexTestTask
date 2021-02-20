@@ -20,6 +20,7 @@
 		C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */; };
 		C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
+		C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
+		C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStockCell.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 			children = (
 				C11C6D7A25DD451E002F5EB6 /* Helpers */,
 				C11C6D7825DD3476002F5EB6 /* Models */,
+				C17F103225E0EE45006CCA52 /* Views */,
 				C11C6D7125DD3308002F5EB6 /* StocksScreen */,
 				C11C6D6A25DD2CCE002F5EB6 /* Resources */,
 				C11C6D6725DD2B8D002F5EB6 /* Commons */,
@@ -126,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
+				C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */,
 			);
 			path = StocksScreen;
 			sourceTree = "<group>";
@@ -141,8 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				C11C6D8225DD5031002F5EB6 /* Constants.swift */,
-				C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */,
-				C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */,
 				C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */,
 			);
 			path = Helpers;
@@ -155,6 +157,15 @@
 				C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */,
 			);
 			path = Trash;
+			sourceTree = "<group>";
+		};
+		C17F103225E0EE45006CCA52 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */,
+				C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +350,7 @@
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
 				C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
+				C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
