@@ -24,18 +24,7 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
         setupStockFavView()
         setupCollectionView()
         collectionView.contentInsetAdjustmentBehavior = .never //!
-
-//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) {
-//            self.navigationController?.pushViewController(EmptyViewController(), animated: true)
-//        }
     }
-
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        stockFavView.collectionView.selectItem(at: IndexPath(item: 0, section: 0), animated: false, scrollPosition: .centeredHorizontally)
-//        stockFavView.collectionView(stockFavView.collectionView, didSelectItemAt: IndexPath(item: 0, section: 0))
-//    }
 
     // MARK: - UI Actions
 
@@ -62,6 +51,7 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
     }
 
     func setupCollectionView() {
+        collectionView.allowsSelection = false
         collectionView.register(TableViewStockCell.self, forCellWithReuseIdentifier: "cellId")
 
         constrain(collectionView, stockFavView) { cv, stockFavView in

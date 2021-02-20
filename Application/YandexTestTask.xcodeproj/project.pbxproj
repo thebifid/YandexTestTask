@@ -21,6 +21,8 @@
 		C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */; };
+		C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103625E0F7FC006CCA52 /* StockCell.swift */; };
+		C17F103A25E0FF6C006CCA52 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C17F103925E0FF6C006CCA52 /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStockCell.swift; sourceTree = "<group>"; };
+		C17F103625E0F7FC006CCA52 /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
+		C17F103925E0FF6C006CCA52 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -121,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */,
+				C17F103925E0FF6C006CCA52 /* Colors.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 			children = (
 				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
 				C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */,
+				C17F103625E0F7FC006CCA52 /* StockCell.swift */,
 			);
 			path = StocksScreen;
 			sourceTree = "<group>";
@@ -230,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C17F103A25E0FF6C006CCA52 /* Colors.xcassets in Resources */,
 				C11C6D6525DD2B75002F5EB6 /* LaunchScreen.storyboard in Resources */,
 				C11C6CF125DCFB87002F5EB6 /* Assets.xcassets in Resources */,
 			);
@@ -342,6 +349,7 @@
 			files = (
 				C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */,
 				C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */,
+				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,

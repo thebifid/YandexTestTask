@@ -15,6 +15,8 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.separatorColor = .clear
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
 
@@ -23,9 +25,12 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
     private func setupTableView() {
         addSubview(tableView)
         constrain(tableView) { tableView in
-            tableView.edges == tableView.superview!.edges
+            tableView.left == tableView.superview!.left + 20
+            tableView.right == tableView.superview!.right - 20
+            tableView.top == tableView.superview!.top
+            tableView.bottom == tableView.superview!.bottom
         }
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
+        tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
     }
 
     // MARK: - TableView
@@ -35,9 +40,15 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
-        cell.textLabel?.text = "Test"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! StockCell
+        if indexPath.row % 2 == 0 {
+            cell.setupCell(color: R.color.customLightGray()!)
+        }
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 
     // MARK: - Init
