@@ -27,6 +27,7 @@
 		C17F104625E12F06006CCA52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F104525E12F06006CCA52 /* API.swift */; };
 		C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105025E132C7006CCA52 /* ConstituentsModel.swift */; };
 		C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105425E13740006CCA52 /* StocksViewModel.swift */; };
+		C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105825E14506006CCA52 /* CompanyProfileModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		C17F104525E12F06006CCA52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C17F105025E132C7006CCA52 /* ConstituentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstituentsModel.swift; sourceTree = "<group>"; };
 		C17F105425E13740006CCA52 /* StocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewModel.swift; sourceTree = "<group>"; };
+		C17F105825E14506006CCA52 /* CompanyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileModel.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				C17F105025E132C7006CCA52 /* ConstituentsModel.swift */,
+				C17F105825E14506006CCA52 /* CompanyProfileModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */,
 				C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */,
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
+				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
 				C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,

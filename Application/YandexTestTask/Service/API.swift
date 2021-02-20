@@ -11,6 +11,7 @@ struct API {
     static let scheme = "https"
     static let host = "finnhub.io"
     static let list = "/api/v1/index/constituents"
+    static let companyProfile = "/api/v1/stock/profile2"
 
     static let token = "c0mgb5748v6ue78flnkg"
 }

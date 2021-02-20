@@ -11,32 +11,53 @@ class NetworkService {
     static let sharedInstance = NetworkService()
 
     func requestTrandingList(completion: @escaping (Result<ConstituentsModel, Error>) -> Void) {
-        let url = BuildUrl(path: "1", params: ["symbol": "^NDX"])
-
-        print(url)
-
+        let url = BuildUrl(path: API.list, params: ["symbol": "^NDX"])
         URLSession.shared.dataTask(with: url) { data, _, error in
-
             guard error == nil else { return }
-
             if let data = data {
                 do {
                     let constituents = try JSONDecoder().decode(ConstituentsModel.self, from: data)
+                    
+                    var first5 = [String]()
+                    for index in 1...5 {
+                        first5.append(constituents.constituents[index])
+                    }
+                    
+                    self.requestCompanyProfile(tickers: first5)
                     completion(.success(constituents))
                 } catch {
                     completion(.failure(error))
                 }
             }
-
         }.resume()
     }
+
+    private func requestCompanyProfile(tickers: [String]) {
+        var companyProfiles = [CompanyProfileModel]()
+
+        tickers.forEach { ticker in
+            let url = BuildUrl(path: API.companyProfile, params: ["symbol": ticker])
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                guard error == nil else { return }
+                if let data = data {
+                    do {
+                        let profile = try JSONDecoder().decode(CompanyProfileModel.self, from: data)
+                        companyProfiles.append(profile)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }.resume()
+        }
+    }
+    
 
     private func BuildUrl(path: String, params: [String: String]) -> URL {
         var components = URLComponents()
 
         components.scheme = API.scheme
         components.host = API.host
-        components.path = API.list
+        components.path = path
         components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
         components.queryItems?.append(URLQueryItem(name: "token", value: API.token))
 
