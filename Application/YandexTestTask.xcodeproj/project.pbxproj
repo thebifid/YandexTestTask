@@ -28,6 +28,7 @@
 		C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105025E132C7006CCA52 /* ConstituentsModel.swift */; };
 		C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105425E13740006CCA52 /* StocksViewModel.swift */; };
 		C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105825E14506006CCA52 /* CompanyProfileModel.swift */; };
+		C17F105C25E14E16006CCA52 /* CompanyQouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		C17F105025E132C7006CCA52 /* ConstituentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstituentsModel.swift; sourceTree = "<group>"; };
 		C17F105425E13740006CCA52 /* StocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewModel.swift; sourceTree = "<group>"; };
 		C17F105825E14506006CCA52 /* CompanyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileModel.swift; sourceTree = "<group>"; };
+		C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyQouteModel.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -157,6 +159,7 @@
 			children = (
 				C17F105025E132C7006CCA52 /* ConstituentsModel.swift */,
 				C17F105825E14506006CCA52 /* CompanyProfileModel.swift */,
+				C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,
+				C17F105C25E14E16006CCA52 /* CompanyQouteModel.swift in Sources */,
 				C17F104625E12F06006CCA52 /* API.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
 				C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */,
