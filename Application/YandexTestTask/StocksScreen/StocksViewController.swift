@@ -23,7 +23,9 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
         setupSearchBar()
         setupStockFavView()
         setupCollectionView()
-        collectionView.contentInsetAdjustmentBehavior = .never //!
+        collectionView.contentInsetAdjustmentBehavior = .never
+
+        NetworkService.sharedInstance.requestTrandingList()
     }
 
     // MARK: - UI Actions

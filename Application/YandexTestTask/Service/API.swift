@@ -1,0 +1,16 @@
+//
+//  API.swift
+//  YandexTestTask
+//
+//  Created by Vasiliy Matveev on 20.02.2021.
+//
+
+import Foundation
+
+struct API {
+    static let scheme = "https"
+    static let host = "finnhub.io"
+    static let list = "/api/v1/index/constituents"
+
+    static let token = "c0mgb5748v6ue78flnkg"
+}

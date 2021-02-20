@@ -23,6 +23,8 @@
 		C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */; };
 		C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103625E0F7FC006CCA52 /* StockCell.swift */; };
 		C17F103A25E0FF6C006CCA52 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C17F103925E0FF6C006CCA52 /* Colors.xcassets */; };
+		C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103D25E12242006CCA52 /* NetworkService.swift */; };
+		C17F104625E12F06006CCA52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F104525E12F06006CCA52 /* API.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStockCell.swift; sourceTree = "<group>"; };
 		C17F103625E0F7FC006CCA52 /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		C17F103925E0FF6C006CCA52 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		C17F103D25E12242006CCA52 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		C17F104525E12F06006CCA52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -99,6 +103,7 @@
 		C11C6CE625DCFB85002F5EB6 /* YandexTestTask */ = {
 			isa = PBXGroup;
 			children = (
+				C17F103C25E12228006CCA52 /* Service */,
 				C11C6D7A25DD451E002F5EB6 /* Helpers */,
 				C11C6D7825DD3476002F5EB6 /* Models */,
 				C17F103225E0EE45006CCA52 /* Views */,
@@ -172,6 +177,15 @@
 				C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C17F103C25E12228006CCA52 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				C17F104525E12F06006CCA52 /* API.swift */,
+				C17F103D25E12242006CCA52 /* NetworkService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,11 +367,13 @@
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,
+				C17F104625E12F06006CCA52 /* API.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
 				C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */,
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
 				C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
+				C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */,
 				C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
