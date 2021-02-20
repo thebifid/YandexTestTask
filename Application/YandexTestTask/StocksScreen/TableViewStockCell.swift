@@ -9,6 +9,10 @@ import Cartography
 import UIKit
 
 class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
+    // MARK: - Private Properties
+
+    let viewModel = StocksViewModel()
+
     // MARK: - UI Controls
 
     private lazy var tableView: UITableView = {
@@ -36,13 +40,13 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
     // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return viewModel.constituents.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! StockCell
         if indexPath.row % 2 == 0 {
-            cell.setupCell(color: R.color.customLightGray()!)
+            cell.setupCell(color: R.color.customLightGray()!, companyName: viewModel.constituents[indexPath.row])
         }
         return cell
     }

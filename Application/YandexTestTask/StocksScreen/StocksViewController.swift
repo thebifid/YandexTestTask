@@ -9,6 +9,8 @@ import Cartography
 import UIKit
 
 class StocksViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    // MARK: - Private Properties
+
     // MARK: - UI Controls
 
     private let searchController = UISearchController()
@@ -24,8 +26,6 @@ class StocksViewController: UICollectionViewController, UICollectionViewDelegate
         setupStockFavView()
         setupCollectionView()
         collectionView.contentInsetAdjustmentBehavior = .never
-
-        NetworkService.sharedInstance.requestTrandingList()
     }
 
     // MARK: - UI Actions

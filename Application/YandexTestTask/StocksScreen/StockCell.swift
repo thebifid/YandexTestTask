@@ -99,8 +99,9 @@ class StockCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(color: UIColor) {
+    func setupCell(color: UIColor, companyName: String) {
         backgroundColor = color
+        tickerLabel.text = companyName
     }
 
     // MARK: - Init

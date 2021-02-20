@@ -10,11 +10,28 @@ import Foundation
 class NetworkService {
     static let sharedInstance = NetworkService()
 
-    func requestTrandingList() {
-        print(url(path: API.list, params: ["symbol": "^NDX"]))
+    func requestTrandingList(completion: @escaping (Result<ConstituentsModel, Error>) -> Void) {
+        let url = BuildUrl(path: "1", params: ["symbol": "^NDX"])
+
+        print(url)
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+
+            guard error == nil else { return }
+
+            if let data = data {
+                do {
+                    let constituents = try JSONDecoder().decode(ConstituentsModel.self, from: data)
+                    completion(.success(constituents))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+
+        }.resume()
     }
 
-    private func url(path: String, params: [String: String]) -> URL {
+    private func BuildUrl(path: String, params: [String: String]) -> URL {
         var components = URLComponents()
 
         components.scheme = API.scheme
