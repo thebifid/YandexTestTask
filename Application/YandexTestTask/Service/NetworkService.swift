@@ -10,7 +10,7 @@ import Foundation
 class NetworkService {
     static let sharedInstance = NetworkService()
 
-    func requestTrandingList(completion: @escaping (Result<ConstituentsModel, Error>) -> Void) {
+    func requestTrandingList(completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var companyQuotes = [String: CompanyQuoteModel]()
 
@@ -51,11 +51,13 @@ class NetworkService {
                     }
 
                     dispatchGroup.notify(queue: .main) {
-                        print(companyQuotes)
-                        print(companyProfiles)
+                        var trendingListFullInfo = [TrendingListFullInfoModel]()
+                        companyProfiles.keys.forEach { key in
+                            trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+                                                                                  companyQuote: companyQuotes[key]!))
+                        }
+                        completion(.success(trendingListFullInfo))
                     }
-
-                    completion(.success(constituents))
                 } catch {
                     completion(.failure(error))
                 }

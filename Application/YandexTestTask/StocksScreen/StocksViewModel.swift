@@ -10,21 +10,20 @@ import Foundation
 class StocksViewModel {
     // MARK: - Properties?
 
-    var constituents = [String]()
-
-//    var companyProfiles
+    var trendingListInfo = [TrendingListFullInfoModel]()
 
     // MARK: - Public Methods
 
-//    func requstTrandingStocks(completion: @escaping (Result<Void, Error>) -> Void) {
-//        NetworkService.sharedInstance.requestTrandingList { result in
-//            switch result {
-//            case let .success(constituents):
-//                self.constituents = constituents.constituents
-//                completion(.success(()))
-//            case let .failure(error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
+    func requestTrendingList() {
+        NetworkService.sharedInstance.requestTrandingList { result in
+
+            switch result {
+            case let .failure(error):
+                break
+
+            case let .success(info):
+                print(info)
+            }
+        }
+    }
 }

@@ -35,18 +35,20 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
             tableView.bottom == tableView.superview!.bottom
         }
         tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
+
+        viewModel.requestTrendingList()
     }
 
     // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.constituents.count
+        return viewModel.trendingListInfo.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! StockCell
         if indexPath.row % 2 == 0 {
-            cell.setupCell(color: R.color.customLightGray()!, companyName: viewModel.constituents[indexPath.row])
+//            cell.setupCell(color: R.color.customLightGray()!, companyName: viewModel.constituents[indexPath.row])
         }
         return cell
     }

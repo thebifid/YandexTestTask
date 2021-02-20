@@ -19,6 +19,7 @@
 		C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8225DD5031002F5EB6 /* Constants.swift */; };
 		C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */; };
 		C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */; };
+		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */; };
 		C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103625E0F7FC006CCA52 /* StockCell.swift */; };
@@ -47,6 +48,7 @@
 		C11C6D8225DD5031002F5EB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
+		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStockCell.swift; sourceTree = "<group>"; };
 		C17F103625E0F7FC006CCA52 /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				C17F105025E132C7006CCA52 /* ConstituentsModel.swift */,
 				C17F105825E14506006CCA52 /* CompanyProfileModel.swift */,
 				C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */,
+				C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
 				C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */,
 				C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */,
+				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
 				C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */,
 				C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */,
