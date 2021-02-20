@@ -34,6 +34,12 @@ class StockCell: UITableViewCell {
         return label
     }()
 
+    private let addToFavButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Star", for: .normal)
+        return button
+    }()
+
     private let stockPrice: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
@@ -61,7 +67,10 @@ class StockCell: UITableViewCell {
             stockImageView.width == stockImageView.height
         }
 
-        let companyInfoStackView = UIStackView(arrangedSubviews: [tickerLabel, complanyNameLabel])
+        let nameLabelFavButtonStackView = UIStackView(arrangedSubviews: [tickerLabel, addToFavButton])
+        nameLabelFavButtonStackView.spacing = 5
+
+        let companyInfoStackView = UIStackView(arrangedSubviews: [nameLabelFavButtonStackView, complanyNameLabel])
         companyInfoStackView.axis = .vertical
         companyInfoStackView.spacing = 2
 
