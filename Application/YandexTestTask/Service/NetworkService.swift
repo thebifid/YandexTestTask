@@ -11,6 +11,9 @@ class NetworkService {
     static let sharedInstance = NetworkService()
 
     func requestTrandingList(completion: @escaping (Result<ConstituentsModel, Error>) -> Void) {
+        var companyProfiles = [String: CompanyProfileModel]()
+        var companyQuotes = [String: CompanyQuoteModel]()
+
         let url = BuildUrl(path: API.list, params: ["symbol": "^NDX"])
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else { return }
@@ -23,8 +26,35 @@ class NetworkService {
                         first5.append(constituents.constituents[index])
                     }
 
-                    self.requestCompanyProfile(tickers: first5)
-                    self.requestCompanyQuote(tickers: first5)
+                    let dispatchGroup = DispatchGroup()
+                    dispatchGroup.enter()
+                    self.requestCompanyProfile(tickers: first5) { result in
+                        switch result {
+                        case let .success(profiles):
+                            companyProfiles = profiles
+                        case let .failure(error):
+                            print(error.localizedDescription)
+                        }
+                        dispatchGroup.leave()
+                    }
+
+                    dispatchGroup.enter()
+                    self.requestCompanyQuote(tickers: first5) { result in
+                        switch result {
+                        case let .success(quotes):
+                            companyQuotes = quotes
+
+                        case let .failure(error):
+                            print(error.localizedDescription)
+                        }
+                        dispatchGroup.leave()
+                    }
+
+                    dispatchGroup.notify(queue: .main) {
+                        print(companyQuotes)
+                        print(companyProfiles)
+                    }
+
                     completion(.success(constituents))
                 } catch {
                     completion(.failure(error))
@@ -33,10 +63,12 @@ class NetworkService {
         }.resume()
     }
 
-    private func requestCompanyProfile(tickers: [String]) {
+    private func requestCompanyProfile(tickers: [String], completion: @escaping (Result<[String: CompanyProfileModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
 
+        let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
+            dispatchGroup.enter()
             let url = BuildUrl(path: API.companyProfile, params: ["symbol": ticker])
             URLSession.shared.dataTask(with: url) { data, _, error in
                 guard error == nil else { return }
@@ -44,18 +76,25 @@ class NetworkService {
                     do {
                         let profile = try JSONDecoder().decode(CompanyProfileModel.self, from: data)
                         companyProfiles[ticker] = profile
-                        print(companyProfiles)
+                        dispatchGroup.leave()
                     } catch {
                         print(error.localizedDescription)
                     }
                 }
             }.resume()
         }
+
+        dispatchGroup.notify(queue: .main) {
+            completion(.success(companyProfiles))
+        }
     }
 
-    private func requestCompanyQuote(tickers: [String]) {
+    private func requestCompanyQuote(tickers: [String], completion: @escaping (Result<[String: CompanyQuoteModel], Error>) -> Void) {
         var companyQuotes = [String: CompanyQuoteModel]()
+
+        let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
+            dispatchGroup.enter()
             let url = BuildUrl(path: API.companyQuote, params: ["symbol": ticker])
             URLSession.shared.dataTask(with: url) { data, _, error in
                 guard error == nil else { return }
@@ -63,12 +102,15 @@ class NetworkService {
                     do {
                         let quote = try JSONDecoder().decode(CompanyQuoteModel.self, from: data)
                         companyQuotes[ticker] = quote
-                        print(companyQuotes)
+                        dispatchGroup.leave()
                     } catch {
                         print(error.localizedDescription)
                     }
                 }
             }.resume()
+        }
+        dispatchGroup.notify(queue: .main) {
+            completion(.success(companyQuotes))
         }
     }
 
