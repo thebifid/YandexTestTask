@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct TrendingListFullInfoModel {
     let country: String
@@ -28,7 +29,9 @@ struct TrendingListFullInfoModel {
     let pc: Float
     let t: Float
 
-    init(companyProfile: CompanyProfileModel, companyQuote: CompanyQuoteModel) {
+    let logoData: Data
+
+    init(companyProfile: CompanyProfileModel, companyQuote: CompanyQuoteModel, companyImageData: Data) {
         country = companyProfile.country
         currency = companyProfile.currency
         exchange = companyProfile.exchange
@@ -48,5 +51,7 @@ struct TrendingListFullInfoModel {
         o = companyQuote.o
         pc = companyQuote.pc
         t = companyQuote.t
+
+        logoData = companyImageData
     }
 }

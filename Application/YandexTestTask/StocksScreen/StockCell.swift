@@ -26,13 +26,15 @@ class StockCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.text = "AAPL"
+        label.backgroundColor = .red
         return label
     }()
 
     private let complanyNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 11)
+        label.font = .boldSystemFont(ofSize: 12)
         label.text = "Apple Inc."
+        label.backgroundColor = .yellow
         return label
     }()
 
@@ -46,6 +48,7 @@ class StockCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.text = "$300.93"
+        label.backgroundColor = .green
         return label
     }()
 
@@ -54,6 +57,7 @@ class StockCell: UITableViewCell {
         label.font = .boldSystemFont(ofSize: 12)
         label.textColor = R.color.customGreen()
         label.text = "+0.12 (1,15%)"
+        label.backgroundColor = .blue
         return label
     }()
 
@@ -110,10 +114,12 @@ class StockCell: UITableViewCell {
         complanyNameLabel.text = companyInfo.name
         stockPriceLabel.text = "$\(companyInfo.c)" // Смотреть валюту!
 
-        print(companyInfo.logo)
-        if let url = URL(string: companyInfo.logo) {
-            stockImageView.sd_setImage(with: url, completed: nil)
-        }
+        stockImageView.image = UIImage(data: companyInfo.logoData)
+
+//        print(companyInfo.logo)
+//        if let url = URL(string: companyInfo.logo) {
+//            stockImageView.sd_setImage(with: url, completed: nil)
+//        }
     }
 
     // MARK: - Init

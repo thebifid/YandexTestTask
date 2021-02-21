@@ -71,7 +71,7 @@ class NetworkService {
                             var trendingListFullInfo = [TrendingListFullInfoModel]()
                             companyProfiles.keys.forEach { key in
                                 trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
-                                                                                      companyQuote: companyQuotes[key]!))
+                                                                                      companyQuote: companyQuotes[key]!, companyImageData: companyImages[key]!))
                             }
                             completion(.success(trendingListFullInfo))
                         }
