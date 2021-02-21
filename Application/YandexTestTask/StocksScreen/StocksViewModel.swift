@@ -10,19 +10,27 @@ import Foundation
 class StocksViewModel {
     // MARK: - Properties?
 
-    var trendingListInfo = [TrendingListFullInfoModel]()
+    var trendingListInfo: [TrendingListFullInfoModel] = [] {
+        didSet {
+            didUpdateModel?()
+        }
+    }
+
+    // MARK: - Handlers
+
+    var didUpdateModel: (() -> Void)?
 
     // MARK: - Public Methods
 
-    func requestTrendingList() {
+    func requestTrendingList(completion: @escaping (Result<Void, Error>) -> Void) {
         NetworkService.sharedInstance.requestTrandingList { result in
 
             switch result {
             case let .failure(error):
-                break
+                completion(.failure(error))
 
             case let .success(info):
-                print(info)
+                self.trendingListInfo = info
             }
         }
     }

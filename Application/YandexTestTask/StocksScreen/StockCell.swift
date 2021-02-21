@@ -40,7 +40,7 @@ class StockCell: UITableViewCell {
         return button
     }()
 
-    private let stockPrice: UILabel = {
+    private let stockPriceLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.text = "$300.93"
@@ -67,7 +67,8 @@ class StockCell: UITableViewCell {
             stockImageView.width == stockImageView.height
         }
 
-        let nameLabelFavButtonStackView = UIStackView(arrangedSubviews: [tickerLabel, addToFavButton])
+        let nameLabelFavButtonStackView = UIStackView(arrangedSubviews: [tickerLabel, addToFavButton, UIView()])
+        nameLabelFavButtonStackView.distribution = .fill
         nameLabelFavButtonStackView.spacing = 5
 
         let companyInfoStackView = UIStackView(arrangedSubviews: [nameLabelFavButtonStackView, complanyNameLabel])
@@ -78,9 +79,10 @@ class StockCell: UITableViewCell {
         constrain(companyInfoStackView, stockImageView) { stackView, image in
             stackView.centerY == image.centerY
             stackView.left == image.right + 20
+            stackView.right == stackView.superview!.right - 100 //!
         }
 
-        let companyPriceInfoStackView = UIStackView(arrangedSubviews: [stockPrice, dayChangeLabel])
+        let companyPriceInfoStackView = UIStackView(arrangedSubviews: [stockPriceLabel, dayChangeLabel])
         companyPriceInfoStackView.axis = .vertical
         companyPriceInfoStackView.spacing = 2
         companyPriceInfoStackView.alignment = .center
@@ -99,9 +101,12 @@ class StockCell: UITableViewCell {
 
     // MARK: - Public Methods
 
-    func setupCell(color: UIColor, companyName: String) {
+    func setupCell(color: UIColor, companyInfo: TrendingListFullInfoModel) {
         backgroundColor = color
-        tickerLabel.text = companyName
+
+        tickerLabel.text = companyInfo.ticker
+        complanyNameLabel.text = companyInfo.name
+        stockPriceLabel.text = "$\(companyInfo.c)" // Смотреть валюту!
     }
 
     // MARK: - Init

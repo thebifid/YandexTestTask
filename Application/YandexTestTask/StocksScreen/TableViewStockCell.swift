@@ -35,8 +35,26 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
             tableView.bottom == tableView.superview!.bottom
         }
         tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
+    }
 
-        viewModel.requestTrendingList()
+    // MARK: - Private Methods
+
+    private func enableBinding() {
+        viewModel.didUpdateModel = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+
+    private func requestData() {
+        viewModel.requestTrendingList { result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+
+            case .success:
+                break
+            }
+        }
     }
 
     // MARK: - TableView
@@ -47,9 +65,8 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! StockCell
-        if indexPath.row % 2 == 0 {
-//            cell.setupCell(color: R.color.customLightGray()!, companyName: viewModel.constituents[indexPath.row])
-        }
+        let color: UIColor = indexPath.row % 2 == 0 ? R.color.customLightGray()! : .white
+        cell.setupCell(color: color, companyInfo: viewModel.trendingListInfo[indexPath.row])
         return cell
     }
 
@@ -62,6 +79,8 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTableView()
+        enableBinding()
+        requestData()
     }
 
     required init?(coder: NSCoder) {
