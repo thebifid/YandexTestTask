@@ -26,7 +26,6 @@ class StockCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.text = "AAPL"
-        label.backgroundColor = .red
         return label
     }()
 
@@ -34,13 +33,13 @@ class StockCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 12)
         label.text = "Apple Inc."
-        label.backgroundColor = .yellow
+        label.numberOfLines = 2
         return label
     }()
 
     private let addToFavButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Star", for: .normal)
+        button.setTitle("*", for: .normal)
         return button
     }()
 
@@ -48,7 +47,6 @@ class StockCell: UITableViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.text = "$300.93"
-        label.backgroundColor = .green
         return label
     }()
 
@@ -57,7 +55,6 @@ class StockCell: UITableViewCell {
         label.font = .boldSystemFont(ofSize: 12)
         label.textColor = R.color.customGreen()
         label.text = "+0.12 (1,15%)"
-        label.backgroundColor = .blue
         return label
     }()
 
@@ -79,24 +76,32 @@ class StockCell: UITableViewCell {
 
         let companyInfoStackView = UIStackView(arrangedSubviews: [nameLabelFavButtonStackView, complanyNameLabel])
         companyInfoStackView.axis = .vertical
+        companyInfoStackView.distribution = .equalCentering
         companyInfoStackView.spacing = 2
-
-        addSubview(companyInfoStackView)
-        constrain(companyInfoStackView, stockImageView) { stackView, image in
-            stackView.centerY == image.centerY
-            stackView.left == image.right + 20
-            stackView.right == stackView.superview!.right - 100 //!
-        }
 
         let companyPriceInfoStackView = UIStackView(arrangedSubviews: [stockPriceLabel, dayChangeLabel])
         companyPriceInfoStackView.axis = .vertical
         companyPriceInfoStackView.spacing = 2
         companyPriceInfoStackView.alignment = .center
+        companyPriceInfoStackView.distribution = .equalCentering
+
+        addSubview(companyInfoStackView)
+        constrain(companyInfoStackView, stockImageView) { companyInfoStackView, stockImageView in
+            companyInfoStackView.left == stockImageView.right + 10
+            companyInfoStackView.centerY == companyInfoStackView.superview!.centerY
+            companyInfoStackView.width == companyInfoStackView.superview!.width / 2.4
+        }
 
         addSubview(companyPriceInfoStackView)
-        constrain(companyPriceInfoStackView) { stackView in
-            stackView.centerY == stackView.superview!.centerY
-            stackView.right == stackView.superview!.right - 20
+        constrain(companyPriceInfoStackView, companyInfoStackView) { companyPriceInfoStackView, companyInfoStackView in
+            companyPriceInfoStackView.left == companyInfoStackView.right + 10
+            companyPriceInfoStackView.top == companyInfoStackView.top
+            companyPriceInfoStackView.right == companyPriceInfoStackView.superview!.right - 20
+        }
+
+        constrain(addToFavButton) { addToFavButton in
+            addToFavButton.height == 22
+            addToFavButton.width == 22
         }
     }
 
@@ -115,11 +120,6 @@ class StockCell: UITableViewCell {
         stockPriceLabel.text = "$\(companyInfo.c)" // Смотреть валюту!
 
         stockImageView.image = UIImage(data: companyInfo.logoData)
-
-//        print(companyInfo.logo)
-//        if let url = URL(string: companyInfo.logo) {
-//            stockImageView.sd_setImage(with: url, completed: nil)
-//        }
     }
 
     // MARK: - Init
