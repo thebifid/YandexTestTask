@@ -6,6 +6,7 @@
 //
 
 import Cartography
+import SDWebImage
 import UIKit
 
 class StockCell: UITableViewCell {
@@ -15,7 +16,8 @@ class StockCell: UITableViewCell {
 
     private let stockImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .green
+        iv.clipsToBounds = true
+        iv.contentMode = .scaleAspectFit
         iv.layer.cornerRadius = 10
         return iv
     }()
@@ -107,6 +109,11 @@ class StockCell: UITableViewCell {
         tickerLabel.text = companyInfo.ticker
         complanyNameLabel.text = companyInfo.name
         stockPriceLabel.text = "$\(companyInfo.c)" // Смотреть валюту!
+
+        print(companyInfo.logo)
+        if let url = URL(string: companyInfo.logo) {
+            stockImageView.sd_setImage(with: url, completed: nil)
+        }
     }
 
     // MARK: - Init

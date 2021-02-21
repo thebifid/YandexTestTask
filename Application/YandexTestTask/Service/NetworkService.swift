@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class NetworkService {
     static let sharedInstance = NetworkService()
@@ -13,6 +14,7 @@ class NetworkService {
     func requestTrandingList(completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var companyQuotes = [String: CompanyQuoteModel]()
+        var companyImages = [String: Data]()
 
         let url = BuildUrl(path: API.list, params: ["symbol": "^NDX"])
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -22,42 +24,60 @@ class NetworkService {
                     let constituents = try JSONDecoder().decode(ConstituentsModel.self, from: data)
 
                     var first5 = [String]()
-                    for index in 1 ... 5 {
-                        first5.append(constituents.constituents[index])
-                    }
 
-                    let dispatchGroup = DispatchGroup()
-                    dispatchGroup.enter()
-                    self.requestCompanyProfile(tickers: first5) { result in
+                    let hasImageDispatchGroup = DispatchGroup()
+                    hasImageDispatchGroup.enter()
+                    self.ifHasImage(tickers: constituents.constituents) { result in
                         switch result {
-                        case let .success(profiles):
-                            companyProfiles = profiles
-                        case let .failure(error):
-                            print(error.localizedDescription)
+                        case let .success(imagesDataDitct):
+                            for index in 0 ... 4 {
+                                companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
+                                first5.append(Array(imagesDataDitct)[index].key)
+                            }
+                        case .failure:
+                            break
                         }
-                        dispatchGroup.leave()
+                        hasImageDispatchGroup.leave()
                     }
 
-                    dispatchGroup.enter()
-                    self.requestCompanyQuote(tickers: first5) { result in
-                        switch result {
-                        case let .success(quotes):
-                            companyQuotes = quotes
+                    ///
 
-                        case let .failure(error):
-                            print(error.localizedDescription)
+                    hasImageDispatchGroup.notify(queue: .main) {
+                        let dispatchGroup = DispatchGroup()
+                        dispatchGroup.enter()
+                        self.requestCompanyProfile(tickers: first5) { result in
+                            switch result {
+                            case let .success(profiles):
+                                companyProfiles = profiles
+                            case let .failure(error):
+                                print(error.localizedDescription)
+                            }
+                            dispatchGroup.leave()
                         }
-                        dispatchGroup.leave()
+
+                        dispatchGroup.enter()
+                        self.requestCompanyQuote(tickers: first5) { result in
+                            switch result {
+                            case let .success(quotes):
+                                companyQuotes = quotes
+
+                            case let .failure(error):
+                                print(error.localizedDescription)
+                            }
+                            dispatchGroup.leave()
+                        }
+
+                        dispatchGroup.notify(queue: .main) {
+                            var trendingListFullInfo = [TrendingListFullInfoModel]()
+                            companyProfiles.keys.forEach { key in
+                                trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+                                                                                      companyQuote: companyQuotes[key]!))
+                            }
+                            completion(.success(trendingListFullInfo))
+                        }
                     }
 
-                    dispatchGroup.notify(queue: .main) {
-                        var trendingListFullInfo = [TrendingListFullInfoModel]()
-                        companyProfiles.keys.forEach { key in
-                            trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
-                                                                                  companyQuote: companyQuotes[key]!))
-                        }
-                        completion(.success(trendingListFullInfo))
-                    }
+                    ///
                 } catch {
                     completion(.failure(error))
                 }
@@ -113,6 +133,31 @@ class NetworkService {
         }
         dispatchGroup.notify(queue: .main) {
             completion(.success(companyQuotes))
+        }
+    }
+
+    private func ifHasImage(tickers: [String], completion: @escaping (Result<[String: Data], Error>) -> Void) {
+        var tickerDataDict = [String: Data]()
+//
+        let dispatchGroup = DispatchGroup()
+
+        tickers.forEach { ticker in
+            dispatchGroup.enter()
+            let url = BuildUrl(path: API.logo, params: ["symbol": ticker])
+            URLSession.shared.dataTask(with: url) { data, _, _ in
+
+                guard data != nil else { return }
+
+                if UIImage(data: data!) != nil {
+                    tickerDataDict[ticker] = data
+                }
+
+                dispatchGroup.leave()
+            }.resume()
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            completion(.success(tickerDataDict))
         }
     }
 
