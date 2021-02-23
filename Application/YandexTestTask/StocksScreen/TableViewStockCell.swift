@@ -8,10 +8,19 @@
 import Cartography
 import UIKit
 
-class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableViewDelegate {
+class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Private Properties
 
     let viewModel = StocksViewModel()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+        enableBinding()
+
+        print("requesting")
+        requestData()
+    }
 
     // MARK: - UI Controls
 
@@ -27,7 +36,7 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
     // MARK: - UI Actions
 
     private func setupTableView() {
-        addSubview(tableView)
+        view.addSubview(tableView)
         constrain(tableView) { tableView in
             tableView.left == tableView.superview!.left + 20
             tableView.right == tableView.superview!.right - 20
@@ -40,8 +49,8 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
     // MARK: - Private Methods
 
     private func enableBinding() {
-        viewModel.didUpdateModel = { [weak self] in
-            self?.tableView.reloadData()
+        viewModel.didUpdateModel = {
+            self.tableView.reloadData()
         }
     }
 
@@ -75,15 +84,4 @@ class TableViewStockCell: UICollectionViewCell, UITableViewDataSource, UITableVi
     }
 
     // MARK: - Init
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupTableView()
-        enableBinding()
-        requestData()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

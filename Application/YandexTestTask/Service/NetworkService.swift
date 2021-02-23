@@ -22,7 +22,7 @@ class NetworkService {
             if let data = data {
                 do {
                     let constituents = try JSONDecoder().decode(ConstituentsModel.self, from: data)
-
+                    print(constituents)
                     var first5 = [String]()
 
                     let hasImageDispatchGroup = DispatchGroup()
@@ -30,7 +30,7 @@ class NetworkService {
                     self.ifHasImage(tickers: constituents.constituents) { result in
                         switch result {
                         case let .success(imagesDataDitct):
-                            for index in 0 ... 4 {
+                            for index in 1 ... 8 {
                                 companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
                                 first5.append(Array(imagesDataDitct)[index].key)
                             }
@@ -141,15 +141,15 @@ class NetworkService {
 //
         let dispatchGroup = DispatchGroup()
 
-        tickers.forEach { ticker in
+        for index in 1 ... 15 {
             dispatchGroup.enter()
-            let url = BuildUrl(path: API.logo, params: ["symbol": ticker])
+            let url = BuildUrl(path: API.logo, params: ["symbol": tickers[index]])
             URLSession.shared.dataTask(with: url) { data, _, _ in
 
                 guard data != nil else { return }
 
                 if UIImage(data: data!) != nil {
-                    tickerDataDict[ticker] = data
+                    tickerDataDict[tickers[index]] = data
                 }
 
                 dispatchGroup.leave()
@@ -157,6 +157,7 @@ class NetworkService {
         }
 
         dispatchGroup.notify(queue: .main) {
+            print(tickerDataDict)
             completion(.success(tickerDataDict))
         }
     }

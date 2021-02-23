@@ -17,8 +17,6 @@
 		C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */; };
 		C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */; };
 		C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8225DD5031002F5EB6 /* Constants.swift */; };
-		C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */; };
-		C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */; };
 		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */; };
@@ -30,6 +28,9 @@
 		C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105425E13740006CCA52 /* StocksViewModel.swift */; };
 		C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105825E14506006CCA52 /* CompanyProfileModel.swift */; };
 		C17F105C25E14E16006CCA52 /* CompanyQouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */; };
+		C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */; };
+		C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */; };
+		C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,8 +47,6 @@
 		C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSnappingController.swift; sourceTree = "<group>"; };
 		C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSappingLayout.swift; sourceTree = "<group>"; };
 		C11C6D8225DD5031002F5EB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
-		C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStockCell.swift; sourceTree = "<group>"; };
@@ -59,6 +58,9 @@
 		C17F105425E13740006CCA52 /* StocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewModel.swift; sourceTree = "<group>"; };
 		C17F105825E14506006CCA52 /* CompanyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileModel.swift; sourceTree = "<group>"; };
 		C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyQouteModel.swift; sourceTree = "<group>"; };
+		C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
+		C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarViewController.swift; sourceTree = "<group>"; };
+		C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -188,8 +190,9 @@
 		C17F103225E0EE45006CCA52 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C11C6D8525DE66CE002F5EB6 /* MenuBar.swift */,
-				C11C6D9125DEA8AC002F5EB6 /* MenuBarCell.swift */,
+				C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */,
+				C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */,
+				C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -376,9 +379,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */,
 				C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */,
 				C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */,
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
+				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
 				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
 				C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
@@ -387,11 +392,10 @@
 				C17F105C25E14E16006CCA52 /* CompanyQouteModel.swift in Sources */,
 				C17F104625E12F06006CCA52 /* API.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
-				C11C6D9225DEA8AC002F5EB6 /* MenuBarCell.swift in Sources */,
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
 				C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */,
-				C11C6D8625DE66CE002F5EB6 /* MenuBar.swift in Sources */,
 				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
+				C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
 				C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */,
 				C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */,
