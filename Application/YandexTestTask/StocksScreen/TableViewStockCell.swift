@@ -49,8 +49,9 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - Private Methods
 
     private func enableBinding() {
-        viewModel.didUpdateModel = {
-            self.tableView.reloadData()
+        viewModel.didUpdateModel = { [weak self] in
+            print(self)
+            self?.tableView.reloadData()
         }
     }
 
