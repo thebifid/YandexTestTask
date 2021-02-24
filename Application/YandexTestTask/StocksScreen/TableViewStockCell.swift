@@ -13,6 +13,8 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
 
     let viewModel = StocksViewModel()
 
+    // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -33,6 +35,25 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
         return tableView
     }()
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView(style: .large)
+        ai.color = .green
+        ai.hidesWhenStopped = true
+        return ai
+    }()
+
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshHandler(sender:)), for: .valueChanged)
+        return refreshControl
+    }()
+
+    // MARK: - Selectors
+
+    @objc private func refreshHandler(sender: UIRefreshControl) {
+        requestData()
+    }
+
     // MARK: - UI Actions
 
     private func setupTableView() {
@@ -44,6 +65,14 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
             tableView.bottom == tableView.superview!.bottom
         }
         tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
+
+        tableView.refreshControl = refreshControl
+
+        tableView.addSubview(activityIndicator)
+        constrain(activityIndicator) { activityIndicator in
+            activityIndicator.centerX == activityIndicator.superview!.centerX
+            activityIndicator.centerY == activityIndicator.superview!.centerY / 2
+        }
     }
 
     // MARK: - Private Methods
@@ -55,17 +84,26 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     private func requestData() {
+        if viewModel.trendingListInfo.isEmpty {
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating()
+            }
+        }
         viewModel.requestTrendingList { [weak self] result in
-
             guard let self = self else { return }
             switch result {
             case let .failure(error):
-                let alert = AlertAssist.AlertWithAction(withError: error)
                 DispatchQueue.main.async {
+                    let alert = AlertAssist.AlertWithAction(withError: error)
+                    self.activityIndicator.stopAnimating()
+                    self.refreshControl.endRefreshing()
                     self.present(alert, animated: true, completion: nil)
                 }
             case .success:
-                break
+                DispatchQueue.main.async {
+                    self.refreshControl.endRefreshing()
+                    self.activityIndicator.stopAnimating()
+                }
             }
         }
     }

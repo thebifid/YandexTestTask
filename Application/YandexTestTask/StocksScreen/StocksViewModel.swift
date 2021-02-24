@@ -31,6 +31,7 @@ class StocksViewModel {
 
             case let .success(info):
                 self.trendingListInfo = info
+                completion(.success(()))
             }
         }
     }
