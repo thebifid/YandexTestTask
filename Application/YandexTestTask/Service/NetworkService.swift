@@ -41,14 +41,14 @@ class NetworkService {
 
                     hasImageDispatchGroup.notify(queue: .global(qos: .background)) {
                         let dispatchGroup = DispatchGroup()
+                        var isAnyError: Error?
                         dispatchGroup.enter()
                         self.requestCompanyProfile(tickers: first5) { result in
                             switch result {
                             case let .success(profiles):
                                 companyProfiles = profiles
                             case let .failure(error):
-                                completion(.failure(error))
-                                fatalError("no data")
+                                isAnyError = error
                             }
                             dispatchGroup.leave()
                         }
@@ -60,24 +60,26 @@ class NetworkService {
                             case let .success(quotes):
                                 companyQuotes = quotes
                             case let .failure(error):
-                                completion(.failure(error))
-                                fatalError("no data")
+                                isAnyError = error
                             }
                             dispatchGroup.leave()
                         }
 
                         dispatchGroup.notify(queue: .main) {
                             var trendingListFullInfo = [TrendingListFullInfoModel]()
+
+                            guard isAnyError == nil else {
+                                completion(.failure(isAnyError!))
+                                return
+                            }
+
                             companyProfiles.keys.forEach { key in
-                                if companyQuotes.count == 8, companyProfiles.count == 8 {
-                                    trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
-                                                                                          companyQuote: companyQuotes[key]!,
-                                                                                          companyImageData: companyImages[key]!))
-                                }
+
+                                trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+                                                                                      companyQuote: companyQuotes[key]!,
+                                                                                      companyImageData: companyImages[key]!))
                             }
-                            if trendingListFullInfo.count == 8 {
-                                completion(.success(trendingListFullInfo))
-                            }
+                            completion(.success(trendingListFullInfo))
                         }
                     }
 
@@ -91,8 +93,10 @@ class NetworkService {
     private func requestCompanyProfile(tickers: [String], completion: @escaping (Result<[String: CompanyProfileModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
 
+        var isAnyError: Error?
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
+
             dispatchGroup.enter()
             let url = BuildUrl(path: API.companyProfile, params: ["symbol": ticker])
             URLSession.shared.dataTask(with: url) { data, _, error in
@@ -106,7 +110,7 @@ class NetworkService {
                         let profile = try JSONDecoder().decode(CompanyProfileModel.self, from: data)
                         companyProfiles[ticker] = profile
                     } catch {
-                        completion(.failure(error))
+                        isAnyError = error
                     }
                 }
                 dispatchGroup.leave()
@@ -114,13 +118,18 @@ class NetworkService {
         }
 
         dispatchGroup.notify(queue: .main) {
-            completion(.success(companyProfiles))
+            if isAnyError != nil {
+                completion(.failure(isAnyError!))
+            } else {
+                completion(.success(companyProfiles))
+            }
         }
     }
 
     private func requestCompanyQuote(tickers: [String], completion: @escaping (Result<[String: CompanyQuoteModel], Error>) -> Void) {
         var companyQuotes = [String: CompanyQuoteModel]()
 
+        var isAnyError: Error?
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
             dispatchGroup.enter()
@@ -136,14 +145,18 @@ class NetworkService {
                         let quote = try JSONDecoder().decode(CompanyQuoteModel.self, from: data)
                         companyQuotes[ticker] = quote
                     } catch {
-                        completion(.failure(error))
+                        isAnyError = error
                     }
                     dispatchGroup.leave()
                 }
             }.resume()
         }
         dispatchGroup.notify(queue: .main) {
-            completion(.success(companyQuotes))
+            if isAnyError != nil {
+                completion(.failure(isAnyError!))
+            } else {
+                completion(.success(companyQuotes))
+            }
         }
     }
 

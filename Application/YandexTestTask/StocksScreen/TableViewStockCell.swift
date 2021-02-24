@@ -60,7 +60,10 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
             guard let self = self else { return }
             switch result {
             case let .failure(error):
-                print(error.localizedDescription)
+                let alert = AlertAssist.AlertWithAction(withError: error)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
             case .success:
                 break
             }
