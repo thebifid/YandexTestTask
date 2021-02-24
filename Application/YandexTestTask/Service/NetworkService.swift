@@ -33,13 +33,13 @@ class NetworkService {
                                 companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
                                 first5.append(Array(imagesDataDitct)[index].key)
                             }
-                        case .failure:
-                            break
+                        case let .failure(error):
+                            completion(.failure(error))
                         }
                         hasImageDispatchGroup.leave()
                     }
 
-                    hasImageDispatchGroup.notify(queue: .main) {
+                    hasImageDispatchGroup.notify(queue: .global(qos: .background)) {
                         let dispatchGroup = DispatchGroup()
                         dispatchGroup.enter()
                         self.requestCompanyProfile(tickers: first5) { result in
@@ -48,18 +48,20 @@ class NetworkService {
                                 companyProfiles = profiles
                             case let .failure(error):
                                 completion(.failure(error))
+                                fatalError("no data")
                             }
                             dispatchGroup.leave()
                         }
 
                         dispatchGroup.enter()
                         self.requestCompanyQuote(tickers: first5) { result in
+
                             switch result {
                             case let .success(quotes):
                                 companyQuotes = quotes
-
                             case let .failure(error):
                                 completion(.failure(error))
+                                fatalError("no data")
                             }
                             dispatchGroup.leave()
                         }
@@ -67,12 +69,15 @@ class NetworkService {
                         dispatchGroup.notify(queue: .main) {
                             var trendingListFullInfo = [TrendingListFullInfoModel]()
                             companyProfiles.keys.forEach { key in
-                                trendingListFullInfo.append(TrendingListFullInfoModel(
-                                                                companyProfile: companyProfiles[key]!,
-                                                                                      companyQuote: companyQuotes[key]!,
-                                                                                      companyImageData: companyImages[key]!))
+                                if companyQuotes.count == 8, companyProfiles.count == 8 {
+                                    trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+                                                                                          companyQuote: companyQuotes[key]!,
+                                                                                          companyImageData: companyImages[key]!))
+                                }
                             }
-                            completion(.success(trendingListFullInfo))
+                            if trendingListFullInfo.count == 8 {
+                                completion(.success(trendingListFullInfo))
+                            }
                         }
                     }
 
@@ -91,16 +96,20 @@ class NetworkService {
             dispatchGroup.enter()
             let url = BuildUrl(path: API.companyProfile, params: ["symbol": ticker])
             URLSession.shared.dataTask(with: url) { data, _, error in
-                guard error == nil else { return }
+                guard error == nil else {
+                    completion(.failure(error!))
+                    dispatchGroup.leave()
+                    return
+                }
                 if let data = data {
                     do {
                         let profile = try JSONDecoder().decode(CompanyProfileModel.self, from: data)
                         companyProfiles[ticker] = profile
-                        dispatchGroup.leave()
                     } catch {
                         completion(.failure(error))
                     }
                 }
+                dispatchGroup.leave()
             }.resume()
         }
 
@@ -117,15 +126,19 @@ class NetworkService {
             dispatchGroup.enter()
             let url = BuildUrl(path: API.companyQuote, params: ["symbol": ticker])
             URLSession.shared.dataTask(with: url) { data, _, error in
-                guard error == nil else { return }
+                guard error == nil else {
+                    completion(.failure(error!))
+                    dispatchGroup.leave()
+                    return
+                }
                 if let data = data {
                     do {
                         let quote = try JSONDecoder().decode(CompanyQuoteModel.self, from: data)
                         companyQuotes[ticker] = quote
-                        dispatchGroup.leave()
                     } catch {
                         completion(.failure(error))
                     }
+                    dispatchGroup.leave()
                 }
             }.resume()
         }

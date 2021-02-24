@@ -31,6 +31,7 @@
 		C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */; };
 		C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */; };
 		C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */; };
+		C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 		C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarViewController.swift; sourceTree = "<group>"; };
 		C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
+		C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAssist.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -174,6 +176,7 @@
 			children = (
 				C11C6D8225DD5031002F5EB6 /* Constants.swift */,
 				C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */,
+				C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */,
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
+				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
 				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
 				C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,

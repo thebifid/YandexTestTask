@@ -55,11 +55,12 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     private func requestData() {
-        viewModel.requestTrendingList { result in
+        viewModel.requestTrendingList { [weak self] result in
+
+            guard let self = self else { return }
             switch result {
             case let .failure(error):
                 print(error.localizedDescription)
-
             case .success:
                 break
             }
