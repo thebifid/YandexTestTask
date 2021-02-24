@@ -32,6 +32,7 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
+        tableView.allowsSelection = false
         return tableView
     }()
 

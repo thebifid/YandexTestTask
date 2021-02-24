@@ -107,7 +107,6 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentId", for: indexPath) as! MenuContentCell
             cell.boss = self
             cell.setupCell(withController: dataSource?.menuBar(self, viewControllerForPageAt: indexPath.item) ?? UIViewController())
-
             return cell
         }
     }

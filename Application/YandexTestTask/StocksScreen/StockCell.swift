@@ -37,9 +37,10 @@ class StockCell: UITableViewCell {
         return label
     }()
 
-    private let addToFavButton: UIButton = {
+    private lazy var addToFavButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("*", for: .normal)
+        button.setTitle("Fav", for: .normal)
+        button.addTarget(self, action: #selector(buttonTappedHandler(sender:)), for: .touchUpInside)
         return button
     }()
 
@@ -57,6 +58,12 @@ class StockCell: UITableViewCell {
         label.text = "+0.12 (1,15%)"
         return label
     }()
+
+    // MARK: - Selectors
+
+    @objc private func buttonTappedHandler(sender: UIButton) {
+        print("self.table")
+    }
 
     // MARK: - UI Actions
 
@@ -101,7 +108,7 @@ class StockCell: UITableViewCell {
 
         constrain(addToFavButton) { addToFavButton in
             addToFavButton.height == 22
-            addToFavButton.width == 22
+            addToFavButton.width == 40
         }
     }
 
@@ -126,6 +133,7 @@ class StockCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.isUserInteractionEnabled = false
         setupUI()
     }
 
