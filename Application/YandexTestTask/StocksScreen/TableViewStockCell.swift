@@ -50,7 +50,6 @@ class TableViewStockCell: UIViewController, UITableViewDataSource, UITableViewDe
 
     private func enableBinding() {
         viewModel.didUpdateModel = { [weak self] in
-            print(self)
             self?.tableView.reloadData()
         }
     }

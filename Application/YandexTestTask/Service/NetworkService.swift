@@ -22,7 +22,6 @@ class NetworkService {
             if let data = data {
                 do {
                     let constituents = try JSONDecoder().decode(ConstituentsModel.self, from: data)
-                    print(constituents)
                     var first5 = [String]()
 
                     let hasImageDispatchGroup = DispatchGroup()
@@ -50,7 +49,7 @@ class NetworkService {
                             case let .success(profiles):
                                 companyProfiles = profiles
                             case let .failure(error):
-                                print(error.localizedDescription)
+                                completion(.failure(error))
                             }
                             dispatchGroup.leave()
                         }
@@ -62,7 +61,7 @@ class NetworkService {
                                 companyQuotes = quotes
 
                             case let .failure(error):
-                                print(error.localizedDescription)
+                                completion(.failure(error))
                             }
                             dispatchGroup.leave()
                         }
@@ -71,7 +70,8 @@ class NetworkService {
                             var trendingListFullInfo = [TrendingListFullInfoModel]()
                             companyProfiles.keys.forEach { key in
                                 trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
-                                                                                      companyQuote: companyQuotes[key]!, companyImageData: companyImages[key]!))
+                                                                                      companyQuote: companyQuotes[key]!,
+                                                                                      companyImageData: companyImages[key]!))
                             }
                             completion(.success(trendingListFullInfo))
                         }
@@ -100,7 +100,7 @@ class NetworkService {
                         companyProfiles[ticker] = profile
                         dispatchGroup.leave()
                     } catch {
-                        print(error.localizedDescription)
+                        completion(.failure(error))
                     }
                 }
             }.resume()
@@ -126,7 +126,7 @@ class NetworkService {
                         companyQuotes[ticker] = quote
                         dispatchGroup.leave()
                     } catch {
-                        print(error.localizedDescription)
+                        completion(.failure(error))
                     }
                 }
             }.resume()
@@ -157,7 +157,6 @@ class NetworkService {
         }
 
         dispatchGroup.notify(queue: .main) {
-            print(tickerDataDict)
             completion(.success(tickerDataDict))
         }
     }

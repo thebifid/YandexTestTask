@@ -58,6 +58,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         cv.delegate = self
         cv.tag = 1
         cv.isPagingEnabled = true
+        cv.allowsSelection = false
         return cv
     }()
 
@@ -111,7 +112,8 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView.tag == 1 {
             return .init(width: contentCollectionView.frame.width, height: contentCollectionView.frame.height)
         }

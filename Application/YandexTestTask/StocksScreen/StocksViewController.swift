@@ -9,21 +9,9 @@ import Cartography
 import UIKit
 
 class StocksViewController: MenuBarViewController, MenuBarDataSource {
-    private let tabs = ["Stocks", "Favourite"]
-
-    func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {
-        tabs[index]
-    }
-
-    func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
-        return TableViewStockCell()
-    }
-
-    func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
-        tabs.count
-    }
-
     // MARK: - Private Properties
+
+    private let tabs = ["Stocks", "Favourite"]
 
     // MARK: - UI Controls
 
@@ -50,5 +38,17 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
         definesPresentationContext = true
     }
 
-    // MARK: - Init
+    // MARK: - MenuBarDataSource
+
+    func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {
+        tabs[index]
+    }
+
+    func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
+        return TableViewStockCell()
+    }
+
+    func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
+        tabs.count
+    }
 }
