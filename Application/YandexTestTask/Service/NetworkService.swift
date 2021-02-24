@@ -39,8 +39,6 @@ class NetworkService {
                         hasImageDispatchGroup.leave()
                     }
 
-                    ///
-
                     hasImageDispatchGroup.notify(queue: .main) {
                         let dispatchGroup = DispatchGroup()
                         dispatchGroup.enter()
@@ -69,7 +67,8 @@ class NetworkService {
                         dispatchGroup.notify(queue: .main) {
                             var trendingListFullInfo = [TrendingListFullInfoModel]()
                             companyProfiles.keys.forEach { key in
-                                trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+                                trendingListFullInfo.append(TrendingListFullInfoModel(
+                                                                companyProfile: companyProfiles[key]!,
                                                                                       companyQuote: companyQuotes[key]!,
                                                                                       companyImageData: companyImages[key]!))
                             }
@@ -77,7 +76,6 @@ class NetworkService {
                         }
                     }
 
-                    ///
                 } catch {
                     completion(.failure(error))
                 }
@@ -138,7 +136,6 @@ class NetworkService {
 
     private func ifHasImage(tickers: [String], completion: @escaping (Result<[String: Data], Error>) -> Void) {
         var tickerDataDict = [String: Data]()
-//
         let dispatchGroup = DispatchGroup()
 
         for index in 1 ... 15 {
