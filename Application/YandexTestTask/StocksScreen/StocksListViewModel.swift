@@ -52,9 +52,9 @@ class StocksListViewModel {
     func saveToFav(index: Int) {
         if CoreDataManager.sharedInstance.checkIfExist(byTicker: trendingListInfo[index].ticker) == false {
             favListInfo.append(trendingListInfo[index])
-            CoreDataManager.sharedInstance.saveToFav(stockInfo: trendingListInfo[index])
+            CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: trendingListInfo[index])
         } else {
-            let stockToRemove = trendingListInfo[index]
+            CoreDataManager.sharedInstance.removeFromCoreData(byTicker: trendingListInfo[index].ticker)
         }
     }
 }

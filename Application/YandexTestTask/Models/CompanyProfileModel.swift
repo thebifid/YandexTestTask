@@ -20,4 +20,19 @@ struct CompanyProfileModel: Decodable {
     let shareOutstanding: Float
     let ticker: String
     let weburl: String
+
+    init(stock: Stock) {
+        country = stock.country ?? ""
+        currency = stock.currency ?? ""
+        exchange = stock.exchange ?? ""
+        finnhubIndustry = stock.finnhubIndustry ?? ""
+        ipo = stock.ipo ?? ""
+        logo = stock.logo ?? ""
+        marketCapitalization = stock.marketCapitalization
+        name = stock.name ?? ""
+        phone = stock.phone ?? ""
+        shareOutstanding = stock.shareOutstanding
+        ticker = stock.ticker ?? ""
+        weburl = stock.weburl ?? ""
+    }
 }

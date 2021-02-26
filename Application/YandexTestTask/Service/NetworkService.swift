@@ -29,7 +29,7 @@ class NetworkService {
                     self.ifHasImage(tickers: constituents.constituents) { result in
                         switch result {
                         case let .success(imagesDataDitct):
-                            for index in 1 ... 8 {
+                            for index in first5.count ... 7 {
                                 companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
                                 first5.append(Array(imagesDataDitct)[index].key)
                             }

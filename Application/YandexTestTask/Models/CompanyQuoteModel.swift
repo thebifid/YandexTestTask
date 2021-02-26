@@ -14,4 +14,13 @@ struct CompanyQuoteModel: Decodable {
     let o: Float
     let pc: Float
     let t: Float
+
+    init(stock: Stock) {
+        c = stock.c
+        h = stock.h
+        l = stock.l
+        o = stock.o
+        pc = stock.pc
+        t = stock.t
+    }
 }

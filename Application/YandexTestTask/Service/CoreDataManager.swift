@@ -30,6 +30,24 @@ class CoreDataManager {
         return false
     }
 
+    func fetchObject(byTicker ticker: String) -> Stock? {
+        let request = NSFetchRequest<Stock>(entityName: "Stock")
+        let predicate = NSPredicate(format: "ticker == %@", ticker)
+        request.predicate = predicate
+        request.fetchLimit = 1
+
+        do {
+            let item = try context.fetch(request)
+            if let info = item.first {
+                return info
+            }
+        } catch {
+            print(error)
+        }
+
+        return nil
+    }
+
     func fetchFavs() -> [TrendingListFullInfoModel] {
         let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
         let items = try? context.fetch(fetchRequest)
@@ -37,9 +55,12 @@ class CoreDataManager {
         items?.forEach { result.append(TrendingListFullInfoModel(stock: $0)) }
         return result
     }
-    
-    func removeFromCoreData(stockInfo: TrendingListFullInfoModel) {
-        context.delete(<#T##object: NSManagedObject##NSManagedObject#>)
+
+    func removeFromCoreData(byTicker ticker: String) {
+        if let stockToDelete = fetchObject(byTicker: ticker) {
+            context.delete(stockToDelete)
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        }
     }
 
     func saveToFavCoreData(stockInfo: TrendingListFullInfoModel) {
