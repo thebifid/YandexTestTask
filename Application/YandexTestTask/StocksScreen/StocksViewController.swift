@@ -45,7 +45,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
     }
 
     func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
-        return TableViewStockCell()
+        return StocksListViewController()
     }
 
     func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {

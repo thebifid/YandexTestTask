@@ -9,7 +9,13 @@ import Cartography
 import SDWebImage
 import UIKit
 
+protocol StockCellDelegate: AnyObject {
+    func favButtonTapped(cell: StockCell)
+}
+
 class StockCell: UITableViewCell {
+    weak var delegate: StockCellDelegate?
+
     // MARK: - Private Properties
 
     // MARK: - UI Controls
@@ -62,7 +68,7 @@ class StockCell: UITableViewCell {
     // MARK: - Selectors
 
     @objc private func buttonTappedHandler(sender: UIButton) {
-        print("self.table")
+        delegate?.favButtonTapped(cell: self)
     }
 
     // MARK: - UI Actions

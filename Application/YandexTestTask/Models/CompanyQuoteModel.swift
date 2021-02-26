@@ -1,5 +1,5 @@
 //
-//  CompanyQouteModel.swift
+//  CompanyQuoteModel.swift
 //  YandexTestTask
 //
 //  Created by Vasiliy Matveev on 20.02.2021.

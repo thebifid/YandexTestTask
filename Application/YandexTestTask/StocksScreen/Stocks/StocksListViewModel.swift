@@ -7,7 +7,7 @@
 
 import Foundation
 
-class StocksViewModel {
+class StocksListViewModel {
     // MARK: - Public Properties
 
     var trendingListInfo: [TrendingListFullInfoModel] = [] {

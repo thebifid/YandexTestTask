@@ -19,19 +19,21 @@
 		C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8225DD5031002F5EB6 /* Constants.swift */; };
 		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
-		C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */; };
+		C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* StocksListViewController.swift */; };
 		C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103625E0F7FC006CCA52 /* StockCell.swift */; };
 		C17F103A25E0FF6C006CCA52 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C17F103925E0FF6C006CCA52 /* Colors.xcassets */; };
 		C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103D25E12242006CCA52 /* NetworkService.swift */; };
 		C17F104625E12F06006CCA52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F104525E12F06006CCA52 /* API.swift */; };
 		C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105025E132C7006CCA52 /* ConstituentsModel.swift */; };
-		C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105425E13740006CCA52 /* StocksViewModel.swift */; };
+		C17F105525E13740006CCA52 /* StocksListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105425E13740006CCA52 /* StocksListViewModel.swift */; };
 		C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105825E14506006CCA52 /* CompanyProfileModel.swift */; };
-		C17F105C25E14E16006CCA52 /* CompanyQouteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */; };
+		C17F105C25E14E16006CCA52 /* CompanyQuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105B25E14E16006CCA52 /* CompanyQuoteModel.swift */; };
 		C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */; };
 		C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */; };
 		C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */; };
 		C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */; };
+		C1EC470F25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1EC470D25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld */; };
+		C1EC471E25E8DD4B004B99E7 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC471D25E8DD4B004B99E7 /* BaseTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,19 +52,21 @@
 		C11C6D8225DD5031002F5EB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
-		C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewStockCell.swift; sourceTree = "<group>"; };
+		C17F103325E0EE88006CCA52 /* StocksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewController.swift; sourceTree = "<group>"; };
 		C17F103625E0F7FC006CCA52 /* StockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCell.swift; sourceTree = "<group>"; };
 		C17F103925E0FF6C006CCA52 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		C17F103D25E12242006CCA52 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		C17F104525E12F06006CCA52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C17F105025E132C7006CCA52 /* ConstituentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstituentsModel.swift; sourceTree = "<group>"; };
-		C17F105425E13740006CCA52 /* StocksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewModel.swift; sourceTree = "<group>"; };
+		C17F105425E13740006CCA52 /* StocksListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewModel.swift; sourceTree = "<group>"; };
 		C17F105825E14506006CCA52 /* CompanyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileModel.swift; sourceTree = "<group>"; };
-		C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyQouteModel.swift; sourceTree = "<group>"; };
+		C17F105B25E14E16006CCA52 /* CompanyQuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyQuoteModel.swift; sourceTree = "<group>"; };
 		C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 		C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarViewController.swift; sourceTree = "<group>"; };
 		C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
 		C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAssist.swift; sourceTree = "<group>"; };
+		C1EC470E25E8CF80004B99E7 /* YandexTestTask.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YandexTestTask.xcdatamodel; sourceTree = "<group>"; };
+		C1EC471D25E8DD4B004B99E7 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -120,7 +124,7 @@
 				C17F103C25E12228006CCA52 /* Service */,
 				C11C6D7825DD3476002F5EB6 /* Models */,
 				C11C6D7A25DD451E002F5EB6 /* Helpers */,
-				C17F103225E0EE45006CCA52 /* Views */,
+				C17F103225E0EE45006CCA52 /* MenuSwipeBar */,
 				C11C6D7125DD3308002F5EB6 /* StocksScreen */,
 				C11C6D6A25DD2CCE002F5EB6 /* Resources */,
 				C11C6D6725DD2B8D002F5EB6 /* Commons */,
@@ -145,6 +149,7 @@
 			children = (
 				C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */,
 				C17F103925E0FF6C006CCA52 /* Colors.xcassets */,
+				C1EC470D25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -152,10 +157,11 @@
 		C11C6D7125DD3308002F5EB6 /* StocksScreen */ = {
 			isa = PBXGroup;
 			children = (
-				C17F105425E13740006CCA52 /* StocksViewModel.swift */,
-				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
-				C17F103325E0EE88006CCA52 /* TableViewStockCell.swift */,
 				C17F103625E0F7FC006CCA52 /* StockCell.swift */,
+				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
+				C1EC471225E8DA94004B99E7 /* Stocks */,
+				C1EC471425E8DAA6004B99E7 /* Favourite */,
+				C1EC471D25E8DD4B004B99E7 /* BaseTableViewController.swift */,
 			);
 			path = StocksScreen;
 			sourceTree = "<group>";
@@ -165,7 +171,7 @@
 			children = (
 				C17F105025E132C7006CCA52 /* ConstituentsModel.swift */,
 				C17F105825E14506006CCA52 /* CompanyProfileModel.swift */,
-				C17F105B25E14E16006CCA52 /* CompanyQouteModel.swift */,
+				C17F105B25E14E16006CCA52 /* CompanyQuoteModel.swift */,
 				C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */,
 			);
 			path = Models;
@@ -190,14 +196,14 @@
 			path = Trash;
 			sourceTree = "<group>";
 		};
-		C17F103225E0EE45006CCA52 /* Views */ = {
+		C17F103225E0EE45006CCA52 /* MenuSwipeBar */ = {
 			isa = PBXGroup;
 			children = (
 				C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */,
 				C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */,
 				C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */,
 			);
-			path = Views;
+			path = MenuSwipeBar;
 			sourceTree = "<group>";
 		};
 		C17F103C25E12228006CCA52 /* Service */ = {
@@ -207,6 +213,22 @@
 				C17F103D25E12242006CCA52 /* NetworkService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		C1EC471225E8DA94004B99E7 /* Stocks */ = {
+			isa = PBXGroup;
+			children = (
+				C17F105425E13740006CCA52 /* StocksListViewModel.swift */,
+				C17F103325E0EE88006CCA52 /* StocksListViewController.swift */,
+			);
+			path = Stocks;
+			sourceTree = "<group>";
+		};
+		C1EC471425E8DAA6004B99E7 /* Favourite */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favourite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,11 +411,12 @@
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
 				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
-				C17F105525E13740006CCA52 /* StocksViewModel.swift in Sources */,
+				C17F105525E13740006CCA52 /* StocksListViewModel.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,
-				C17F105C25E14E16006CCA52 /* CompanyQouteModel.swift in Sources */,
+				C1EC471E25E8DD4B004B99E7 /* BaseTableViewController.swift in Sources */,
+				C17F105C25E14E16006CCA52 /* CompanyQuoteModel.swift in Sources */,
 				C17F104625E12F06006CCA52 /* API.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
@@ -401,8 +424,9 @@
 				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
 				C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
+				C1EC470F25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld in Sources */,
 				C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */,
-				C17F103425E0EE88006CCA52 /* TableViewStockCell.swift in Sources */,
+				C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +611,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C1EC470D25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C1EC470E25E8CF80004B99E7 /* YandexTestTask.xcdatamodel */,
+			);
+			currentVersion = C1EC470E25E8CF80004B99E7 /* YandexTestTask.xcdatamodel */;
+			path = YandexTestTask.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C11C6CDC25DCFB85002F5EB6 /* Project object */;
 }
