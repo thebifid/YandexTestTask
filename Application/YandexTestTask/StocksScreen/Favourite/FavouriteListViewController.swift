@@ -1,5 +1,5 @@
 //
-//  BaseTableViewController.swift
+//  FavouriteListViewController.swift
 //  YandexTestTask
 //
 //  Created by Vasiliy Matveev on 26.02.2021.
@@ -8,12 +8,22 @@
 import Cartography
 import UIKit
 
-class BaseTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
+class FavouriteListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
+    // MARK: - Private Properties
+
+    private let viewModel = FavouriteViewModel()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        viewModel.fetchData()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("kek")
     }
 
     // MARK: - UI Controls
@@ -43,7 +53,9 @@ class BaseTableViewController: UIViewController, UITableViewDataSource, UITableV
 
     // MARK: - Selectors
 
-    @objc private func refreshHandler(sender: UIRefreshControl) {}
+    @objc private func refreshHandler(sender: UIRefreshControl) {
+        refreshControl.endRefreshing()
+    }
 
     // MARK: - UI Actions
 
@@ -66,21 +78,33 @@ class BaseTableViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
 
-    // MARK: StockCellDelegate
+    // MARK: - Private Methods
 
-    func favButtonTapped(cell: StockCell) {}
+    private func enableBinding() {
+        viewModel.didUpdateModel = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
 
     // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return viewModel.favListInfo.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! StockCell
+        let color: UIColor = indexPath.row % 2 == 0 ? R.color.customLightGray()! : .white
+        cell.setupCell(color: color, companyInfo: viewModel.favListInfo[indexPath.row])
+        cell.delegate = self
+        return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+
+    // MARK: - StockCellDelegate
+
+    func favButtonTapped(cell: StockCell) {}
 }

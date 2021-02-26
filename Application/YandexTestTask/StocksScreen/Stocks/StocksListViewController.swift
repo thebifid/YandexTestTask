@@ -13,9 +13,6 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
 
     let viewModel = StocksListViewModel()
 
-    // reference to managed object context
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -134,11 +131,8 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
 
     func favButtonTapped(cell: StockCell) {
         let indexPath = tableView.indexPath(for: cell)
-
-        let newStock = Stock(context: context)
-        newStock.ticker = viewModel.trendingListInfo[indexPath!.row].ticker
-        newStock.name = viewModel.trendingListInfo[indexPath!.row].name
-        newStock.c = viewModel.trendingListInfo[indexPath!.row].c
+        let index = indexPath!.row
+        viewModel.saveToFav(index: index)
     }
 
     // MARK: - Init

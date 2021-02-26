@@ -17,6 +17,8 @@
 		C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */; };
 		C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */; };
 		C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8225DD5031002F5EB6 /* Constants.swift */; };
+		C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */; };
+		C11CCBC425E8E35000394969 /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11CCBC325E8E35000394969 /* FavouriteViewModel.swift */; };
 		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* StocksListViewController.swift */; };
@@ -33,7 +35,6 @@
 		C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */; };
 		C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */; };
 		C1EC470F25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1EC470D25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld */; };
-		C1EC471E25E8DD4B004B99E7 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC471D25E8DD4B004B99E7 /* BaseTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,8 @@
 		C11C6D7B25DD4529002F5EB6 /* HorizontalSnappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSnappingController.swift; sourceTree = "<group>"; };
 		C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSappingLayout.swift; sourceTree = "<group>"; };
 		C11C6D8225DD5031002F5EB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewController.swift; sourceTree = "<group>"; };
+		C11CCBC325E8E35000394969 /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
 		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* StocksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewController.swift; sourceTree = "<group>"; };
@@ -66,7 +69,6 @@
 		C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
 		C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAssist.swift; sourceTree = "<group>"; };
 		C1EC470E25E8CF80004B99E7 /* YandexTestTask.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = YandexTestTask.xcdatamodel; sourceTree = "<group>"; };
-		C1EC471D25E8DD4B004B99E7 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YandexTestTask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -157,11 +159,10 @@
 		C11C6D7125DD3308002F5EB6 /* StocksScreen */ = {
 			isa = PBXGroup;
 			children = (
-				C17F103625E0F7FC006CCA52 /* StockCell.swift */,
 				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
+				C17F103625E0F7FC006CCA52 /* StockCell.swift */,
 				C1EC471225E8DA94004B99E7 /* Stocks */,
 				C1EC471425E8DAA6004B99E7 /* Favourite */,
-				C1EC471D25E8DD4B004B99E7 /* BaseTableViewController.swift */,
 			);
 			path = StocksScreen;
 			sourceTree = "<group>";
@@ -227,6 +228,8 @@
 		C1EC471425E8DAA6004B99E7 /* Favourite */ = {
 			isa = PBXGroup;
 			children = (
+				C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */,
+				C11CCBC325E8E35000394969 /* FavouriteViewModel.swift */,
 			);
 			path = Favourite;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */,
 				C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */,
 				C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */,
+				C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */,
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
@@ -415,7 +419,6 @@
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,
-				C1EC471E25E8DD4B004B99E7 /* BaseTableViewController.swift in Sources */,
 				C17F105C25E14E16006CCA52 /* CompanyQuoteModel.swift in Sources */,
 				C17F104625E12F06006CCA52 /* API.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
@@ -424,6 +427,7 @@
 				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
 				C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
+				C11CCBC425E8E35000394969 /* FavouriteViewModel.swift in Sources */,
 				C1EC470F25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld in Sources */,
 				C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */,
 				C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */,

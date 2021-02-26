@@ -12,6 +12,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
     // MARK: - Private Properties
 
     private let tabs = ["Stocks", "Favourite"]
+    private let controllers = [StocksListViewController(), FavouriteListViewController()]
 
     // MARK: - UI Controls
 
@@ -45,7 +46,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
     }
 
     func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
-        return StocksListViewController()
+        return controllers[index]
     }
 
     func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
