@@ -1,17 +1,17 @@
 //
-//  StocksListViewController.swift
+//  FavouriteListViewController.swift
 //  YandexTestTask
 //
-//  Created by Vasiliy Matveev on 20.02.2021.
+//  Created by Vasiliy Matveev on 26.02.2021.
 //
 
 import Cartography
 import UIKit
 
-class StocksListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
+class FavouriteListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
     // MARK: - Private Properties
 
-    let viewModel = StocksListViewModel()
+    private let viewModel: StocksListViewModel!
 
     // MARK: - LifeCycle
 
@@ -19,9 +19,11 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
         super.viewDidLoad()
         setupTableView()
         enableBinding()
+        viewModel.fetchData()
+    }
 
-        print("requesting")
-        requestData()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     // MARK: - UI Controls
@@ -52,7 +54,7 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - Selectors
 
     @objc private func refreshHandler(sender: UIRefreshControl) {
-        requestData()
+        refreshControl.endRefreshing()
     }
 
     // MARK: - UI Actions
@@ -79,46 +81,21 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - Private Methods
 
     private func enableBinding() {
-        viewModel.didUpdateModel = { [weak self] in
+        viewModel.didUpdateFavs = { [weak self] in
             self?.tableView.reloadData()
-        }
-    }
-
-    private func requestData() {
-        if viewModel.trendingListInfo.isEmpty {
-            DispatchQueue.main.async {
-                self.activityIndicator.startAnimating()
-            }
-        }
-        viewModel.requestTrendingList { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .failure(error):
-                DispatchQueue.main.async {
-                    let alert = AlertAssist.AlertWithAction(withError: error)
-                    self.activityIndicator.stopAnimating()
-                    self.refreshControl.endRefreshing()
-                    self.present(alert, animated: true, completion: nil)
-                }
-            case .success:
-                DispatchQueue.main.async {
-                    self.refreshControl.endRefreshing()
-                    self.activityIndicator.stopAnimating()
-                }
-            }
         }
     }
 
     // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.trendingListInfo.count
+        return viewModel.favListInfo.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! StockCell
         let color: UIColor = indexPath.row % 2 == 0 ? R.color.customLightGray()! : .white
-        cell.setupCell(color: color, companyInfo: viewModel.trendingListInfo[indexPath.row])
+        cell.setupCell(color: color, companyInfo: viewModel.favListInfo[indexPath.row])
         cell.delegate = self
         return cell
     }
@@ -129,11 +106,14 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
 
     // MARK: - StockCellDelegate
 
-    func favButtonTapped(cell: StockCell) {
-        let indexPath = tableView.indexPath(for: cell)
-        let index = indexPath!.row
-        viewModel.saveToFav(index: index)
+    func favButtonTapped(cell: StockCell) {}
+
+    init(viewModel: StocksListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
 
-    // MARK: - Init
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

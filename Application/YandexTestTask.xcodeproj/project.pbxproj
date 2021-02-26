@@ -18,7 +18,7 @@
 		C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */; };
 		C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8225DD5031002F5EB6 /* Constants.swift */; };
 		C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */; };
-		C11CCBC425E8E35000394969 /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11CCBC325E8E35000394969 /* FavouriteViewModel.swift */; };
+		C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */; };
 		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* StocksListViewController.swift */; };
@@ -52,7 +52,7 @@
 		C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSappingLayout.swift; sourceTree = "<group>"; };
 		C11C6D8225DD5031002F5EB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewController.swift; sourceTree = "<group>"; };
-		C11CCBC325E8E35000394969 /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
+		C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* StocksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +161,9 @@
 			children = (
 				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
 				C17F103625E0F7FC006CCA52 /* StockCell.swift */,
+				C17F105425E13740006CCA52 /* StocksListViewModel.swift */,
+				C17F103325E0EE88006CCA52 /* StocksListViewController.swift */,
+				C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */,
 				C1EC471225E8DA94004B99E7 /* Stocks */,
 				C1EC471425E8DAA6004B99E7 /* Favourite */,
 			);
@@ -212,6 +215,7 @@
 			children = (
 				C17F104525E12F06006CCA52 /* API.swift */,
 				C17F103D25E12242006CCA52 /* NetworkService.swift */,
+				C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -219,8 +223,6 @@
 		C1EC471225E8DA94004B99E7 /* Stocks */ = {
 			isa = PBXGroup;
 			children = (
-				C17F105425E13740006CCA52 /* StocksListViewModel.swift */,
-				C17F103325E0EE88006CCA52 /* StocksListViewController.swift */,
 			);
 			path = Stocks;
 			sourceTree = "<group>";
@@ -228,8 +230,6 @@
 		C1EC471425E8DAA6004B99E7 /* Favourite */ = {
 			isa = PBXGroup;
 			children = (
-				C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */,
-				C11CCBC325E8E35000394969 /* FavouriteViewModel.swift */,
 			);
 			path = Favourite;
 			sourceTree = "<group>";
@@ -413,6 +413,7 @@
 				C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */,
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
+				C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
 				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
 				C17F105525E13740006CCA52 /* StocksListViewModel.swift in Sources */,
@@ -427,7 +428,6 @@
 				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
 				C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
-				C11CCBC425E8E35000394969 /* FavouriteViewModel.swift in Sources */,
 				C1EC470F25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld in Sources */,
 				C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */,
 				C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */,

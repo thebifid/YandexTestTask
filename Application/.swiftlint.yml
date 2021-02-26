@@ -1,6 +1,7 @@
 # Use `swiftlint autocorrect` for the first swiftlint run to remove simple warnings/errors
 
 disabled_rules:
+  - empty_count # prefer .isEmpty over .count > 0
 #  - vertical_whitespace # Should be enabled on new projects. BUT! Can cause a lot of warning on old projects with legacy code
 #  - trailing_whitespace # Should be enabled on new projects. BUT! Can cause a lot of warnings too. Can reduce file size. You can set it to be automatically managed in Xcode -> Preferences -> Text editing -> [v] Automatically trim trailing whitespace
 
@@ -12,7 +13,6 @@ opt_in_rules:
   - redundant_nil_coalescing
   - closure_spacing
   - operator_usage_whitespace
-  - empty_count # prefer .isEmpty over .count > 0
   - first_where # .first(where:) over .filter().first
   - contains_over_first_not_nil # .contains > .first(where:) != nil
   - array_init # Array() is optimized. arr.map({ $0 }) is not

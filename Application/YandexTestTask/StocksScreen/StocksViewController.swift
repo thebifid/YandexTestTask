@@ -11,8 +11,10 @@ import UIKit
 class StocksViewController: MenuBarViewController, MenuBarDataSource {
     // MARK: - Private Properties
 
+    private let viewModel = StocksListViewModel()
+
     private let tabs = ["Stocks", "Favourite"]
-    private let controllers = [StocksListViewController(), FavouriteListViewController()]
+    private lazy var controllers = [StocksListViewController(viewModel: viewModel), FavouriteListViewController(viewModel: viewModel)]
 
     // MARK: - UI Controls
 
