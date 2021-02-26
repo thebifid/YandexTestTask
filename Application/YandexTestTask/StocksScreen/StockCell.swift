@@ -6,7 +6,6 @@
 //
 
 import Cartography
-import SDWebImage
 import UIKit
 
 protocol StockCellDelegate: AnyObject {
