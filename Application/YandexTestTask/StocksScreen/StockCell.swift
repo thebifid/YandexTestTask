@@ -44,7 +44,7 @@ class StockCell: UITableViewCell {
 
     private lazy var addToFavButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Fav", for: .normal)
+        button.setImage(R.image.star(), for: .normal)
         button.addTarget(self, action: #selector(buttonTappedHandler(sender:)), for: .touchUpInside)
         return button
     }()
@@ -95,7 +95,6 @@ class StockCell: UITableViewCell {
         companyPriceInfoStackView.axis = .vertical
         companyPriceInfoStackView.spacing = 2
         companyPriceInfoStackView.alignment = .center
-        companyPriceInfoStackView.distribution = .equalCentering
 
         addSubview(companyInfoStackView)
         constrain(companyInfoStackView, stockImageView) { companyInfoStackView, stockImageView in
@@ -107,13 +106,12 @@ class StockCell: UITableViewCell {
         addSubview(companyPriceInfoStackView)
         constrain(companyPriceInfoStackView, companyInfoStackView) { companyPriceInfoStackView, companyInfoStackView in
             companyPriceInfoStackView.left == companyInfoStackView.right + 10
-            companyPriceInfoStackView.top == companyInfoStackView.top
-            companyPriceInfoStackView.right == companyPriceInfoStackView.superview!.right - 20
+            companyPriceInfoStackView.centerY == companyPriceInfoStackView.superview!.centerY
         }
 
         constrain(addToFavButton) { addToFavButton in
-            addToFavButton.height == 22
-            addToFavButton.width == 40
+            addToFavButton.height == 17
+            addToFavButton.width == addToFavButton.height
         }
     }
 
