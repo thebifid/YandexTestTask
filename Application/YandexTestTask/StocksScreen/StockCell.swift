@@ -52,7 +52,6 @@ class StockCell: UITableViewCell {
     private let stockPriceLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
-        label.text = "$300.93"
         return label
     }()
 
@@ -94,7 +93,7 @@ class StockCell: UITableViewCell {
         let companyPriceInfoStackView = UIStackView(arrangedSubviews: [stockPriceLabel, dayChangeLabel])
         companyPriceInfoStackView.axis = .vertical
         companyPriceInfoStackView.spacing = 2
-        companyPriceInfoStackView.alignment = .center
+        companyPriceInfoStackView.alignment = .trailing
 
         addSubview(companyInfoStackView)
         constrain(companyInfoStackView, stockImageView) { companyInfoStackView, stockImageView in
@@ -104,8 +103,8 @@ class StockCell: UITableViewCell {
         }
 
         addSubview(companyPriceInfoStackView)
-        constrain(companyPriceInfoStackView, companyInfoStackView) { companyPriceInfoStackView, companyInfoStackView in
-            companyPriceInfoStackView.left == companyInfoStackView.right + 10
+        constrain(companyPriceInfoStackView, companyInfoStackView) { companyPriceInfoStackView, _ in
+            companyPriceInfoStackView.right == companyPriceInfoStackView.superview!.right - 20
             companyPriceInfoStackView.centerY == companyPriceInfoStackView.superview!.centerY
         }
 
@@ -129,9 +128,46 @@ class StockCell: UITableViewCell {
 
         tickerLabel.text = companyInfo.ticker
         complanyNameLabel.text = companyInfo.name
-        stockPriceLabel.text = "$\(companyInfo.c)" // Смотреть валюту!
+
+        stockPriceLabel.text = "$\(round(100 * companyInfo.c) / 100)" // Смотреть валюту!
+
+        dayChangeLabel.attributedText = calculateDailyChange(currency: companyInfo.currency,
+                                                             currentPrice: companyInfo.c, openPice: companyInfo.o)
 
         stockImageView.image = UIImage(data: companyInfo.logoData)
+    }
+
+    // MARK: - Private Methods
+
+    private func calculateDailyChange(currency: String, currentPrice: Float, openPice: Float) -> NSAttributedString {
+        let dailyChange = round(100 * (openPice - currentPrice)) / 100
+
+        var color = UIColor.gray
+
+        var resultString = ""
+        if dailyChange > 0 {
+            color = R.color.customGreen()!
+            if currency == "USD" {
+                resultString = "+$\(dailyChange)"
+            } else {
+                resultString = "+\(dailyChange) Р"
+            }
+        } else {
+            color = .red
+            if currency == "USD" {
+                resultString = "-$\(abs(dailyChange))"
+            } else {
+                resultString = "-\(abs(dailyChange)) Р"
+            }
+        }
+
+        var percentDailyChange = abs(openPice - currentPrice) / openPice * 100
+        percentDailyChange = round(100 * percentDailyChange) / 100
+
+        resultString = "\(resultString) (\(percentDailyChange)%)"
+
+        return NSAttributedString(string: resultString,
+                                  attributes: [NSAttributedString.Key.foregroundColor: color])
     }
 
     // MARK: - Init
