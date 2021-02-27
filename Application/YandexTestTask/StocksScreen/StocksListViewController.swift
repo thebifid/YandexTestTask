@@ -36,7 +36,7 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
 
     private let activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView(style: .large)
-        ai.color = .green
+        ai.color = .black
         ai.hidesWhenStopped = true
         return ai
     }()
