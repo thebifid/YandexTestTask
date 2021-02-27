@@ -164,8 +164,6 @@
 				C17F105425E13740006CCA52 /* StocksListViewModel.swift */,
 				C17F103325E0EE88006CCA52 /* StocksListViewController.swift */,
 				C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */,
-				C1EC471225E8DA94004B99E7 /* Stocks */,
-				C1EC471425E8DAA6004B99E7 /* Favourite */,
 			);
 			path = StocksScreen;
 			sourceTree = "<group>";
@@ -218,20 +216,6 @@
 				C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		C1EC471225E8DA94004B99E7 /* Stocks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Stocks;
-			sourceTree = "<group>";
-		};
-		C1EC471425E8DAA6004B99E7 /* Favourite */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Favourite;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -22,10 +22,6 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         fetchFavs()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
     // MARK: - UI Controls
 
     private lazy var tableView: UITableView = {
@@ -69,10 +65,9 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
             tableView.top == tableView.superview!.top
             tableView.bottom == tableView.superview!.bottom
         }
+
         tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
-
         tableView.refreshControl = refreshControl
-
         tableView.addSubview(activityIndicator)
         constrain(activityIndicator) { activityIndicator in
             activityIndicator.centerX == activityIndicator.superview!.centerX

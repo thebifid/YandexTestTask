@@ -8,8 +8,6 @@
 import Foundation
 
 class StocksListViewModel {
-    // MARK: - Private properties
-
     // MARK: - Public Properties
 
     var trendingListInfo: [TrendingListFullInfoModel] = [] {
@@ -31,6 +29,7 @@ class StocksListViewModel {
 
     // MARK: - Public Methods
 
+    /// Request list of trending stoks
     func requestTrendingList(completion: @escaping (Result<Void, Error>) -> Void) {
         NetworkService.sharedInstance.requestTrandingList { result in
 
@@ -45,6 +44,7 @@ class StocksListViewModel {
         }
     }
 
+    /// Fetch data from CoreData
     func fetchData(completion: @escaping ((Result<Void, Error>) -> Void)) {
         CoreDataManager.sharedInstance.fetchFavs(completion: { [weak self] result in
 
@@ -59,6 +59,7 @@ class StocksListViewModel {
         })
     }
 
+    /// Action for fav button tapped in StoksScreen
     func stocksFavButtonTapped(index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
         if CoreDataManager.sharedInstance.checkIfExist(byTicker: trendingListInfo[index].ticker) == false {
             CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: trendingListInfo[index]) { [weak self] result in
@@ -89,6 +90,7 @@ class StocksListViewModel {
         }
     }
 
+    /// Action for fav button tapped in FavScreen
     func favsFavButtonTapped(index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
         let inFav = favListInfo[index].inFav
 

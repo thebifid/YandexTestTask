@@ -15,6 +15,7 @@ class NetworkService {
         var companyProfiles = [String: CompanyProfileModel]()
         var companyQuotes = [String: CompanyQuoteModel]()
         var companyImages = [String: Data]()
+        var isAnyError: Error?
 
         let url = BuildUrl(path: API.list, params: ["symbol": "^NDX"])
         URLSession.shared.dataTask(with: url) { data, _, error in
@@ -41,7 +42,6 @@ class NetworkService {
 
                     hasImageDispatchGroup.notify(queue: .global(qos: .background)) {
                         let dispatchGroup = DispatchGroup()
-                        var isAnyError: Error?
                         dispatchGroup.enter()
                         self.requestCompanyProfile(tickers: first5) { result in
                             switch result {
@@ -55,7 +55,6 @@ class NetworkService {
 
                         dispatchGroup.enter()
                         self.requestCompanyQuote(tickers: first5) { result in
-
                             switch result {
                             case let .success(quotes):
                                 companyQuotes = quotes
@@ -67,16 +66,12 @@ class NetworkService {
 
                         dispatchGroup.notify(queue: .main) {
                             var trendingListFullInfo = [TrendingListFullInfoModel]()
-
                             guard isAnyError == nil else {
                                 completion(.failure(isAnyError!))
                                 return
                             }
-
                             companyProfiles.keys.forEach { key in
-
                                 let inFav = CoreDataManager.sharedInstance.checkIfExist(byTicker: key)
-
                                 trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
                                                                                       companyQuote: companyQuotes[key]!,
                                                                                       companyImageData: companyImages[key]!,
@@ -95,7 +90,6 @@ class NetworkService {
 
     private func requestCompanyProfile(tickers: [String], completion: @escaping (Result<[String: CompanyProfileModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
-
         var isAnyError: Error?
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
@@ -131,7 +125,6 @@ class NetworkService {
 
     private func requestCompanyQuote(tickers: [String], completion: @escaping (Result<[String: CompanyQuoteModel], Error>) -> Void) {
         var companyQuotes = [String: CompanyQuoteModel]()
-
         var isAnyError: Error?
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
@@ -171,9 +164,7 @@ class NetworkService {
             dispatchGroup.enter()
             let url = BuildUrl(path: API.logo, params: ["symbol": tickers[index]])
             URLSession.shared.dataTask(with: url) { data, _, _ in
-
                 guard data != nil else { return }
-
                 if UIImage(data: data!) != nil {
                     tickerDataDict[tickers[index]] = data
                 }
@@ -181,7 +172,6 @@ class NetworkService {
                 dispatchGroup.leave()
             }.resume()
         }
-
         dispatchGroup.notify(queue: .main) {
             completion(.success(tickerDataDict))
         }

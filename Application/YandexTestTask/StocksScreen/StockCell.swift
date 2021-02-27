@@ -13,9 +13,9 @@ protocol StockCellDelegate: AnyObject {
 }
 
 class StockCell: UITableViewCell {
-    weak var delegate: StockCellDelegate?
+    // MARK: - Public Properties
 
-    // MARK: - Private Properties
+    weak var delegate: StockCellDelegate?
 
     // MARK: - UI Controls
 
@@ -114,11 +114,6 @@ class StockCell: UITableViewCell {
         }
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        backgroundColor = .white
-    }
-
     // MARK: - Public Methods
 
     func setupCell(color: UIColor, companyInfo: TrendingListFullInfoModel) {
@@ -135,6 +130,11 @@ class StockCell: UITableViewCell {
                                                              currentPrice: companyInfo.c, openPice: companyInfo.o)
 
         stockImageView.image = UIImage(data: companyInfo.logoData)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        backgroundColor = .white
     }
 
     // MARK: - Private Methods

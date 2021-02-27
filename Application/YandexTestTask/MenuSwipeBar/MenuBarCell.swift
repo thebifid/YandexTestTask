@@ -9,9 +9,25 @@ import Cartography
 import UIKit
 
 class MenuBarCell: UICollectionViewCell {
-    // MARK: - Private Properties
-
     // MARK: - Public Properties
+
+    override var isSelected: Bool {
+        didSet {
+            UIView.transition(with: self.label, duration: 0.1, options: .transitionCrossDissolve, animations: {
+                self.label.font = self.isSelected ? .boldSystemFont(ofSize: self.fontSize) :
+                    .boldSystemFont(ofSize: self.fontSize - 1)
+                self.label.textColor = self.isSelected ? UIColor.black : .lightGray
+            }, completion: nil)
+        }
+    }
+
+    override var isHighlighted: Bool {
+        didSet {
+            label.textColor = isHighlighted ? .black : .lightGray
+        }
+    }
+
+    // MARK: - Private Properties
 
     private var fontSize: CGFloat = 18
 
@@ -55,22 +71,6 @@ class MenuBarCell: UICollectionViewCell {
         layoutIfNeeded()
         attributes.size.width = label.frame.width
         return attributes
-    }
-
-    override var isSelected: Bool {
-        didSet {
-            UIView.transition(with: self.label, duration: 0.1, options: .transitionCrossDissolve, animations: {
-                self.label.font = self.isSelected ? .boldSystemFont(ofSize: self.fontSize) :
-                    .boldSystemFont(ofSize: self.fontSize - 1)
-                self.label.textColor = self.isSelected ? UIColor.black : .lightGray
-            }, completion: nil)
-        }
-    }
-
-    override var isHighlighted: Bool {
-        didSet {
-            label.textColor = isHighlighted ? .black : .lightGray
-        }
     }
 
     // MARK: - Init

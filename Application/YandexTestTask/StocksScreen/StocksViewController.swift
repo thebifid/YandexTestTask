@@ -12,7 +12,6 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
     // MARK: - Private Properties
 
     private let viewModel = StocksListViewModel()
-
     private let tabs = ["Stocks", "Favourite"]
     private lazy var controllers = [StocksListViewController(viewModel: viewModel), FavouriteListViewController(viewModel: viewModel)]
 

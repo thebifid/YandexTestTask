@@ -11,7 +11,7 @@ import UIKit
 class StocksListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
     // MARK: - Private Properties
 
-    let viewModel: StocksListViewModel!
+    private let viewModel: StocksListViewModel!
 
     // MARK: - LifeCycle
 
@@ -63,8 +63,8 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
             tableView.top == tableView.superview!.top
             tableView.bottom == tableView.superview!.bottom
         }
-        tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
 
+        tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
         tableView.refreshControl = refreshControl
 
         tableView.addSubview(activityIndicator)

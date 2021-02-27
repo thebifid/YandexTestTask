@@ -22,7 +22,6 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
     // MARK: - Public Properties
 
     var dataSource: MenuBarDataSource?
-
     var startElement: Int = 0
     var barItemFontSize: CGFloat = 18
 

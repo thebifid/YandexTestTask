@@ -16,6 +16,7 @@ class CoreDataManager {
     // reference to managed object context
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
+    /// Check if object exist in CoreData
     func checkIfExist(byTicker ticker: String) -> Bool {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Stock")
         let predicate = NSPredicate(format: "ticker == %@", ticker)
@@ -30,24 +31,25 @@ class CoreDataManager {
         return false
     }
 
+    /// Get object by ticker
     func fetchObject(byTicker ticker: String) -> Stock? {
         let request = NSFetchRequest<Stock>(entityName: "Stock")
         let predicate = NSPredicate(format: "ticker == %@", ticker)
         request.predicate = predicate
         request.fetchLimit = 1
-
         do {
             let item = try context.fetch(request)
             if let info = item.first {
                 return info
             }
         } catch {
-            print(error)
+            print(error) //!
         }
 
         return nil
     }
 
+    /// Fetch list of Favourite stokcs
     func fetchFavs(completion: @escaping ((Result<[TrendingListFullInfoModel], Error>) -> Void)) {
         let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
         do {
@@ -62,6 +64,7 @@ class CoreDataManager {
         }
     }
 
+    /// Remove object from CoreData by ticker
     func removeFromCoreData(byTicker ticker: String, completion: @escaping ((Result<Void, Error>) -> Void)) {
         if let stockToDelete = fetchObject(byTicker: ticker) {
             context.delete(stockToDelete)
@@ -76,6 +79,7 @@ class CoreDataManager {
         }
     }
 
+    /// Save object to CoreData
     func saveToFavCoreData(stockInfo: TrendingListFullInfoModel, completion: @escaping ((Result<Void, Error>) -> Void)) {
         guard checkIfExist(byTicker: stockInfo.ticker) == false else { return }
 
