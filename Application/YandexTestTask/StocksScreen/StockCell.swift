@@ -108,9 +108,10 @@ class StockCell: UITableViewCell {
             companyPriceInfoStackView.centerY == companyPriceInfoStackView.superview!.centerY
         }
 
-        constrain(addToFavButton) { addToFavButton in
+        constrain(addToFavButton, stockPriceLabel) { addToFavButton, stockPriceLabel in
             addToFavButton.height == 17
             addToFavButton.width == addToFavButton.height
+            stockPriceLabel.height == addToFavButton.height
         }
     }
 
@@ -141,7 +142,6 @@ class StockCell: UITableViewCell {
 
     private func calculateDailyChange(currency: String, currentPrice: Float, openPice: Float) -> NSAttributedString {
         let dailyChange = round(100 * (openPice - currentPrice)) / 100
-
         var color = UIColor.gray
 
         var resultString = ""
@@ -163,9 +163,7 @@ class StockCell: UITableViewCell {
 
         var percentDailyChange = abs(openPice - currentPrice) / openPice * 100
         percentDailyChange = round(100 * percentDailyChange) / 100
-
         resultString = "\(resultString) (\(percentDailyChange)%)"
-
         return NSAttributedString(string: resultString,
                                   attributes: [NSAttributedString.Key.foregroundColor: color])
     }
