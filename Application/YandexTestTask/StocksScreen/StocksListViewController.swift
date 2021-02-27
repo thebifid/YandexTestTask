@@ -130,7 +130,17 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
     func favButtonTapped(cell: StockCell) {
         let indexPath = tableView.indexPath(for: cell)
         let index = indexPath!.row
-        viewModel.saveToFav(index: index)
+        viewModel.saveToFav(index: index) { result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithCancel(withError: error)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+            case .success:
+                break
+            }
+        }
     }
 
     // MARK: - Init

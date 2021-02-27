@@ -49,12 +49,26 @@ class StocksListViewModel {
         favListInfo = CoreDataManager.sharedInstance.fetchFavs()
     }
 
-    func saveToFav(index: Int) {
+    func saveToFav(index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
         if CoreDataManager.sharedInstance.checkIfExist(byTicker: trendingListInfo[index].ticker) == false {
             favListInfo.append(trendingListInfo[index])
-            CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: trendingListInfo[index])
+            CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: trendingListInfo[index]) { result in
+                switch result {
+                case let .failure(error):
+                    completion(.failure(error))
+                case .success:
+                    completion(.success(()))
+                }
+            }
         } else {
-            CoreDataManager.sharedInstance.removeFromCoreData(byTicker: trendingListInfo[index].ticker)
+            CoreDataManager.sharedInstance.removeFromCoreData(byTicker: trendingListInfo[index].ticker) { result in
+                switch result {
+                case let .failure(error):
+                    completion(.failure(error))
+                case .success:
+                    completion(.success(()))
+                }
+            }
         }
     }
 }

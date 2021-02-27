@@ -56,14 +56,21 @@ class CoreDataManager {
         return result
     }
 
-    func removeFromCoreData(byTicker ticker: String) {
+    func removeFromCoreData(byTicker ticker: String, completion: @escaping ((Result<Void, Error>) -> Void)) {
         if let stockToDelete = fetchObject(byTicker: ticker) {
             context.delete(stockToDelete)
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            (UIApplication.shared.delegate as! AppDelegate).saveContext { result in
+                switch result {
+                case let .failure(error):
+                    completion(.failure(error))
+                case .success:
+                    completion(.success(()))
+                }
+            }
         }
     }
 
-    func saveToFavCoreData(stockInfo: TrendingListFullInfoModel) {
+    func saveToFavCoreData(stockInfo: TrendingListFullInfoModel, completion: @escaping ((Result<Void, Error>) -> Void)) {
         guard checkIfExist(byTicker: stockInfo.ticker) == false else { return }
 
         let newStock = Stock(context: context)
@@ -90,6 +97,13 @@ class CoreDataManager {
 
         newStock.logoData = stockInfo.logoData
 
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        (UIApplication.shared.delegate as! AppDelegate).saveContext { result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case .success:
+                completion(.success(()))
+            }
+        }
     }
 }

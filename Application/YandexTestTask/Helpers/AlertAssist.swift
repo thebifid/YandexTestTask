@@ -8,6 +8,13 @@
 import UIKit
 
 class AlertAssist {
+    static func AlertWithCancel(withError error: Error) -> UIAlertController {
+        let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        ac.addAction(cancelAction)
+        return ac
+    }
+
     static func AlertWithAction(withError error: Error) -> UIAlertController {
         let ac = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
