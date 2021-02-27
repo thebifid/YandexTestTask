@@ -48,12 +48,18 @@ class CoreDataManager {
         return nil
     }
 
-    func fetchFavs() -> [TrendingListFullInfoModel] {
+    func fetchFavs(completion: @escaping ((Result<[TrendingListFullInfoModel], Error>) -> Void)) {
         let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
-        let items = try? context.fetch(fetchRequest)
-        var result = [TrendingListFullInfoModel]()
-        items?.forEach { result.append(TrendingListFullInfoModel(stock: $0)) }
-        return result
+        do {
+            let items = try context.fetch(fetchRequest)
+            var result = [TrendingListFullInfoModel]()
+            items.forEach { result.append(TrendingListFullInfoModel(stock: $0)) }
+
+            completion(.success(result))
+
+        } catch {
+            completion(.failure(error))
+        }
     }
 
     func removeFromCoreData(byTicker ticker: String, completion: @escaping ((Result<Void, Error>) -> Void)) {

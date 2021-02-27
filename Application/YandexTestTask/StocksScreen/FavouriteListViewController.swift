@@ -19,7 +19,17 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidLoad()
         setupTableView()
         enableBinding()
-        viewModel.fetchData()
+        viewModel.fetchData { result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithCancel(withError: error)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+            case .success:
+                break
+            }
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -82,6 +82,12 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
 
+    private func vibrate() {
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
+        impactFeedbackgenerator.prepare()
+        impactFeedbackgenerator.impactOccurred()
+    }
+
     private func requestData() {
         if viewModel.trendingListInfo.isEmpty {
             DispatchQueue.main.async {
@@ -138,7 +144,7 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
                     self.present(alert, animated: true, completion: nil)
                 }
             case .success:
-                break
+                self.vibrate()
             }
         }
     }
