@@ -75,9 +75,13 @@ class NetworkService {
 
                             companyProfiles.keys.forEach { key in
 
+                                let inFav = CoreDataManager.sharedInstance.checkIfExist(byTicker: key)
+
+//                                trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+//                                                                                      companyQuote: companyQuotes[key]!,
+//                                                                                      companyImageData: companyImages[key]!))
                                 trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
-                                                                                      companyQuote: companyQuotes[key]!,
-                                                                                      companyImageData: companyImages[key]!))
+                                                                                      companyQuote: companyQuotes[key]!, companyImageData: companyImages[key]!, inFav: inFav))
                             }
                             completion(.success(trendingListFullInfo))
                         }

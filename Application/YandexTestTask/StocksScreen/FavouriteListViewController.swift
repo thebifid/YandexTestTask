@@ -19,17 +19,7 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidLoad()
         setupTableView()
         enableBinding()
-        viewModel.fetchData { result in
-            switch result {
-            case let .failure(error):
-                let alert = AlertAssist.AlertWithCancel(withError: error)
-                DispatchQueue.main.async {
-                    self.present(alert, animated: true, completion: nil)
-                }
-            case .success:
-                break
-            }
-        }
+        fetchFavs()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -64,6 +54,8 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
     // MARK: - Selectors
 
     @objc private func refreshHandler(sender: UIRefreshControl) {
+        fetchFavs()
+        tableView.reloadData()
         refreshControl.endRefreshing()
     }
 
@@ -96,6 +88,26 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         }
     }
 
+    private func vibrate() {
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
+        impactFeedbackgenerator.prepare()
+        impactFeedbackgenerator.impactOccurred()
+    }
+
+    private func fetchFavs() {
+        viewModel.fetchData { result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithCancel(withError: error)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+            case .success:
+                break
+            }
+        }
+    }
+
     // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,7 +128,21 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
 
     // MARK: - StockCellDelegate
 
-    func favButtonTapped(cell: StockCell) {}
+    func favButtonTapped(cell: StockCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        let index = indexPath!.row
+        viewModel.favsFavButtonTapped(index: index) { result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithCancel(withError: error)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+            case .success:
+                self.vibrate()
+            }
+        }
+    }
 
     init(viewModel: StocksListViewModel) {
         self.viewModel = viewModel

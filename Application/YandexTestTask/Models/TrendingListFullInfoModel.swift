@@ -31,7 +31,9 @@ struct TrendingListFullInfoModel {
 
     let logoData: Data
 
-    init(companyProfile: CompanyProfileModel, companyQuote: CompanyQuoteModel, companyImageData: Data) {
+    var inFav: Bool
+
+    init(companyProfile: CompanyProfileModel, companyQuote: CompanyQuoteModel, companyImageData: Data, inFav: Bool) {
         country = companyProfile.country
         currency = companyProfile.currency
         exchange = companyProfile.exchange
@@ -53,6 +55,8 @@ struct TrendingListFullInfoModel {
         t = companyQuote.t
 
         logoData = companyImageData
+
+        self.inFav = inFav
     }
 
     init(stock: Stock) {
@@ -77,5 +81,7 @@ struct TrendingListFullInfoModel {
         t = stock.t
 
         logoData = stock.logoData!
+
+        inFav = true
     }
 }

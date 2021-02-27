@@ -125,6 +125,8 @@ class StockCell: UITableViewCell {
     func setupCell(color: UIColor, companyInfo: TrendingListFullInfoModel) {
         backgroundColor = color
 
+        addToFavButton.tintColor = companyInfo.inFav ? .green : .gray
+
         tickerLabel.text = companyInfo.ticker
         complanyNameLabel.text = companyInfo.name
         stockPriceLabel.text = "$\(companyInfo.c)" // Смотреть валюту!
