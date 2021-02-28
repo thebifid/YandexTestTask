@@ -47,16 +47,41 @@ class StocksListViewModel {
     /// Fetch data from CoreData
     func fetchData(completion: @escaping ((Result<Void, Error>) -> Void)) {
         CoreDataManager.sharedInstance.fetchFavs(completion: { [weak self] result in
-
+            guard let self = self else { return }
             switch result {
             case let .failure(error):
                 completion(.failure(error))
             case let .success(info):
-                self?.favListInfo = info
-                completion(.success(()))
+                self.updateQuotes(model: info) { [weak self] result in
+                    switch result {
+                    case let .failure(error):
+                        completion(.failure(error))
+                    case let .success(model):
+                        self?.favListInfo = model
+                        completion(.success(()))
+                    }
+                }
             }
 
         })
+    }
+
+    private func updateQuotes(model: [TrendingListFullInfoModel],
+                              completion: @escaping ((Result<[TrendingListFullInfoModel], Error>) -> Void)) {
+        var info = model
+        let tickers = info.map { $0.ticker }
+        NetworkService.sharedInstance.requestCompanyQuote(tickers: tickers) { result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case let .success(quotes):
+                for index in info.indices {
+                    info[index].c = quotes[info[index].ticker]?.c ?? info[index].c
+                    info[index].o = quotes[info[index].ticker]?.o ?? info[index].o
+                }
+                completion(.success(info))
+            }
+        }
     }
 
     /// Action for fav button tapped in StoksScreen

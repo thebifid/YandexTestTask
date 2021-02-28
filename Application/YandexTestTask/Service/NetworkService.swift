@@ -153,7 +153,7 @@ class NetworkService {
         }
     }
 
-    private func requestCompanyQuote(tickers: [String], completion: @escaping (Result<[String: CompanyQuoteModel], Error>) -> Void) {
+    func requestCompanyQuote(tickers: [String], completion: @escaping (Result<[String: CompanyQuoteModel], Error>) -> Void) {
         var companyQuotes = [String: CompanyQuoteModel]()
         var isAnyError: Error?
         let dispatchGroup = DispatchGroup()

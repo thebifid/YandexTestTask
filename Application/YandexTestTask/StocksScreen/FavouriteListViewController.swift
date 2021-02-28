@@ -90,15 +90,21 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
     }
 
     private func fetchFavs() {
-        viewModel.fetchData { result in
+        if viewModel.favListInfo.isEmpty {
+            activityIndicator.startAnimating()
+        }
+
+        viewModel.fetchData { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .failure(error):
                 let alert = AlertAssist.AlertWithCancel(withError: error)
                 DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
                     self.present(alert, animated: true, completion: nil)
                 }
             case .success:
-                break
+                self.activityIndicator.stopAnimating()
             }
         }
     }
