@@ -35,6 +35,9 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
         // Разобраться когда дойду
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
+
+        searchController.searchBar.placeholder = "Find company or ticker"
+
         // Include the search bar within the navigation bar.
         navigationItem.titleView = searchController.searchBar
         definesPresentationContext = true

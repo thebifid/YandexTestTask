@@ -65,10 +65,9 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
 
     private func setupUI() {
         view.backgroundColor = .white
-
         view.addSubview(barCollectionView)
         constrain(barCollectionView) { collectionView in
-            collectionView.top == collectionView.superview!.safeAreaLayoutGuide.top + 10
+            collectionView.top == collectionView.superview!.safeAreaLayoutGuide.top
             collectionView.left == collectionView.superview!.left
             collectionView.right == collectionView.superview!.right
             collectionView.height == 60
@@ -76,7 +75,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
 
         view.addSubview(contentCollectionView)
         constrain(contentCollectionView, barCollectionView) { contentCollectionView, barCollectionView in
-            contentCollectionView.top == barCollectionView.bottom
+            contentCollectionView.top == barCollectionView.bottom + 5
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right
             contentCollectionView.bottom == contentCollectionView.superview!.bottom
