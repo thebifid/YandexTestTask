@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 20.02.2021.
 //
 
+import EasyStash
 import Foundation
 import UIKit
 
@@ -91,11 +92,32 @@ class NetworkService {
     private func requestCompanyProfile(tickers: [String], completion: @escaping (Result<[String: CompanyProfileModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var isAnyError: Error?
+
+        var storage: Storage?
+        var options: Options = Options()
+        options.folder = "Cache"
+        do {
+            try storage = Storage(options: options)
+        } catch {
+            print(error.localizedDescription)
+        }
+
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
 
-            dispatchGroup.enter()
             let url = BuildUrl(path: API.companyProfile, params: ["symbol": ticker])
+
+            if storage != nil {
+                if storage!.exists(forKey: "\(ticker)Profile") {
+                    do {
+                        let profile = try storage!.load(forKey: "\(ticker)Profile", as: CompanyProfileModel.self)
+                        companyProfiles[ticker] = profile
+                        return
+                    } catch {}
+                }
+            }
+
+            dispatchGroup.enter()
             URLSession.shared.dataTask(with: url) { data, _, error in
                 guard error == nil else {
                     completion(.failure(error!))
@@ -106,6 +128,14 @@ class NetworkService {
                     do {
                         let profile = try JSONDecoder().decode(CompanyProfileModel.self, from: data)
                         companyProfiles[ticker] = profile
+                        if storage != nil {
+                            do {
+                                try storage!.save(object: profile, forKey: "\(ticker)Profile")
+                            } catch {
+                                print(error.localizedDescription)
+                            }
+                        }
+
                     } catch {
                         isAnyError = error
                     }
@@ -159,14 +189,48 @@ class NetworkService {
     private func ifHasImage(tickers: [String], completion: @escaping (Result<[String: Data], Error>) -> Void) {
         var tickerDataDict = [String: Data]()
         let dispatchGroup = DispatchGroup()
+        var storage: Storage?
+        var options = Options()
+        options.folder = "Cache"
 
-        for index in 1 ... 15 {
+        do {
+            try storage = Storage(options: options)
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        let first15 = tickers.prefix(15)
+
+        first15.forEach { ticker in
+            let url = BuildUrl(path: API.logo, params: ["symbol": ticker])
+
+            if storage != nil {
+                guard !storage!.exists(forKey: "\(ticker)NilImageData") else { return }
+                if storage!.exists(forKey: "\(ticker)ImageData") {
+                    do {
+                        let data = try storage!.load(forKey: "\(ticker)ImageData", as: Data.self)
+                        tickerDataDict[ticker] = data
+                        return
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+
             dispatchGroup.enter()
-            let url = BuildUrl(path: API.logo, params: ["symbol": tickers[index]])
             URLSession.shared.dataTask(with: url) { data, _, _ in
                 guard data != nil else { return }
                 if UIImage(data: data!) != nil {
-                    tickerDataDict[tickers[index]] = data
+                    tickerDataDict[ticker] = data
+                    if storage != nil {
+                        do {
+                            try storage!.save(object: data, forKey: "\(ticker)ImageData")
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                } else {
+                    try? storage!.save(object: true, forKey: "\(ticker)NilImageData")
                 }
 
                 dispatchGroup.leave()

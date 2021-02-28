@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CompanyProfileModel: Decodable {
+struct CompanyProfileModel: Decodable, Encodable {
     let country: String
     let currency: String
     let exchange: String
