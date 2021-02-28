@@ -102,6 +102,10 @@ class StocksListViewModel {
                     completion(.failure(error))
                 case .success:
                     self.favListInfo[index].inFav = false
+                    let trendingListIndex = self.trendingListInfo.firstIndex(where: { $0.ticker == self.favListInfo[index].ticker })
+                    if trendingListIndex != nil {
+                        self.trendingListInfo[trendingListIndex!].inFav = false
+                    }
                     completion(.success(()))
                 }
             }
@@ -112,6 +116,10 @@ class StocksListViewModel {
                     completion(.failure(error))
                 case .success:
                     self.favListInfo[index].inFav = true
+                    let trendingListIndex = self.trendingListInfo.firstIndex(where: { $0.ticker == self.favListInfo[index].ticker })
+                    if trendingListIndex != nil {
+                        self.trendingListInfo[trendingListIndex!].inFav = true
+                    }
                     completion(.success(()))
                 }
             }

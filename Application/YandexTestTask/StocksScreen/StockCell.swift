@@ -120,7 +120,7 @@ class StockCell: UITableViewCell {
     func setupCell(color: UIColor, companyInfo: TrendingListFullInfoModel) {
         backgroundColor = color
 
-        addToFavButton.tintColor = companyInfo.inFav ? .green : .gray
+        addToFavButton.tintColor = companyInfo.inFav ? R.color.customYellow() : R.color.uncheckColor()
 
         tickerLabel.text = companyInfo.ticker
         complanyNameLabel.text = companyInfo.name
