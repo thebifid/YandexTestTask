@@ -11,28 +11,17 @@ import UIKit
 
 class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate {
     func menuBar(didScrolledFromIndex from: Int, to: Int) {
-        if let controller = controllers[from] as? StocksListViewController {
-            if let navigationController = controller.navigationController as? ScrollingNavigationController {
-                navigationController.stopFollowingScrollView()
-            }
-        }
+        guard from >= 0, from <= controllers.count, to <= controllers.count else { return }
 
-        if let controller = controllers[from] as? FavouriteListViewController {
-            if let navigationController = controller.navigationController as? ScrollingNavigationController {
-                navigationController.stopFollowingScrollView()
-            }
+        if let navigationController = controllers[from].navigationController as? ScrollingNavigationController {
+            navigationController.stopFollowingScrollView()
         }
-
-        if let controller = controllers[to] as? StocksListViewController {
-            if let navigationController = controller.navigationController as? ScrollingNavigationController {
-                navigationController.followScrollView(controller.tableView, delay: 50.0)
-            }
-        }
-
-        if let controller = controllers[to] as? FavouriteListViewController {
-            if let navigationController = controller.navigationController as? ScrollingNavigationController {
-                navigationController.followScrollView(controller.tableView, delay: 50.0)
-            }
+        if let navigationController = controllers[to].navigationController as? ScrollingNavigationController {
+            navigationController.followScrollView(controllers[to].tableView, delay: 0, followers:
+                [
+                    NavigationBarFollower(view: barCollectionView),
+                    NavigationBarFollower(view: contentCollectionView)
+                ])
         }
     }
 
@@ -50,12 +39,21 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         dataSource = self
         delegate = self
-
         barItemFontSize = 24
         setupSearchBar()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let navigationController = controllers[0].navigationController as? ScrollingNavigationController {
+            navigationController.followScrollView(controllers[0].tableView, delay: 0, followers:
+                [
+                    NavigationBarFollower(view: barCollectionView),
+                    NavigationBarFollower(view: contentCollectionView)
+                ])
+        }
     }
 
     // MARK: - UI Actions

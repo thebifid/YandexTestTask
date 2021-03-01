@@ -79,7 +79,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
             collectionView.top == collectionView.superview!.safeAreaLayoutGuide.top
             collectionView.left == collectionView.superview!.left
             collectionView.right == collectionView.superview!.right
-            collectionView.height == 60
+            collectionView.height == 40
         }
 
         view.addSubview(contentCollectionView)
@@ -87,7 +87,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
             contentCollectionView.top == barCollectionView.bottom + 5
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right
-            contentCollectionView.height == contentCollectionView.superview!.height - 100
+            contentCollectionView.height == contentCollectionView.superview!.height - 40
         }
 
         barCollectionView.register(MenuBarCell.self, forCellWithReuseIdentifier: "barId")

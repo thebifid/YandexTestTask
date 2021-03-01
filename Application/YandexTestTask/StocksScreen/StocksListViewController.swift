@@ -9,7 +9,7 @@ import AMScrollingNavbar
 import Cartography
 import UIKit
 
-class StocksListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
+class StocksListViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
     // MARK: - Private Properties
 
     private let viewModel: StocksListViewModel!
@@ -24,16 +24,6 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     // MARK: - UI Controls
-
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorColor = .clear
-        tableView.showsVerticalScrollIndicator = false
-        tableView.allowsSelection = false
-        return tableView
-    }()
 
     private let activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView(style: .large)
@@ -57,17 +47,9 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - UI Actions
 
     private func setupTableView() {
-        view.addSubview(tableView)
-        constrain(tableView) { tableView in
-            tableView.left == tableView.superview!.left + 20
-            tableView.right == tableView.superview!.right - 20
-            tableView.top == tableView.superview!.top
-            tableView.bottom == tableView.superview!.bottom
-        }
-
-        tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.refreshControl = refreshControl
-
         tableView.addSubview(activityIndicator)
         constrain(activityIndicator) { activityIndicator in
             activityIndicator.centerX == activityIndicator.superview!.centerX

@@ -8,7 +8,7 @@
 import AMScrollingNavbar
 import Cartography
 import UIKit
-class FavouriteListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
+class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
     // MARK: - Private Properties
 
     private let viewModel: StocksListViewModel!
@@ -23,16 +23,6 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
     }
 
     // MARK: - UI Controls
-
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorColor = .clear
-        tableView.showsVerticalScrollIndicator = false
-        tableView.allowsSelection = false
-        return tableView
-    }()
 
     private let activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView(style: .large)
@@ -58,13 +48,8 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
     // MARK: - UI Actions
 
     private func setupTableView() {
-        view.addSubview(tableView)
-        constrain(tableView) { tableView in
-            tableView.left == tableView.superview!.left + 20
-            tableView.right == tableView.superview!.right - 20
-            tableView.top == tableView.superview!.top
-            tableView.bottom == tableView.superview!.bottom
-        }
+        tableView.dataSource = self
+        tableView.delegate = self
 
         tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
         tableView.refreshControl = refreshControl
@@ -125,6 +110,11 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
+    }
+
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        print("kekw")
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     // MARK: - StockCellDelegate
