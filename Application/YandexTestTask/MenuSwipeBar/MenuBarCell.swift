@@ -15,7 +15,7 @@ class MenuBarCell: UICollectionViewCell {
         didSet {
             UIView.transition(with: self.label, duration: 0.1, options: .transitionCrossDissolve, animations: {
                 self.label.font = self.isSelected ? .boldSystemFont(ofSize: self.fontSize) :
-                    .boldSystemFont(ofSize: self.fontSize - 1)
+                    .boldSystemFont(ofSize: self.fontSize)
                 self.label.textColor = self.isSelected ? UIColor.black : .lightGray
             }, completion: nil)
         }

@@ -5,26 +5,10 @@
 //  Created by Vasiliy Matveev on 17.02.2021.
 //
 
-import AMScrollingNavbar
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate {
-    func menuBar(didScrolledFromIndex from: Int, to: Int) {
-        guard from >= 0, from <= controllers.count, to <= controllers.count else { return }
-
-        if let navigationController = controllers[from].navigationController as? ScrollingNavigationController {
-            navigationController.stopFollowingScrollView()
-        }
-        if let navigationController = controllers[to].navigationController as? ScrollingNavigationController {
-            navigationController.followScrollView(controllers[to].tableView, delay: 0, followers:
-                [
-                    NavigationBarFollower(view: barCollectionView),
-                    NavigationBarFollower(view: contentCollectionView)
-                ])
-        }
-    }
-
+class StocksViewController: MenuBarViewController, MenuBarDataSource {
     // MARK: - Private Properties
 
     private let viewModel = StocksListViewModel()
@@ -40,20 +24,10 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
-        delegate = self
         barItemFontSize = 24
         setupSearchBar()
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let navigationController = controllers[0].navigationController as? ScrollingNavigationController {
-            navigationController.followScrollView(controllers[0].tableView, delay: 0, followers:
-                [
-                    NavigationBarFollower(view: barCollectionView),
-                    NavigationBarFollower(view: contentCollectionView)
-                ])
-        }
+        navigationController?.hidesBarsOnSwipe = true
     }
 
     // MARK: - UI Actions

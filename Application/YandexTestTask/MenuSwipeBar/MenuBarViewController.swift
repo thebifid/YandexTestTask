@@ -5,7 +5,6 @@
 //  Created by Vasiliy Matveev on 18.02.2021.
 //
 
-import AMScrollingNavbar
 import Cartography
 import UIKit
 
@@ -74,6 +73,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
 
     private func setupUI() {
         view.backgroundColor = .white
+
         view.addSubview(barCollectionView)
         constrain(barCollectionView) { collectionView in
             collectionView.top == collectionView.superview!.safeAreaLayoutGuide.top
@@ -84,10 +84,10 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
 
         view.addSubview(contentCollectionView)
         constrain(contentCollectionView, barCollectionView) { contentCollectionView, barCollectionView in
-            contentCollectionView.top == barCollectionView.bottom + 5
+            contentCollectionView.top == barCollectionView.bottom
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right
-            contentCollectionView.height == contentCollectionView.superview!.height - 40
+            contentCollectionView.height == contentCollectionView.superview!.height - 100
         }
 
         barCollectionView.register(MenuBarCell.self, forCellWithReuseIdentifier: "barId")

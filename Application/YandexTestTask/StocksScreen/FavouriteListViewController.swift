@@ -5,7 +5,6 @@
 //  Created by Vasiliy Matveev on 26.02.2021.
 //
 
-import AMScrollingNavbar
 import Cartography
 import UIKit
 class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
@@ -110,11 +109,6 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
-    }
-
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        print("kekw")
-        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     // MARK: - StockCellDelegate
