@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 20.02.2021.
 //
 
+import AMScrollingNavbar
 import Cartography
 import UIKit
 

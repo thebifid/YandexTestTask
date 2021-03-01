@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 26.02.2021.
 //
 
+import AMScrollingNavbar
 import Cartography
 import UIKit
 
@@ -20,6 +21,10 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         setupTableView()
         enableBinding()
         fetchFavs()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     // MARK: - UI Controls
@@ -125,23 +130,6 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let height = view.safeAreaLayoutGuide.layoutFrame.size.height
-        let scrolled = scrollView.panGestureRecognizer.translation(in: scrollView).y
-        if !(scrollView.visibleSize.height - height >= 90) {
-            if scrolled < 0 {
-                UIView.animate(withDuration: 0.9) {
-                    self.navigationController?.setNavigationBarHidden(true, animated: true)
-                }
-
-            } else {
-                UIView.animate(withDuration: 0.9) {
-                    self.navigationController?.setNavigationBarHidden(false, animated: true)
-                }
-            }
-        }
     }
 
     // MARK: - StockCellDelegate

@@ -11,5 +11,6 @@ target 'YandexTestTask' do
     pod 'R.swift'
     pod 'Cartography', '~> 3.0'
     pod 'EasyStash'
+    pod 'AMScrollingNavbar'
 
 end

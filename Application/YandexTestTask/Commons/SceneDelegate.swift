@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 17.02.2021.
 //
 
+import AMScrollingNavbar
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -13,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UINavigationController(rootViewController: StocksViewController())
+            window.rootViewController = ScrollingNavigationController(rootViewController: StocksViewController())
             window.makeKeyAndVisible()
             self.window = window
         }

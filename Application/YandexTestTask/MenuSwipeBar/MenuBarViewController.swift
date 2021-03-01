@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 18.02.2021.
 //
 
+import AMScrollingNavbar
 import Cartography
 import UIKit
 
@@ -14,7 +15,8 @@ protocol MenuBarDataSource {
     func numberOfPages(in swipeMenu: MenuBarViewController) -> Int
 }
 
-class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout, ScrollingNavigationControllerDelegate {
     // MARK: - Private Properties
 
     private var labels = [String]()
@@ -30,6 +32,12 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
+        navigationController?.hidesBarsOnSwipe = true
+
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.scrollingNavbarDelegate = self
+        }
     }
 
     // MARK: - UI Controls
@@ -58,6 +66,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         cv.tag = 1
         cv.isPagingEnabled = true
         cv.allowsSelection = false
+        cv.showsHorizontalScrollIndicator = false
         return cv
     }()
 
@@ -78,7 +87,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
             contentCollectionView.top == barCollectionView.bottom + 5
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right
-            contentCollectionView.bottom == contentCollectionView.superview!.bottom
+            contentCollectionView.height == contentCollectionView.superview!.height - 100
         }
 
         barCollectionView.register(MenuBarCell.self, forCellWithReuseIdentifier: "barId")

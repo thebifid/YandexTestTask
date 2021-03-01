@@ -1,4 +1,5 @@
 PODS:
+  - AMScrollingNavbar (5.6.1)
   - Cartography (3.1.0)
   - EasyStash (1.1.7)
   - R.swift (5.2.2):
@@ -8,6 +9,7 @@ PODS:
   - SwiftLint (0.39.2)
 
 DEPENDENCIES:
+  - AMScrollingNavbar
   - Cartography (~> 3.0)
   - EasyStash
   - R.swift
@@ -16,6 +18,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AMScrollingNavbar
     - Cartography
     - EasyStash
     - R.swift
@@ -24,6 +27,7 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
+  AMScrollingNavbar: 602dd7a26efd0edb40d67ec20b5ee80b9f573bbb
   Cartography: 1988b7578871a56c036e7af17195cb2190edf18c
   EasyStash: 29813c9bca4ace671c86d932b3acffe91d6c4e43
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
@@ -31,6 +35,6 @@ SPEC CHECKSUMS:
   SwiftFormat: 3b5caa6389b2b9adbc00e133b3ccc8c6e687a6a4
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 099349807f04cfa8688fa119b0af9f1a460ab9d2
+PODFILE CHECKSUM: 53d6cdc210b63c401340253d0f546711c7244413
 
 COCOAPODS: 1.9.3
