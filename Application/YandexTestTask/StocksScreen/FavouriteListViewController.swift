@@ -8,7 +8,6 @@
 import AMScrollingNavbar
 import Cartography
 import UIKit
-
 class FavouriteListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
     // MARK: - Private Properties
 
@@ -23,13 +22,9 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         fetchFavs()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     // MARK: - UI Controls
 
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self

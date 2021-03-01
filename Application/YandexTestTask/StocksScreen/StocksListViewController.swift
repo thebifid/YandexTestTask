@@ -25,7 +25,7 @@ class StocksListViewController: UIViewController, UITableViewDataSource, UITable
 
     // MARK: - UI Controls
 
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self

@@ -9,21 +9,27 @@ import AMScrollingNavbar
 import Cartography
 import UIKit
 
-protocol MenuBarDataSource {
+protocol MenuBarDataSource: AnyObject {
     func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String
     func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController
     func numberOfPages(in swipeMenu: MenuBarViewController) -> Int
 }
 
+protocol MenuBarDelegate: AnyObject {
+    func menuBar(didScrolledFromIndex from: Int, to: Int)
+}
+
 class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,
-    UICollectionViewDelegateFlowLayout, ScrollingNavigationControllerDelegate {
+    UICollectionViewDelegateFlowLayout {
     // MARK: - Private Properties
 
     private var labels = [String]()
 
     // MARK: - Public Properties
 
-    var dataSource: MenuBarDataSource?
+    weak var dataSource: MenuBarDataSource?
+    weak var delegate: MenuBarDelegate?
+
     var startElement: Int = 0
     var barItemFontSize: CGFloat = 18
 
@@ -32,12 +38,6 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
-        navigationController?.hidesBarsOnSwipe = true
-
-        if let navigationController = navigationController as? ScrollingNavigationController {
-            navigationController.scrollingNavbarDelegate = self
-        }
     }
 
     // MARK: - UI Controls
@@ -132,6 +132,15 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
             let index = Int(targetContentOffset.pointee.x / view.frame.width)
             let indexPath = IndexPath(item: index, section: 0)
             barCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            var indexFrom = 0
+            if velocity.x < 0 {
+                indexFrom = Int((targetContentOffset.pointee.x + view.frame.width) / view.frame.width)
+            } else {
+                indexFrom = Int((targetContentOffset.pointee.x - view.frame.width) / view.frame.width)
+            }
+            let indexTo = Int(targetContentOffset.pointee.x / view.frame.width)
+
+            delegate?.menuBar(didScrolledFromIndex: indexFrom, to: indexTo)
         }
     }
 

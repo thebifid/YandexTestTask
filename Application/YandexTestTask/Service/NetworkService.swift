@@ -31,7 +31,7 @@ class NetworkService {
                     self.ifHasImage(tickers: constituents.constituents) { result in
                         switch result {
                         case let .success(imagesDataDitct):
-                            for index in first5.count ... 7 {
+                            for index in first5.count ... 12 {
                                 companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
                                 first5.append(Array(imagesDataDitct)[index].key)
                             }
@@ -199,7 +199,7 @@ class NetworkService {
             print(error.localizedDescription)
         }
 
-        let first15 = tickers.prefix(15)
+        let first15 = tickers.prefix(25)
 
         first15.forEach { ticker in
             let url = BuildUrl(path: API.logo, params: ["symbol": ticker])

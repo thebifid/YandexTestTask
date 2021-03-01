@@ -5,10 +5,37 @@
 //  Created by Vasiliy Matveev on 17.02.2021.
 //
 
+import AMScrollingNavbar
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource {
+class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate {
+    func menuBar(didScrolledFromIndex from: Int, to: Int) {
+        if let controller = controllers[from] as? StocksListViewController {
+            if let navigationController = controller.navigationController as? ScrollingNavigationController {
+                navigationController.stopFollowingScrollView()
+            }
+        }
+
+        if let controller = controllers[from] as? FavouriteListViewController {
+            if let navigationController = controller.navigationController as? ScrollingNavigationController {
+                navigationController.stopFollowingScrollView()
+            }
+        }
+
+        if let controller = controllers[to] as? StocksListViewController {
+            if let navigationController = controller.navigationController as? ScrollingNavigationController {
+                navigationController.followScrollView(controller.tableView, delay: 50.0)
+            }
+        }
+
+        if let controller = controllers[to] as? FavouriteListViewController {
+            if let navigationController = controller.navigationController as? ScrollingNavigationController {
+                navigationController.followScrollView(controller.tableView, delay: 50.0)
+            }
+        }
+    }
+
     // MARK: - Private Properties
 
     private let viewModel = StocksListViewModel()
@@ -25,6 +52,8 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
         super.viewDidLoad()
 
         dataSource = self
+        delegate = self
+
         barItemFontSize = 24
         setupSearchBar()
     }
