@@ -44,7 +44,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
     // MARK: - Selectors
 
     @objc private func refreshHandler(sender: UIRefreshControl) {
-        fetchFavs()
+        fetchFavs() //! eto
         tableView.reloadData()
         refreshControl.endRefreshing()
     }

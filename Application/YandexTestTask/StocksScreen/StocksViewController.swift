@@ -19,7 +19,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, cellDidScr
                 self.barCollectionView.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
                 self.contentCollectionView.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
             }
-        } else {
+        } else if scrollView.contentOffset.y < 200 && scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
             UIView.animate(withDuration: 0.1) {
                 self.navigationController?.navigationBar.alpha = 1
                 self.navigationController?.navigationBar.transform = CGAffineTransform.identity
