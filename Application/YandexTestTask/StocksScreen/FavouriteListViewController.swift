@@ -7,10 +7,17 @@
 
 import Cartography
 import UIKit
+
+protocol cellDidScrollDelegate: AnyObject {
+    func cellDidScroll(scrollView: UIScrollView)
+}
+
 class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
     // MARK: - Private Properties
 
     private let viewModel: StocksListViewModel!
+
+    weak var delegate: cellDidScrollDelegate?
 
     // MARK: - LifeCycle
 
@@ -109,6 +116,11 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("typaScroll")
+        delegate?.cellDidScroll(scrollView: scrollView)
     }
 
     // MARK: - StockCellDelegate

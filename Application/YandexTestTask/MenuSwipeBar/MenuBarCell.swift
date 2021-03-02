@@ -50,7 +50,7 @@ class MenuBarCell: UICollectionViewCell {
         addSubview(label)
         constrain(label) { label in
             label.left == label.superview!.left
-            label.centerY == label.superview!.centerY
+            label.bottom == label.superview!.bottom
         }
     }
 

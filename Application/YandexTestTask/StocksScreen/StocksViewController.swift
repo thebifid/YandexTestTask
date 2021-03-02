@@ -8,7 +8,23 @@
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource {
+class StocksViewController: MenuBarViewController, MenuBarDataSource, cellDidScrollDelegate {
+    func cellDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 20 {
+            navigationController?.setNavigationBarHidden(true, animated: true)
+            UIView.animate(withDuration: 0.1) {
+                self.barCollectionView.transform = CGAffineTransform(translationX: 0, y: -45)
+                self.contentCollectionView.transform = CGAffineTransform(translationX: 0, y: -45)
+            }
+        } else {
+            navigationController?.setNavigationBarHidden(false, animated: true)
+            UIView.animate(withDuration: 0.1) {
+                self.barCollectionView.transform = CGAffineTransform.identity
+                self.contentCollectionView.transform = CGAffineTransform.identity
+            }
+        }
+    }
+
     // MARK: - Private Properties
 
     private let viewModel = StocksListViewModel()
@@ -26,8 +42,6 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource {
         dataSource = self
         barItemFontSize = 24
         setupSearchBar()
-
-        navigationController?.hidesBarsOnSwipe = true
     }
 
     // MARK: - UI Actions
