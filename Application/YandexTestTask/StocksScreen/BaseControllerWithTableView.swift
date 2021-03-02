@@ -16,6 +16,8 @@ class BaseControllerWithTableView: UIViewController {
         setupTableView()
     }
 
+    weak var cellDidScrollDelegate: cellDidScrollDelegate?
+
     // MARK: - UI Controls
 
     lazy var tableView: UITableView = {

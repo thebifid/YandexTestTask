@@ -12,8 +12,8 @@ class MenuContentCell: UICollectionViewCell {
     weak var boss: MenuBarViewController?
 
     func setupCell(withController controller: UIViewController) {
-        if let controller = controller as? FavouriteListViewController {
-            controller.delegate = (boss as! cellDidScrollDelegate)
+        if let controller = controller as? BaseControllerWithTableView {
+            controller.cellDidScrollDelegate = (boss as! cellDidScrollDelegate)
         }
         boss?.addChild(controller)
         addSubview(controller.view)

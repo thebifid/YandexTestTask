@@ -113,6 +113,10 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         return 80
     }
 
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        cellDidScrollDelegate?.cellDidScroll(scrollView: scrollView)
+    }
+
     // MARK: - StockCellDelegate
 
     func favButtonTapped(cell: StockCell) {

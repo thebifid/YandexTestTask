@@ -10,15 +10,19 @@ import UIKit
 
 class StocksViewController: MenuBarViewController, MenuBarDataSource, cellDidScrollDelegate {
     func cellDidScroll(scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 20 {
-            navigationController?.setNavigationBarHidden(true, animated: true)
+        let navBarHeight = navigationController!.navigationBar.frame.height
+
+        if scrollView.contentOffset.y > 200 {
             UIView.animate(withDuration: 0.1) {
-                self.barCollectionView.transform = CGAffineTransform(translationX: 0, y: -45)
-                self.contentCollectionView.transform = CGAffineTransform(translationX: 0, y: -45)
+                self.navigationController?.navigationBar.alpha = 0
+                self.navigationController?.navigationBar.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
+                self.barCollectionView.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
+                self.contentCollectionView.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
             }
         } else {
-            navigationController?.setNavigationBarHidden(false, animated: true)
             UIView.animate(withDuration: 0.1) {
+                self.navigationController?.navigationBar.alpha = 1
+                self.navigationController?.navigationBar.transform = CGAffineTransform.identity
                 self.barCollectionView.transform = CGAffineTransform.identity
                 self.contentCollectionView.transform = CGAffineTransform.identity
             }

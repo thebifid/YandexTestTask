@@ -17,8 +17,6 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     private let viewModel: StocksListViewModel!
 
-    weak var delegate: cellDidScrollDelegate?
-
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -119,8 +117,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("typaScroll")
-        delegate?.cellDidScroll(scrollView: scrollView)
+        cellDidScrollDelegate?.cellDidScroll(scrollView: scrollView)
     }
 
     // MARK: - StockCellDelegate
