@@ -84,7 +84,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
 
         view.addSubview(contentCollectionView)
         constrain(contentCollectionView, barCollectionView) { contentCollectionView, barCollectionView in
-            contentCollectionView.top == barCollectionView.bottom + 10
+            contentCollectionView.top == barCollectionView.bottom
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right
             contentCollectionView.height == contentCollectionView.superview!.height - 100
