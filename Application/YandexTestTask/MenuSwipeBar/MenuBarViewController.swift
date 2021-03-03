@@ -15,7 +15,7 @@ protocol MenuBarDataSource: AnyObject {
 }
 
 protocol MenuBarDelegate: AnyObject {
-    func menuBar(didScrolledFromIndex from: Int, to: Int)
+    func menuBar(didScrolledToIndex to: Int)
 }
 
 class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,
@@ -140,11 +140,12 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
             }
             let indexTo = Int(targetContentOffset.pointee.x / view.frame.width)
 
-            delegate?.menuBar(didScrolledFromIndex: indexFrom, to: indexTo)
+            delegate?.menuBar(didScrolledToIndex: indexTo)
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         contentCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        delegate?.menuBar(didScrolledToIndex: indexPath.item)
     }
 }
