@@ -10,42 +10,11 @@ import UIKit
 
 class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, CellDidScrollDelegate {
     func menuBar(didScrolledToIndex to: Int) {
-        controllers.forEach { controller in
-            controller.tableView.isScrollEnabled = false
-        }
-        controllers[to].tableView.isScrollEnabled = true
+        controllers.forEach { $0.deactivateFollowingNavbar() }
+        controllers[to].activateFollowingNavbar()
     }
 
-    func cellDidScroll(scrollView: UIScrollView) {
-        let navBarHeight = navigationController!.navigationBar.frame.height
-
-        guard let navController = navigationController else { return }
-
-        if scrollView.contentOffset.y > 200 {
-            if !navController.isNavigationBarHidden {
-                UIView.animate(withDuration: 0.1) {
-                    self.navigationController?.navigationBar.alpha = 0
-                    self.navigationController?.navigationBar.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
-                    self.barCollectionView.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
-
-                    self.contentCollectionView.transform = CGAffineTransform(translationX: 0, y: -navBarHeight)
-                } completion: { _ in
-                    self.navigationController?.setNavigationBarHidden(true, animated: false)
-                }
-            }
-
-        } else if scrollView.contentOffset.y < 200, scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0 {
-            if navController.isNavigationBarHidden {
-                navigationController?.setNavigationBarHidden(false, animated: false)
-                UIView.animate(withDuration: 0.1) {
-                    self.navigationController?.navigationBar.alpha = 1
-                    self.navigationController?.navigationBar.transform = CGAffineTransform.identity
-                    self.barCollectionView.transform = CGAffineTransform.identity
-                    self.contentCollectionView.transform = CGAffineTransform.identity
-                }
-            }
-        }
-    }
+    func cellDidScroll(scrollView: UIScrollView) {}
 
     // MARK: - Private Properties
 

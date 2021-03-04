@@ -66,6 +66,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         cv.isPagingEnabled = true
         cv.allowsSelection = false
         cv.showsHorizontalScrollIndicator = false
+        cv.contentInsetAdjustmentBehavior = .never
         return cv
     }()
 
@@ -76,22 +77,24 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
 
         view.addSubview(barCollectionView)
         constrain(barCollectionView) { collectionView in
-            collectionView.top == collectionView.superview!.top + 90
+            collectionView.top == collectionView.superview!.safeAreaLayoutGuide.top - 10
             collectionView.left == collectionView.superview!.left
             collectionView.right == collectionView.superview!.right
-            collectionView.height == 60
+            collectionView.height == 45
         }
 
         view.addSubview(contentCollectionView)
-        constrain(contentCollectionView, barCollectionView) { contentCollectionView, barCollectionView in
-            contentCollectionView.top == barCollectionView.bottom
+        constrain(contentCollectionView) { contentCollectionView in
+            contentCollectionView.top == contentCollectionView.superview!.top
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right
-            contentCollectionView.height == contentCollectionView.superview!.height - 100
+            contentCollectionView.bottom == contentCollectionView.superview!.bottom
         }
 
         barCollectionView.register(MenuBarCell.self, forCellWithReuseIdentifier: "barId")
         contentCollectionView.register(MenuContentCell.self, forCellWithReuseIdentifier: "contentId")
+
+        view.bringSubviewToFront(barCollectionView)
     }
 
     // MARK: - CollectionView
@@ -113,6 +116,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "contentId", for: indexPath) as! MenuContentCell
             cell.boss = self
+            cell.barCV = barCollectionView
             cell.setupCell(withController: dataSource?.menuBar(self, viewControllerForPageAt: indexPath.item) ?? UIViewController())
             return cell
         }

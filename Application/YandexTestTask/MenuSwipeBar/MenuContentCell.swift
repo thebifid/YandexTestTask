@@ -5,15 +5,18 @@
 //  Created by Vasiliy Matveev on 23.02.2021.
 //
 
+import AMScrollingNavbar
 import Cartography
 import UIKit
 
 class MenuContentCell: UICollectionViewCell {
     weak var boss: MenuBarViewController?
+    weak var barCV: UICollectionView?
 
     func setupCell(withController controller: UIViewController) {
         if let controller = controller as? BaseControllerWithTableView {
             controller.cellDidScrollDelegate = (boss as! CellDidScrollDelegate)
+            controller.barCV = barCV
         }
         boss?.addChild(controller)
         addSubview(controller.view)
