@@ -8,13 +8,8 @@
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, cellDidScrollDelegate {
+class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, CellDidScrollDelegate {
     func menuBar(didScrolledToIndex to: Int) {
-        //        guard from >= 0, to <= controllers.count - 1 else { return }
-        //        print("Disable \(from)  Enable \(to)")
-        //        controllers[from].tableView.isScrollEnabled = false
-        //        controllers[to].tableView.isScrollEnabled = true
-
         controllers.forEach { controller in
             controller.tableView.isScrollEnabled = false
         }

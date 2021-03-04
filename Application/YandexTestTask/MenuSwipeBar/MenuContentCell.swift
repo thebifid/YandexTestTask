@@ -13,7 +13,7 @@ class MenuContentCell: UICollectionViewCell {
 
     func setupCell(withController controller: UIViewController) {
         if let controller = controller as? BaseControllerWithTableView {
-            controller.cellDidScrollDelegate = (boss as! cellDidScrollDelegate)
+            controller.cellDidScrollDelegate = (boss as! CellDidScrollDelegate)
         }
         boss?.addChild(controller)
         addSubview(controller.view)

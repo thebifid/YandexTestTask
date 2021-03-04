@@ -8,7 +8,7 @@
 import Cartography
 import UIKit
 
-protocol cellDidScrollDelegate: AnyObject {
+protocol CellDidScrollDelegate: AnyObject {
     func cellDidScroll(scrollView: UIScrollView)
 }
 

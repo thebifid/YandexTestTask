@@ -16,7 +16,7 @@ class BaseControllerWithTableView: UIViewController {
         setupTableView()
     }
 
-    weak var cellDidScrollDelegate: cellDidScrollDelegate?
+    weak var cellDidScrollDelegate: CellDidScrollDelegate?
 
     // MARK: - UI Controls
 
