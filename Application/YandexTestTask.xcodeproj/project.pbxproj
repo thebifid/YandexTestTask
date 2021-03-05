@@ -31,6 +31,8 @@
 		C17F105525E13740006CCA52 /* StocksListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105425E13740006CCA52 /* StocksListViewModel.swift */; };
 		C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105825E14506006CCA52 /* CompanyProfileModel.swift */; };
 		C17F105C25E14E16006CCA52 /* CompanyQuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F105B25E14E16006CCA52 /* CompanyQuoteModel.swift */; };
+		C19C956025F27A5D00220CCF /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19C955F25F27A5D00220CCF /* TagsView.swift */; };
+		C19C956525F27B9400220CCF /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19C956425F27B9400220CCF /* SearchView.swift */; };
 		C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */; };
 		C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */; };
 		C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */; };
@@ -66,6 +68,8 @@
 		C17F105425E13740006CCA52 /* StocksListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewModel.swift; sourceTree = "<group>"; };
 		C17F105825E14506006CCA52 /* CompanyProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyProfileModel.swift; sourceTree = "<group>"; };
 		C17F105B25E14E16006CCA52 /* CompanyQuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyQuoteModel.swift; sourceTree = "<group>"; };
+		C19C955F25F27A5D00220CCF /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
+		C19C956425F27B9400220CCF /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C1DADC6E25E4F508003AB7E3 /* MenuBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarCell.swift; sourceTree = "<group>"; };
 		C1DADC6F25E4F508003AB7E3 /* MenuBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBarViewController.swift; sourceTree = "<group>"; };
 		C1DADC7025E4F508003AB7E3 /* MenuContentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 		C11C6CE625DCFB85002F5EB6 /* YandexTestTask */ = {
 			isa = PBXGroup;
 			children = (
+				C19C955E25F27A5400220CCF /* SearchView */,
 				C17F103C25E12228006CCA52 /* Service */,
 				C11C6D7825DD3476002F5EB6 /* Models */,
 				C11C6D7A25DD451E002F5EB6 /* Helpers */,
@@ -219,6 +224,15 @@
 				C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		C19C955E25F27A5400220CCF /* SearchView */ = {
+			isa = PBXGroup;
+			children = (
+				C19C955F25F27A5D00220CCF /* TagsView.swift */,
+				C19C956425F27B9400220CCF /* SearchView.swift */,
+			);
+			path = SearchView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,6 +416,7 @@
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
 				C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
+				C19C956025F27A5D00220CCF /* TagsView.swift in Sources */,
 				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
 				C17F105525E13740006CCA52 /* StocksListViewModel.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
@@ -412,6 +427,7 @@
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
 				C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */,
+				C19C956525F27B9400220CCF /* SearchView.swift in Sources */,
 				C14C9CB225ECE69E004E9505 /* BaseControllerWithTableView.swift in Sources */,
 				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
 				C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */,

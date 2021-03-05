@@ -8,7 +8,7 @@
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, CellDidScrollDelegate {
+class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, CellDidScrollDelegate, UISearchBarDelegate {
     func menuBar(didScrolledToIndex to: Int) {
         controllers.forEach { $0.deactivateFollowingNavbar() }
         controllers[to].activateFollowingNavbar()
@@ -25,6 +25,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
     // MARK: - UI Controls
 
     private let searchController = UISearchController()
+    private var searchView: SearchView?
 
     // MARK: - LifeCycle
 
@@ -36,18 +37,39 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         setupSearchBar()
     }
 
+    // MARK: - Private Methods
+
     // MARK: - UI Actions
 
     private func setupSearchBar() {
         // Разобраться когда дойду
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
-
         searchController.searchBar.placeholder = "Find company or ticker"
+        searchController.obscuresBackgroundDuringPresentation = false
 
         // Include the search bar within the navigation bar.
         navigationItem.titleView = searchController.searchBar
         definesPresentationContext = true
+
+        searchController.searchBar.delegate = self
+    }
+
+    // MARK: - SearchBarDelegate
+
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        guard searchView == nil else { return true }
+        searchView = SearchView()
+        view.addSubview(searchView!)
+        constrain(searchView!) { searchView in
+            searchView.edges == searchView.superview!.edges
+        }
+        return true
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchView?.removeFromSuperview()
+        searchView = nil
     }
 
     // MARK: - MenuBarDataSource
