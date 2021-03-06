@@ -8,7 +8,17 @@
 import Cartography
 import UIKit
 
-class SearchView: UIView, TagsViewDataSource {
+protocol SearchViewDelegate: AnyObject {
+    func searchView(_ searchView: SearchView, didClickTag tag: String)
+}
+
+class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
+    weak var delegate: SearchViewDelegate?
+
+    func tagDidClicked(_ tagView: TagsView, tagText text: String) {
+        delegate?.searchView(self, didClickTag: text)
+    }
+
     private var popularTagsArray = [String]() {
         didSet {
             popularRequestsTagView.reloadView()
@@ -49,6 +59,7 @@ class SearchView: UIView, TagsViewDataSource {
         let tv = TagsView()
         tv.tag = 0
         tv.dataSource = self
+        tv.delegate = self
         return tv
     }()
 
@@ -56,6 +67,7 @@ class SearchView: UIView, TagsViewDataSource {
         let tv = TagsView()
         tv.tag = 1
         tv.dataSource = self
+        tv.delegate = self
         return tv
     }()
 

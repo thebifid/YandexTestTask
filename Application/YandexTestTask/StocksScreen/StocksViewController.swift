@@ -8,7 +8,13 @@
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, UISearchBarDelegate {
+class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, UISearchBarDelegate, SearchViewDelegate {
+    func searchView(_ searchView: SearchView, didClickTag tag: String) {
+        searchController.searchBar.searchTextField.text = tag
+        searchBarSearchButtonClicked(searchController.searchBar)
+        searchController.searchBar.resignFirstResponder()
+    }
+
     func menuBar(didScrolledToIndex to: Int) {
         controllers.forEach { $0.deactivateFollowingNavbar() }
         controllers[to].activateFollowingNavbar()
@@ -76,6 +82,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         searchController.showsSearchResultsController = false
         guard searchView == nil else { return true }
         searchView = SearchView()
+        searchView!.delegate = self
         searchView!.setPopularTags(tags: viewModel.popularList ?? [])
         view.addSubview(searchView!)
         constrain(searchView!) { searchView in
@@ -87,7 +94,9 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.showsSearchResultsController = true
         if let searchText = searchBar.text?.uppercased() {
+            searchResController.startedSearch()
             viewModel.searchRequest(withText: searchText) { result in
+
                 switch result {
                 case let .failure(error):
                     break

@@ -13,12 +13,18 @@ protocol TagsViewDataSource: AnyObject {
     func titlesForButtons(_ tagView: TagsView) -> [String]
 }
 
+protocol TagsViewDelegate: AnyObject {
+    func tagDidClicked(_ tagView: TagsView, tagText text: String)
+}
+
 class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
     weak var dataSource: TagsViewDataSource? {
         didSet {
             setupUI()
         }
     }
+
+    weak var delegate: TagsViewDelegate?
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -114,7 +120,9 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
     }
 
     @objc private func buttonClicked(sender: UIButton) {
-        print(sender.titleLabel?.text?.trimmingCharacters(in: .whitespaces))
+        if let searchTerm = sender.titleLabel?.text?.trimmingCharacters(in: .whitespaces) {
+            delegate?.tagDidClicked(self, tagText: searchTerm)
+        }
     }
 
     // MARK: - Init

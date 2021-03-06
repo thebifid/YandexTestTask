@@ -5,10 +5,18 @@
 //  Created by Vasiliy Matveev on 06.03.2021.
 //
 
+import Cartography
 import UIKit
 
 class SearchResViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
-    func favButtonTapped(cell: StockCell) {}
+    // MARK: - UI Controls
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView(style: .large)
+        ai.color = .black
+        ai.hidesWhenStopped = true
+        return ai
+    }()
 
     // MARK: - Private Properties
 
@@ -23,9 +31,19 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupUI()
     }
 
     // MARK: - Private Methods
+
+    private func setupUI() {
+        view.addSubview(activityIndicator)
+        view.bringSubviewToFront(activityIndicator)
+        constrain(activityIndicator) { activityIndicator in
+            activityIndicator.centerX == activityIndicator.superview!.centerX
+            activityIndicator.centerY == activityIndicator.superview!.centerY / 2
+        }
+    }
 
     private func setupTableView() {
         tableView.dataSource = self
@@ -36,12 +54,24 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
 
     func setSearchResults(results: [TrendingListFullInfoModel]) {
         searchResult = results
+        activityIndicator.stopAnimating()
+    }
+
+    func startedSearch() {
+        activityIndicator.startAnimating()
+    }
+
+    // MARK: - StockCellDelegate
+
+    func favButtonTapped(cell: StockCell) {
+        let indexPath = tableView.indexPath(for: cell)
+        let index = indexPath!.row
+        print(index)
     }
 
     // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(searchResult.count)
         return searchResult.count
     }
 
