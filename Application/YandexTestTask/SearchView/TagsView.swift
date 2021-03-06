@@ -87,7 +87,7 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         constrain(topStackView) { topStackView in
             topStackView.top == topStackView.superview!.top + 10
             topStackView.left == topStackView.superview!.left + 20
-            topStackView.right == topStackView.superview!.right
+            topStackView.right == topStackView.superview!.right - 20
             topStackView.height == 40
         }
 
