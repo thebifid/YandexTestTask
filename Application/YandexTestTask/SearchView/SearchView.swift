@@ -9,41 +9,74 @@ import Cartography
 import UIKit
 
 class SearchView: UIView, TagsViewDataSource {
-    private var tagsArray = ["Apple", "Yandex", "Alibaba", "Facebook", "AMD", "Bank Of America", "Nokia", "Miscrosoft", "First Solar"] {
+    private var popularTagsArray = [String]() {
         didSet {
-            popularRequestsTagView.reloadView()
+            searchedRequestsTagView.reloadView()
         }
     }
 
+    private var searchedTagsArray = [String]()
+
     func titleForHeader(_ tagView: TagsView) -> String {
-        return "Popular requests"
+        if tagView.tag == 0 {
+            return "Popular requests"
+        } else {
+            return "You've searched for this"
+        }
     }
 
     func titlesForButtons(_ tagView: TagsView) -> [String] {
-        return tagsArray
+        if tagView.tag == 0 {
+            return popularTagsArray
+        } else {
+            return searchedTagsArray
+        }
     }
 
     // MARK: - Public Methods
 
-    func setTags(withTags tags: [String]) {
-        tagsArray = tags
+    func setPopularTags(tags: [String]) {
+        popularTagsArray = tags
+    }
+
+    func setSearchedTags(tags: [String]) {
+        searchedTagsArray = tags
     }
 
     // MARK: - UI Controls
 
-    private let popularRequestsTagView = TagsView()
+    private lazy var popularRequestsTagView: TagsView = {
+        let tv = TagsView()
+        tv.tag = 0
+        tv.dataSource = self
+        return tv
+    }()
+
+    private lazy var searchedRequestsTagView: TagsView = {
+        let tv = TagsView()
+        tv.tag = 1
+        tv.dataSource = self
+        return tv
+    }()
 
     // MARK: - Private Methods
 
     private func setupUI() {
         backgroundColor = .white
-        popularRequestsTagView.dataSource = self
         addSubview(popularRequestsTagView)
         constrain(popularRequestsTagView) { view in
             view.top == view.superview!.safeAreaLayoutGuide.top
             view.left == view.superview!.left
             view.right == view.superview!.right
             view.height == 150
+        }
+
+        addSubview(searchedRequestsTagView)
+        constrain(searchedRequestsTagView, popularRequestsTagView) { searched, popular in
+            searched.top == popular.bottom
+            searched.left == searched.superview!.left
+            searched.right == searched.superview!.right
+            searched.height == 150
         }
     }
 

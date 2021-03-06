@@ -39,6 +39,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
 
     // MARK: - Private Methods
 
+
     // MARK: - UI Actions
 
     private func setupSearchBar() {
@@ -47,7 +48,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.placeholder = "Find company or ticker"
         searchController.obscuresBackgroundDuringPresentation = false
-
+        
         // Include the search bar within the navigation bar.
         navigationItem.titleView = searchController.searchBar
         definesPresentationContext = true
@@ -61,12 +62,12 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         guard searchView == nil else { return true }
         searchView = SearchView()
         view.addSubview(searchView!)
-        constrain(searchView!) { searchView in
+        constrain(searchView!) { (searchView) in
             searchView.edges == searchView.superview!.edges
         }
         return true
     }
-
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchView?.removeFromSuperview()
         searchView = nil
