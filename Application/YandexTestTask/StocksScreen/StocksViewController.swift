@@ -35,10 +35,19 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         delegate = self
         barItemFontSize = 24
         setupSearchBar()
+        enabliBinding()
+    }
+
+    private func enabliBinding() {
+        viewModel.didUpdatePopularList = { [weak self] in
+            guard self?.searchView != nil else { return }
+            DispatchQueue.main.async {
+                self?.searchView!.setPopularTags(tags: self?.viewModel.popularList ?? [])
+            }
+        }
     }
 
     // MARK: - Private Methods
-
 
     // MARK: - UI Actions
 
@@ -48,7 +57,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.placeholder = "Find company or ticker"
         searchController.obscuresBackgroundDuringPresentation = false
-        
+
         // Include the search bar within the navigation bar.
         navigationItem.titleView = searchController.searchBar
         definesPresentationContext = true
@@ -61,13 +70,14 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         guard searchView == nil else { return true }
         searchView = SearchView()
+        searchView!.setPopularTags(tags: viewModel.popularList ?? [])
         view.addSubview(searchView!)
-        constrain(searchView!) { (searchView) in
+        constrain(searchView!) { searchView in
             searchView.edges == searchView.superview!.edges
         }
         return true
     }
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchView?.removeFromSuperview()
         searchView = nil

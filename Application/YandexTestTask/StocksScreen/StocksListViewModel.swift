@@ -22,24 +22,41 @@ class StocksListViewModel {
         }
     }
 
+    var popularList: [String]? {
+        didSet {
+            popularList = Array((popularList?.prefix(16)) ?? [])
+            didUpdatePopularList?()
+        }
+    }
+
+    var searchedList: [String]?
+
     // MARK: - Handlers
 
     var didUpdateModel: (() -> Void)?
     var didUpdateFavs: (() -> Void)?
+    var didUpdatePopularList: (() -> Void)?
 
     // MARK: - Public Methods
 
     /// Request list of trending stoks
     func requestTrendingList(completion: @escaping (Result<Void, Error>) -> Void) {
-        NetworkService.sharedInstance.requestTrandingList { result in
-
+        NetworkService.sharedInstance.requestTrendingList { result in
             switch result {
             case let .failure(error):
                 completion(.failure(error))
+            case let .success(companies):
+                self.popularList = companies.constituents
+                NetworkService.sharedInstance.requestTrandingCompanies(companies: companies.constituents) { result in
+                    switch result {
+                    case let .failure(error):
+                        completion(.failure(error))
 
-            case let .success(info):
-                self.trendingListInfo = info
-                completion(.success(()))
+                    case let .success(info):
+                        self.trendingListInfo = info
+                        completion(.success(()))
+                    }
+                }
             }
         }
     }

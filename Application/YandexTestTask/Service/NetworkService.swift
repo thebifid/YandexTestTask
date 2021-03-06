@@ -12,76 +12,81 @@ import UIKit
 class NetworkService {
     static let sharedInstance = NetworkService()
 
-    func requestTrandingList(completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
+    func requestTrandingCompanies(companies: [String], completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var companyQuotes = [String: CompanyQuoteModel]()
         var companyImages = [String: Data]()
         var isAnyError: Error?
 
+        var first5 = [String]()
+        let hasImageDispatchGroup = DispatchGroup()
+        hasImageDispatchGroup.enter()
+        ifHasImage(tickers: companies) { result in
+            switch result {
+            case let .success(imagesDataDitct):
+                for index in first5.count ... 12 {
+                    companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
+                    first5.append(Array(imagesDataDitct)[index].key)
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+            hasImageDispatchGroup.leave()
+        }
+
+        hasImageDispatchGroup.notify(queue: .global(qos: .background)) {
+            let dispatchGroup = DispatchGroup()
+            dispatchGroup.enter()
+            self.requestCompanyProfile(tickers: first5) { result in
+                switch result {
+                case let .success(profiles):
+                    companyProfiles = profiles
+                case let .failure(error):
+                    isAnyError = error
+                }
+                dispatchGroup.leave()
+            }
+
+            dispatchGroup.enter()
+            self.requestCompanyQuote(tickers: first5) { result in
+                switch result {
+                case let .success(quotes):
+                    companyQuotes = quotes
+                case let .failure(error):
+                    isAnyError = error
+                }
+                dispatchGroup.leave()
+            }
+
+            dispatchGroup.notify(queue: .main) {
+                var trendingListFullInfo = [TrendingListFullInfoModel]()
+                guard isAnyError == nil else {
+                    completion(.failure(isAnyError!))
+                    return
+                }
+                companyProfiles.keys.forEach { key in
+                    let inFav = CoreDataManager.sharedInstance.checkIfExist(byTicker: key)
+                    trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+                                                                          companyQuote: companyQuotes[key]!,
+                                                                          companyImageData: companyImages[key]!,
+                                                                          inFav: inFav))
+                }
+                completion(.success(trendingListFullInfo))
+            }
+        }
+    }
+
+    func requestTrendingList(completion: @escaping (Result<ConstituentsModel, Error>) -> Void) {
         let url = BuildUrl(path: API.list, params: ["symbol": "^NDX"])
         URLSession.shared.dataTask(with: url) { data, _, error in
-            guard error == nil else { return }
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
             if let data = data {
                 do {
                     let constituents = try JSONDecoder().decode(ConstituentsModel.self, from: data)
-                    var first5 = [String]()
-
-                    let hasImageDispatchGroup = DispatchGroup()
-                    hasImageDispatchGroup.enter()
-                    self.ifHasImage(tickers: constituents.constituents) { result in
-                        switch result {
-                        case let .success(imagesDataDitct):
-                            for index in first5.count ... 12 {
-                                companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
-                                first5.append(Array(imagesDataDitct)[index].key)
-                            }
-                        case let .failure(error):
-                            completion(.failure(error))
-                        }
-                        hasImageDispatchGroup.leave()
-                    }
-
-                    hasImageDispatchGroup.notify(queue: .global(qos: .background)) {
-                        let dispatchGroup = DispatchGroup()
-                        dispatchGroup.enter()
-                        self.requestCompanyProfile(tickers: first5) { result in
-                            switch result {
-                            case let .success(profiles):
-                                companyProfiles = profiles
-                            case let .failure(error):
-                                isAnyError = error
-                            }
-                            dispatchGroup.leave()
-                        }
-
-                        dispatchGroup.enter()
-                        self.requestCompanyQuote(tickers: first5) { result in
-                            switch result {
-                            case let .success(quotes):
-                                companyQuotes = quotes
-                            case let .failure(error):
-                                isAnyError = error
-                            }
-                            dispatchGroup.leave()
-                        }
-
-                        dispatchGroup.notify(queue: .main) {
-                            var trendingListFullInfo = [TrendingListFullInfoModel]()
-                            guard isAnyError == nil else {
-                                completion(.failure(isAnyError!))
-                                return
-                            }
-                            companyProfiles.keys.forEach { key in
-                                let inFav = CoreDataManager.sharedInstance.checkIfExist(byTicker: key)
-                                trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
-                                                                                      companyQuote: companyQuotes[key]!,
-                                                                                      companyImageData: companyImages[key]!,
-                                                                                      inFav: inFav))
-                            }
-                            completion(.success(trendingListFullInfo))
-                        }
-                    }
-
+                    completion(.success(constituents))
                 } catch {
                     completion(.failure(error))
                 }

@@ -11,7 +11,7 @@ import UIKit
 class SearchView: UIView, TagsViewDataSource {
     private var popularTagsArray = [String]() {
         didSet {
-            searchedRequestsTagView.reloadView()
+            popularRequestsTagView.reloadView()
         }
     }
 
