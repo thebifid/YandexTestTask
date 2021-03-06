@@ -29,6 +29,12 @@ class StocksListViewModel {
         }
     }
 
+    var searchResult: [TrendingListFullInfoModel] = [] {
+        didSet {
+            didSearch?()
+        }
+    }
+
     var searchedList: [String]?
 
     // MARK: - Handlers
@@ -36,6 +42,7 @@ class StocksListViewModel {
     var didUpdateModel: (() -> Void)?
     var didUpdateFavs: (() -> Void)?
     var didUpdatePopularList: (() -> Void)?
+    var didSearch: (() -> Void)?
 
     // MARK: - Public Methods
 
@@ -47,7 +54,7 @@ class StocksListViewModel {
                 completion(.failure(error))
             case let .success(companies):
                 self.popularList = companies.constituents
-                NetworkService.sharedInstance.requestTrandingCompanies(companies: companies.constituents) { result in
+                NetworkService.sharedInstance.requestCompaniesInfo(companies: companies.constituents) { result in
                     switch result {
                     case let .failure(error):
                         completion(.failure(error))
@@ -128,6 +135,18 @@ class StocksListViewModel {
                     }
                     completion(.success(()))
                 }
+            }
+        }
+    }
+
+    func searchRequest(withText text: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        NetworkService.sharedInstance.requestSearch(withText: text) { [weak self] result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case let .success(answer):
+                self?.searchResult = answer
+                completion(.success(()))
             }
         }
     }

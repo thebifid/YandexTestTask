@@ -14,6 +14,7 @@ struct API {
     static let companyProfile = "/api/v1/stock/profile2"
     static let companyQuote = "/api/v1/quote"
     static let logo = "/api/logo"
+    static let search = "/api/v1/search"
 
     static let token = "c0mgb5748v6ue78flnkg"
 }

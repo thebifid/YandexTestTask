@@ -15,7 +15,6 @@ class MenuContentCell: UICollectionViewCell {
 
     func setupCell(withController controller: UIViewController) {
         if let controller = controller as? BaseControllerWithTableView {
-            controller.cellDidScrollDelegate = (boss as! CellDidScrollDelegate)
             controller.barCV = barCV
         }
         boss?.addChild(controller)

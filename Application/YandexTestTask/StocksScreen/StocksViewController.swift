@@ -8,13 +8,11 @@
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, CellDidScrollDelegate, UISearchBarDelegate {
+class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, UISearchBarDelegate {
     func menuBar(didScrolledToIndex to: Int) {
         controllers.forEach { $0.deactivateFollowingNavbar() }
         controllers[to].activateFollowingNavbar()
     }
-
-    func cellDidScroll(scrollView: UIScrollView) {}
 
     // MARK: - Private Properties
 
@@ -24,7 +22,9 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
 
     // MARK: - UI Controls
 
-    private let searchController = UISearchController()
+    private let searchResController = SearchResViewController()
+
+    private lazy var searchController = UISearchController(searchResultsController: searchResController)
     private var searchView: SearchView?
 
     // MARK: - LifeCycle
@@ -45,6 +45,10 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
                 self?.searchView!.setPopularTags(tags: self?.viewModel.popularList ?? [])
             }
         }
+
+        viewModel.didSearch = { [weak self] in
+            self?.searchResController.setSearchResults(results: self?.viewModel.searchResult ?? [])
+        }
     }
 
     // MARK: - Private Methods
@@ -57,6 +61,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.placeholder = "Find company or ticker"
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.showsSearchResultsController = false
 
         // Include the search bar within the navigation bar.
         navigationItem.titleView = searchController.searchBar
@@ -68,6 +73,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
     // MARK: - SearchBarDelegate
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchController.showsSearchResultsController = false
         guard searchView == nil else { return true }
         searchView = SearchView()
         searchView!.setPopularTags(tags: viewModel.popularList ?? [])
@@ -76,6 +82,20 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
             searchView.edges == searchView.superview!.edges
         }
         return true
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchController.showsSearchResultsController = true
+        if let searchText = searchBar.text?.uppercased() {
+            viewModel.searchRequest(withText: searchText) { result in
+                switch result {
+                case let .failure(error):
+                    break
+                case .success:
+                    self.searchResController.setSearchResults(results: self.viewModel.searchResult ?? [])
+                }
+            }
+        }
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

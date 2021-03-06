@@ -12,7 +12,7 @@ import UIKit
 class NetworkService {
     static let sharedInstance = NetworkService()
 
-    func requestTrandingCompanies(companies: [String], completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
+    func requestCompaniesInfo(companies: [String], completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var companyQuotes = [String: CompanyQuoteModel]()
         var companyImages = [String: Data]()
@@ -24,7 +24,7 @@ class NetworkService {
         ifHasImage(tickers: companies) { result in
             switch result {
             case let .success(imagesDataDitct):
-                for index in first5.count ... 12 {
+                for index in 0 ..< min(imagesDataDitct.count, 5) {
                     companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
                     first5.append(Array(imagesDataDitct)[index].key)
                 }
@@ -244,6 +244,38 @@ class NetworkService {
         dispatchGroup.notify(queue: .main) {
             completion(.success(tickerDataDict))
         }
+    }
+
+    func requestSearch(withText text: String, completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
+        let url = BuildUrl(path: API.search, params: ["q": text])
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard error == nil else {
+                completion(.failure(error!))
+                return
+            }
+
+            if let data = data {
+                do {
+                    let answer = try JSONDecoder().decode(SymbolLookUpModel.self, from: data)
+                    var tickers = [String]()
+                    answer.result.forEach { if $0.type == "Common Stock", !$0.symbol.contains(".") { tickers.append($0.symbol) } }
+
+                    self.requestCompaniesInfo(companies: tickers) { result in
+                        switch result {
+                        case let .failure(error):
+                            print(error)
+
+                        case let .success(info):
+                            completion(.success(info))
+                        }
+                    }
+
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+
+        }.resume()
     }
 
     private func BuildUrl(path: String, params: [String: String]) -> URL {
