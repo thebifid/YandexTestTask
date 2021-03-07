@@ -9,45 +9,45 @@ import Foundation
 
 class StocksListViewModel {
     // MARK: - Public Properties
-
+    
     var trendingListInfo: [TrendingListFullInfoModel] = [] {
         didSet {
             didUpdateModel?()
         }
     }
-
+    
     var favListInfo: [TrendingListFullInfoModel] = [] {
         didSet {
             didUpdateFavs?()
         }
     }
-
+    
     var popularList: [String]? {
         didSet {
             popularList = Array((popularList?.prefix(16)) ?? [])
             didUpdatePopularList?()
         }
     }
-
+    
     var searchResult: [TrendingListFullInfoModel] = [] {
         didSet {
             didSearch?()
         }
     }
-
+    
     var searchedList: [String] {
         return UserDefaults.standard.object(forKey: "SavedTerms") as? [String] ?? []
     }
-
+    
     // MARK: - Handlers
-
+    
     var didUpdateModel: (() -> Void)?
     var didUpdateFavs: (() -> Void)?
     var didUpdatePopularList: (() -> Void)?
     var didSearch: (() -> Void)?
-
+    
     // MARK: - Public Methods
-
+    
     /// Request list of trending stoks
     func requestTrendingList(completion: @escaping (Result<Void, Error>) -> Void) {
         NetworkService.sharedInstance.requestTrendingList { result in
@@ -60,7 +60,7 @@ class StocksListViewModel {
                     switch result {
                     case let .failure(error):
                         completion(.failure(error))
-
+                        
                     case let .success(info):
                         self.trendingListInfo = info
                         completion(.success(()))
@@ -69,7 +69,7 @@ class StocksListViewModel {
             }
         }
     }
-
+    
     /// Fetch data from CoreData
     func fetchData(completion: @escaping ((Result<Void, Error>) -> Void)) {
         CoreDataManager.sharedInstance.fetchFavs(completion: { [weak self] result in
@@ -88,10 +88,10 @@ class StocksListViewModel {
                     }
                 }
             }
-
+            
         })
     }
-
+    
     private func updateQuotes(model: [TrendingListFullInfoModel],
                               completion: @escaping ((Result<[TrendingListFullInfoModel], Error>) -> Void)) {
         var info = model
@@ -109,15 +109,16 @@ class StocksListViewModel {
             }
         }
     }
-
+    
     enum StockScreen {
         case stocks, favourite, search
     }
+    
 
     /// Action for fav button tapped in StoksScreen
     func stocksFavButtonTapped(list: StockScreen, index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
         var dataSource: [TrendingListFullInfoModel] = []
-
+        
         switch list {
         case .stocks:
             dataSource = trendingListInfo
@@ -126,7 +127,7 @@ class StocksListViewModel {
         case .search:
             dataSource = searchResult
         }
-
+        
         if CoreDataManager.sharedInstance.checkIfExist(byTicker: dataSource[index].ticker) == false {
             CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: dataSource[index]) { [weak self] result in
                 guard let self = self else { return }
@@ -134,9 +135,29 @@ class StocksListViewModel {
                 case let .failure(error):
                     completion(.failure(error))
                 case .success:
-                    self.trendingListInfo[index].inFav = true
-                    dataSource[index].inFav = true
-                    self.favListInfo.append(dataSource[index])
+                    var elementToAppend = dataSource[index]
+                    elementToAppend.inFav = true
+                    switch list {
+                    case .stocks:
+                        self.trendingListInfo[index].inFav = true
+                        var elementToAppend = dataSource[index]
+                        elementToAppend.inFav = true
+                        self.favListInfo.append(elementToAppend)
+                    case .favourite:
+                        self.favListInfo[index].inFav = true
+                        if let indexInTrending = self.trendingListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
+                            self.trendingListInfo[indexInTrending].inFav = true
+                        }
+                    case .search:
+                        self.searchResult[index].inFav = true
+                        if let indexInTrending = self.trendingListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
+                            self.trendingListInfo[indexInTrending].inFav = true
+                        }
+                        var elementToAppend = dataSource[index]
+                        elementToAppend.inFav = true
+                        self.favListInfo.append(elementToAppend)
+                    }
+                    
                     completion(.success(()))
                 }
             }
@@ -147,19 +168,33 @@ class StocksListViewModel {
                 case let .failure(error):
                     completion(.failure(error))
                 case .success:
-                    if let indexToDelete = self.favListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
-                        if list != .favourite {
+                    switch list {
+                    case .stocks:
+                        self.trendingListInfo[index].inFav = false
+                        if let indexToDelete = self.favListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
                             self.favListInfo.remove(at: indexToDelete)
                         }
-                        self.favListInfo[indexToDelete].inFav = false
-                        self.trendingListInfo[index].inFav = false
+                    case .favourite:
+                        self.favListInfo[index].inFav = false
+                        if let indexToDelete = self.trendingListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
+                            self.trendingListInfo[indexToDelete].inFav = false
+                        }
+                    case .search:
+                        self.searchResult[index].inFav = false
+                        if let indexToDelete = self.trendingListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
+                            self.trendingListInfo[indexToDelete].inFav = false
+                        }
+                        if let indexToDelete = self.favListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
+                            self.favListInfo.remove(at: indexToDelete)
+                        }
                     }
                     completion(.success(()))
+                    
                 }
             }
         }
     }
-
+    
     func searchRequest(withText text: String, completion: @escaping (Result<Void, Error>) -> Void) {
         NetworkService.sharedInstance.requestSearch(withText: text) { [weak self] result in
             switch result {
@@ -171,7 +206,7 @@ class StocksListViewModel {
             }
         }
     }
-
+    
     func saveSerchRequestTerm(withTerm term: String) -> Bool {
         let defaults = UserDefaults.standard
         var savedTerms = defaults.object(forKey: "SavedTerms") as? [String] ?? []

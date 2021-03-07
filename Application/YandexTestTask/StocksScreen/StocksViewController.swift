@@ -11,7 +11,8 @@ import UIKit
 class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate,
     UISearchBarDelegate, SearchViewDelegate, SearchResControllerDelegate {
     func favButtonClicked(atIndexPath indexPath: IndexPath) {
-        print(indexPath)
+        viewModel.stocksFavButtonTapped(list: .search, index: indexPath.row) { _ in
+        }
     }
 
     func searchView(_ searchView: SearchView, didClickTag tag: String) {
