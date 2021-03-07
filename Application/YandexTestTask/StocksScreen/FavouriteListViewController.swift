@@ -54,9 +54,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
     // MARK: - Selectors
 
     @objc private func refreshHandler(sender: UIRefreshControl) {
-        fetchFavs() //! eto
-        tableView.reloadData()
-        refreshControl.endRefreshing()
+        fetchFavs()
     }
 
     // MARK: - UI Actions
@@ -110,7 +108,9 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
             guard let self = self else { return }
             switch result {
             case let .failure(error):
-                let alert = AlertAssist.AlertWithCancel(withError: error)
+                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
+                    self.fetchFavs()
+                }
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                     self.present(alert, animated: true, completion: nil)
@@ -118,6 +118,9 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
             case .success:
                 self.activityIndicator.stopAnimating()
             }
+
+            self.refreshControl.endRefreshing()
+            self.tableView.reloadData()
         }
     }
 

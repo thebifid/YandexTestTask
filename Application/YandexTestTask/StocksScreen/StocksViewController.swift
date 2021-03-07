@@ -111,9 +111,9 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
 
                 switch result {
                 case let .failure(error):
-                    break
+                    print(error.localizedDescription)
                 case .success:
-                    self.searchResController.setSearchResults(results: self.viewModel.searchResult ?? [])
+                    self.searchResController.setSearchResults(results: self.viewModel.searchResult)
                 }
             }
         }

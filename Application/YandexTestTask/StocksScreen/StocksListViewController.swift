@@ -83,7 +83,9 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
             switch result {
             case let .failure(error):
                 DispatchQueue.main.async {
-                    let alert = AlertAssist.AlertWithAction(withError: error)
+                    let alert = AlertAssist.AlertWithTryAgainAction(withError: error, action: { _ in
+                        self.requestData()
+                    })
                     self.activityIndicator.stopAnimating()
                     self.refreshControl.endRefreshing()
                     self.present(alert, animated: true, completion: nil)
