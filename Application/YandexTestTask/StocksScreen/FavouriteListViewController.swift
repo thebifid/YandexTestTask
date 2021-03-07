@@ -67,7 +67,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
     // MARK: - Private Methods
 
     private func enableBinding() {
-        viewModel.didUpdateFavs = { [weak self] in
+        viewModel.didUpdateFavsList = { [weak self] in
             self?.tableView.reloadData()
         }
     }

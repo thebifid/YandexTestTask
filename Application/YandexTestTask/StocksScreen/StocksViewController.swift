@@ -59,7 +59,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
             }
         }
 
-        viewModel.didSearch = { [weak self] in
+        viewModel.didUpdateSearchList = { [weak self] in
             self?.searchResController.setSearchResults(results: self?.viewModel.searchResult ?? [])
         }
     }

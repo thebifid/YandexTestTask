@@ -61,7 +61,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
     // MARK: - Private Methods
 
     private func enableBinding() {
-        viewModel.didUpdateModel = { [weak self] in
+        viewModel.didUpdateStocksList = { [weak self] in
             self?.tableView.reloadData()
         }
     }

@@ -12,13 +12,13 @@ class StocksListViewModel {
 
     var trendingListInfo: [TrendingListFullInfoModel] = [] {
         didSet {
-            didUpdateModel?()
+            didUpdateStocksList?()
         }
     }
 
     var favListInfo: [TrendingListFullInfoModel] = [] {
         didSet {
-            didUpdateFavs?()
+            didUpdateFavsList?()
         }
     }
 
@@ -31,7 +31,7 @@ class StocksListViewModel {
 
     var searchResult: [TrendingListFullInfoModel] = [] {
         didSet {
-            didSearch?()
+            didUpdateSearchList?()
         }
     }
 
@@ -41,10 +41,10 @@ class StocksListViewModel {
 
     // MARK: - Handlers
 
-    var didUpdateModel: (() -> Void)?
-    var didUpdateFavs: (() -> Void)?
+    var didUpdateStocksList: (() -> Void)?
+    var didUpdateFavsList: (() -> Void)?
     var didUpdatePopularList: (() -> Void)?
-    var didSearch: (() -> Void)?
+    var didUpdateSearchList: (() -> Void)?
 
     // MARK: - Public Methods
 
@@ -115,9 +115,9 @@ class StocksListViewModel {
     }
 
     private func didUpdateAllModels() {
-        didUpdateModel?()
-        didUpdateFavs?()
-        didSearch?()
+        didUpdateStocksList?()
+        didUpdateFavsList?()
+        didUpdateSearchList?()
     }
 
     /// Action for fav button tapped in StoksScreen
