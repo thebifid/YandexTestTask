@@ -8,7 +8,12 @@
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate, UISearchBarDelegate, SearchViewDelegate {
+class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate,
+    UISearchBarDelegate, SearchViewDelegate, SearchResControllerDelegate {
+    func favButtonClicked(atIndexPath indexPath: IndexPath) {
+        print(indexPath)
+    }
+
     func searchView(_ searchView: SearchView, didClickTag tag: String) {
         searchController.searchBar.searchTextField.text = tag
         searchBarSearchButtonClicked(searchController.searchBar)
@@ -42,6 +47,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         barItemFontSize = 24
         setupSearchBar()
         enabliBinding()
+        searchResController.delegate = self
     }
 
     private func enabliBinding() {

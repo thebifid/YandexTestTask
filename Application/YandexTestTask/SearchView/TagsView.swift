@@ -111,7 +111,7 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         var topArrayTitles = [String]()
         var bottomArrayTitles = [String]()
 
-        if unwrapArrayOfTitles.count < 5 {
+        if unwrapArrayOfTitles.count < 6 {
             topArrayTitles = unwrapArrayOfTitles
         } else {
             for index in stride(from: 0, to: unwrapArrayOfTitles.count, by: 2) {
@@ -137,7 +137,7 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         if emptyPlaceholderLabel.alpha == 1 {
             emptyPlaceholderLabel.alpha = 0
         }
-        if bottomStackView.subviews.count < topStackView.subviews.count, topStackView.subviews.count > 4 {
+        if bottomStackView.subviews.count < topStackView.subviews.count, topStackView.subviews.count > 5 {
             bottomStackView.addArrangedSubview(makeButtons(withTitles: [tag]).first!)
         } else {
             topStackView.addArrangedSubview(makeButtons(withTitles: [tag]).first!)
@@ -152,6 +152,7 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
             button.setTitle("   \($0)   ", for: .normal)
             button.setTitleColor(.black, for: .normal)
             button.backgroundColor = R.color.customLightGray()
+            button.titleLabel?.font = .boldSystemFont(ofSize: 14)
             button.layer.cornerRadius = 16
             button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
             buttonArray.append(button)

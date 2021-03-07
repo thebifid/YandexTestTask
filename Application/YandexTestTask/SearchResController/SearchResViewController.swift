@@ -8,7 +8,13 @@
 import Cartography
 import UIKit
 
+protocol SearchResControllerDelegate: AnyObject {
+    func favButtonClicked(atIndexPath indexPath: IndexPath)
+}
+
 class SearchResViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
+    weak var delegate: SearchResControllerDelegate?
+
     // MARK: - UI Controls
 
     private let activityIndicator: UIActivityIndicatorView = {
@@ -64,9 +70,9 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     // MARK: - StockCellDelegate
 
     func favButtonTapped(cell: StockCell) {
-        let indexPath = tableView.indexPath(for: cell)
-        let index = indexPath!.row
-        print(index)
+        if let indexPath = tableView.indexPath(for: cell) {
+            delegate?.favButtonClicked(atIndexPath: indexPath)
+        }
     }
 
     // MARK: - TableView
