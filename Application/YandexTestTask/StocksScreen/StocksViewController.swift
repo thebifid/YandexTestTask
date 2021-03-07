@@ -79,6 +79,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
     // MARK: - SearchBarDelegate
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.tintColor = .systemBlue
         searchController.showsSearchResultsController = false
         guard searchView == nil else { return true }
         searchView = SearchView()
@@ -108,6 +109,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.tintColor = .white
         searchView?.removeFromSuperview()
         searchView = nil
     }

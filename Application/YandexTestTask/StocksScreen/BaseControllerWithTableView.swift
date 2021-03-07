@@ -42,7 +42,7 @@ class BaseControllerWithTableView: UIViewController {
 
     func activateFollowingNavbar() {
         if let navigationController = navigationController as? ScrollingNavigationController {
-            navigationController.followScrollView(tableView, followers: [NavigationBarFollower(view: barCV!)])
+            navigationController.followScrollView(tableView, delay: 20, followers: [NavigationBarFollower(view: barCV!)])
         }
     }
 
