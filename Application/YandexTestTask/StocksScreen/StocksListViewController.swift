@@ -124,7 +124,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
     func favButtonTapped(cell: StockCell) {
         let indexPath = tableView.indexPath(for: cell)
         let index = indexPath!.row
-        viewModel.stocksFavButtonTapped(index: index) { result in
+        viewModel.stocksFavButtonTapped(list: .stocks, index: index) { result in
             switch result {
             case let .failure(error):
                 let alert = AlertAssist.AlertWithCancel(withError: error)

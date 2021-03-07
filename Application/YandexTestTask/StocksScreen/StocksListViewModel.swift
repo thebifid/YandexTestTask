@@ -110,29 +110,48 @@ class StocksListViewModel {
         }
     }
 
+    enum StockScreen {
+        case stocks, favourite, search
+    }
+
     /// Action for fav button tapped in StoksScreen
-    func stocksFavButtonTapped(index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
-        if CoreDataManager.sharedInstance.checkIfExist(byTicker: trendingListInfo[index].ticker) == false {
-            CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: trendingListInfo[index]) { [weak self] result in
+    func stocksFavButtonTapped(list: StockScreen, index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
+        var dataSource: [TrendingListFullInfoModel] = []
+
+        switch list {
+        case .stocks:
+            dataSource = trendingListInfo
+        case .favourite:
+            dataSource = favListInfo
+        case .search:
+            dataSource = searchResult
+        }
+
+        if CoreDataManager.sharedInstance.checkIfExist(byTicker: dataSource[index].ticker) == false {
+            CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: dataSource[index]) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case let .failure(error):
                     completion(.failure(error))
                 case .success:
                     self.trendingListInfo[index].inFav = true
-                    self.favListInfo.append(self.trendingListInfo[index])
+                    dataSource[index].inFav = true
+                    self.favListInfo.append(dataSource[index])
                     completion(.success(()))
                 }
             }
         } else {
-            CoreDataManager.sharedInstance.removeFromCoreData(byTicker: trendingListInfo[index].ticker) { [weak self] result in
+            CoreDataManager.sharedInstance.removeFromCoreData(byTicker: dataSource[index].ticker) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case let .failure(error):
                     completion(.failure(error))
                 case .success:
-                    if let indexToDelete = self.favListInfo.firstIndex(where: { $0.ticker == self.trendingListInfo[index].ticker }) {
-                        self.favListInfo.remove(at: indexToDelete)
+                    if let indexToDelete = self.favListInfo.firstIndex(where: { $0.ticker == dataSource[index].ticker }) {
+                        if list != .favourite {
+                            self.favListInfo.remove(at: indexToDelete)
+                        }
+                        self.favListInfo[indexToDelete].inFav = false
                         self.trendingListInfo[index].inFav = false
                     }
                     completion(.success(()))
@@ -149,42 +168,6 @@ class StocksListViewModel {
             case let .success(answer):
                 self?.searchResult = answer
                 completion(.success(()))
-            }
-        }
-    }
-
-    /// Action for fav button tapped in FavScreen
-    func favsFavButtonTapped(index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
-        let inFav = favListInfo[index].inFav
-
-        if inFav {
-            CoreDataManager.sharedInstance.removeFromCoreData(byTicker: favListInfo[index].ticker) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case let .failure(error):
-                    completion(.failure(error))
-                case .success:
-                    self.favListInfo[index].inFav = false
-                    let trendingListIndex = self.trendingListInfo.firstIndex(where: { $0.ticker == self.favListInfo[index].ticker })
-                    if trendingListIndex != nil {
-                        self.trendingListInfo[trendingListIndex!].inFav = false
-                    }
-                    completion(.success(()))
-                }
-            }
-        } else {
-            CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: favListInfo[index]) { result in
-                switch result {
-                case let .failure(error):
-                    completion(.failure(error))
-                case .success:
-                    self.favListInfo[index].inFav = true
-                    let trendingListIndex = self.trendingListInfo.firstIndex(where: { $0.ticker == self.favListInfo[index].ticker })
-                    if trendingListIndex != nil {
-                        self.trendingListInfo[trendingListIndex!].inFav = true
-                    }
-                    completion(.success(()))
-                }
             }
         }
     }

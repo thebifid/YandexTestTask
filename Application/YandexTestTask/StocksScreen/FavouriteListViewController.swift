@@ -125,7 +125,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
     func favButtonTapped(cell: StockCell) {
         let indexPath = tableView.indexPath(for: cell)
         let index = indexPath!.row
-        viewModel.favsFavButtonTapped(index: index) { result in
+        viewModel.stocksFavButtonTapped(list: .favourite, index: index) { result in
             switch result {
             case let .failure(error):
                 let alert = AlertAssist.AlertWithCancel(withError: error)
