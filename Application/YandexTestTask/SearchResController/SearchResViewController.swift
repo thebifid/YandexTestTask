@@ -56,6 +56,12 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         tableView.delegate = self
     }
 
+    private func vibrate() {
+        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
+        impactFeedbackgenerator.prepare()
+        impactFeedbackgenerator.impactOccurred()
+    }
+
     // MARK: - Public Methods
 
     func setSearchResults(results: [TrendingListFullInfoModel]) {
@@ -70,6 +76,7 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     // MARK: - StockCellDelegate
 
     func favButtonTapped(cell: StockCell) {
+        vibrate()
         if let indexPath = tableView.indexPath(for: cell) {
             delegate?.favButtonClicked(atIndexPath: indexPath)
         }

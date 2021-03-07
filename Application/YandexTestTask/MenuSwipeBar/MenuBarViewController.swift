@@ -136,12 +136,6 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
             let index = Int(targetContentOffset.pointee.x / view.frame.width)
             let indexPath = IndexPath(item: index, section: 0)
             barCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-            var indexFrom = 0
-            if velocity.x < 0 {
-                indexFrom = Int((targetContentOffset.pointee.x + view.frame.width) / view.frame.width)
-            } else {
-                indexFrom = Int((targetContentOffset.pointee.x - view.frame.width) / view.frame.width)
-            }
             let indexTo = Int(targetContentOffset.pointee.x / view.frame.width)
 
             delegate?.menuBar(didScrolledToIndex: indexTo)

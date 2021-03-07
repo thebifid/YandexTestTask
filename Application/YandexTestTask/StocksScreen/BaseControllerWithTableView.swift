@@ -10,11 +10,6 @@ import Cartography
 import UIKit
 
 class BaseControllerWithTableView: UIViewController {
-    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        print("kekw")
-        return true
-    }
-
     // MARK: - LifeCycle
 
     override func viewDidLoad() {

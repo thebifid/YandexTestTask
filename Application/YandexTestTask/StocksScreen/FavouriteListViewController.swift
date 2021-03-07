@@ -24,6 +24,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
         setupTableView()
         enableBinding()
         fetchFavs()
+        setupPlaceholder()
     }
 
     // MARK: - UI Controls
@@ -41,6 +42,15 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
         return refreshControl
     }()
 
+    private let emptyFavsPlaceholderLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No fav stocks for now"
+        label.textColor = .lightGray
+        label.font = .boldSystemFont(ofSize: 30)
+        label.alpha = 0
+        return label
+    }()
+
     // MARK: - Selectors
 
     @objc private func refreshHandler(sender: UIRefreshControl) {
@@ -50,6 +60,13 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
     }
 
     // MARK: - UI Actions
+
+    private func setupPlaceholder() {
+        view.addSubview(emptyFavsPlaceholderLabel)
+        constrain(emptyFavsPlaceholderLabel) { label in
+            label.center == label.superview!.center
+        }
+    }
 
     private func setupTableView() {
         tableView.dataSource = self
@@ -68,7 +85,13 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     private func enableBinding() {
         viewModel.didUpdateFavsList = { [weak self] in
-            self?.tableView.reloadData()
+            guard let self = self else { return }
+            self.tableView.reloadData()
+            if self.viewModel.favListInfo.isEmpty {
+                self.emptyFavsPlaceholderLabel.alpha = 1
+            } else {
+                self.emptyFavsPlaceholderLabel.alpha = 0
+            }
         }
     }
 
