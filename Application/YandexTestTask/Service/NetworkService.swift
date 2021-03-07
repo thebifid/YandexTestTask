@@ -68,8 +68,7 @@ class NetworkService {
                     let inFav = CoreDataManager.sharedInstance.checkIfExist(byTicker: key)
                     trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
                                                                           companyQuote: companyQuotes[key]!,
-                                                                          companyImageData: companyImages[key]!,
-                                                                          inFav: inFav))
+                                                                          companyImageData: companyImages[key]!))
                 }
                 completion(.success(trendingListFullInfo))
             }
