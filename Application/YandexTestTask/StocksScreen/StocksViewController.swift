@@ -84,7 +84,8 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         guard searchView == nil else { return true }
         searchView = SearchView()
         searchView!.delegate = self
-        searchView!.setPopularTags(tags: viewModel.popularList ?? [])
+        searchView!.setPopularTags(tags: viewModel.popularList ?? [String]())
+        searchView!.setSearchedTags(tags: viewModel.searchedList)
         view.addSubview(searchView!)
         constrain(searchView!) { searchView in
             searchView.edges == searchView.superview!.edges
@@ -94,9 +95,12 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.showsSearchResultsController = true
-        if let searchText = searchBar.text?.uppercased() {
+        if let searchText = searchBar.text {
+            if viewModel.saveSerchRequestTerm(withTerm: searchText) {
+                searchView?.addTag(withTag: searchText)
+            }
             searchResController.startedSearch()
-            viewModel.searchRequest(withText: searchText) { result in
+            viewModel.searchRequest(withText: searchText.uppercased()) { result in
 
                 switch result {
                 case let .failure(error):

@@ -21,11 +21,15 @@ class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
 
     private var popularTagsArray = [String]() {
         didSet {
-            popularRequestsTagView.reloadView()
+            popularRequestsTagView.reloadData()
         }
     }
 
-    private var searchedTagsArray = [String]()
+    private var searchedTagsArray = [String]() {
+        didSet {
+            searchedRequestsTagView.reloadData()
+        }
+    }
 
     func titleForHeader(_ tagView: TagsView) -> String {
         if tagView.tag == 0 {
@@ -53,10 +57,14 @@ class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
         searchedTagsArray = tags
     }
 
+    func addTag(withTag tag: String) {
+        searchedRequestsTagView.addTag(withTag: tag)
+    }
+
     // MARK: - UI Controls
 
     private lazy var popularRequestsTagView: TagsView = {
-        let tv = TagsView()
+        let tv = TagsView(type: .internet)
         tv.tag = 0
         tv.dataSource = self
         tv.delegate = self
@@ -64,7 +72,7 @@ class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
     }()
 
     private lazy var searchedRequestsTagView: TagsView = {
-        let tv = TagsView()
+        let tv = TagsView(type: .local)
         tv.tag = 1
         tv.dataSource = self
         tv.delegate = self

@@ -35,7 +35,9 @@ class StocksListViewModel {
         }
     }
 
-    var searchedList: [String]?
+    var searchedList: [String] {
+        return UserDefaults.standard.object(forKey: "SavedTerms") as? [String] ?? []
+    }
 
     // MARK: - Handlers
 
@@ -185,5 +187,19 @@ class StocksListViewModel {
                 }
             }
         }
+    }
+
+    func saveSerchRequestTerm(withTerm term: String) -> Bool {
+        let defaults = UserDefaults.standard
+        var savedTerms = defaults.object(forKey: "SavedTerms") as? [String] ?? []
+        if !savedTerms.contains(term) {
+            savedTerms.insert(term, at: 0)
+            if savedTerms.count > 20 {
+                savedTerms.removeLast()
+            }
+            defaults.setValue(savedTerms, forKey: "SavedTerms")
+            return true
+        }
+        return false
     }
 }
