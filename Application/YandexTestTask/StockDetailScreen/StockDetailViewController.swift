@@ -8,7 +8,7 @@
 import AMScrollingNavbar
 import UIKit
 
-class StockDetailViewController: UIViewController {
+class StockDetailViewController: MenuBarViewController {
     // MARK: - Private Properties
 
     private var viewModel: StockDetailViewModel!
@@ -17,9 +17,27 @@ class StockDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
     }
+
+    // MARK: - MenuBarDataSource
+
+    private let controllers = [StockChartViewController(), UIViewController()]
+    private let titles = ["Chart", "Test"]
+
+    override func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {
+        titles[index]
+    }
+
+    override func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
+        controllers[index]
+    }
+
+    override func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
+        controllers.count
+    }
+
+    // MARK: - Init
 
     init(viewModel: StockDetailViewModel) {
         super.init(nibName: nil, bundle: nil)

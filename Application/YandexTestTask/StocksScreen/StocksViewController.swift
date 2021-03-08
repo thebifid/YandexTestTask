@@ -8,8 +8,7 @@
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDelegate,
-    UISearchBarDelegate, SearchViewDelegate, SearchResControllerDelegate {
+class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchViewDelegate, SearchResControllerDelegate {
     func favButtonClicked(atIndexPath indexPath: IndexPath) {
         viewModel.stocksFavButtonTapped(list: .search, index: indexPath.row) { _ in
         }
@@ -21,7 +20,7 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
         searchController.searchBar.resignFirstResponder()
     }
 
-    func menuBar(didScrolledToIndex to: Int) {
+    override func menuBar(didScrolledToIndex to: Int) {
         controllers.forEach { $0.deactivateFollowingNavbar() }
         controllers[to].activateFollowingNavbar()
     }
@@ -43,8 +42,6 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = self
-        delegate = self
         barItemFontSize = 24
         setupSearchBar()
         enabliBinding()
@@ -127,15 +124,15 @@ class StocksViewController: MenuBarViewController, MenuBarDataSource, MenuBarDel
 
     // MARK: - MenuBarDataSource
 
-    func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {
+    override func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {
         tabs[index]
     }
 
-    func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
+    override func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
         return controllers[index]
     }
 
-    func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
+    override func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
         tabs.count
     }
 }

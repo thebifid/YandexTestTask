@@ -19,7 +19,21 @@ protocol MenuBarDelegate: AnyObject {
 }
 
 class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,
-    UICollectionViewDelegateFlowLayout {
+    UICollectionViewDelegateFlowLayout, MenuBarDataSource, MenuBarDelegate {
+    func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {
+        return ""
+    }
+
+    func menuBar(_ menuBar: MenuBarViewController, viewControllerForPageAt index: Int) -> UIViewController {
+        return UIViewController()
+    }
+
+    func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
+        return 0
+    }
+
+    func menuBar(didScrolledToIndex to: Int) {}
+
     // MARK: - Private Properties
 
     private var labels = [String]()
@@ -36,6 +50,8 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataSource = self
+        delegate = self
         setupUI()
     }
 
