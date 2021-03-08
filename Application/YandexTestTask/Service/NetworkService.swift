@@ -276,6 +276,32 @@ class NetworkService {
         }.resume()
     }
 
+    func requestCompanyCandle(withSymbol symbol: String, resolution: String, from: String, to: String,
+                              completion: @escaping (Result<CandlesModel, Error>) -> Void) {
+        let url = BuildUrl(path: API.candle, params: ["symbol": symbol, "resolution": resolution, "from": from, "to": to])
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if error != nil {
+                completion(.failure(error!))
+                return
+            }
+            if let data = data {
+                do {
+                    let candles = try JSONDecoder().decode(CandlesModel.self, from: data)
+                    if candles.s != "ok" {
+                        let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: candles.s])
+                        print(error)
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(candles))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+
+        }.resume()
+    }
+
     private func BuildUrl(path: String, params: [String: String]) -> URL {
         var components = URLComponents()
 

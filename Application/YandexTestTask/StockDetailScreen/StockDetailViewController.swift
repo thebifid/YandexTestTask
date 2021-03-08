@@ -18,11 +18,22 @@ class StockDetailViewController: MenuBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
+//        connectWebSocket()
+
+        viewModel.requestCompanyCandles(fromInterval: .month)
     }
+
+//    private func connectWebSocket() {
+//        webSocketConnection = WebSocketTaskConnection(url: URL(string: "wss://ws.finnhub.io?token=c0mgb5748v6ue78flnkg")!)
+//        webSocketConnection.delegate = self
+//        webSocketConnection.connect()
+//        webSocketConnection.send(text: "{\"type\":\"subscribe\",\"symbol\":\"AAPL\"}")
+//    }
 
     // MARK: - MenuBarDataSource
 
-    private let controllers = [StockChartViewController(), UIViewController()]
+    private let stockChartViewController = StockChartViewController()
+    private lazy var controllers = [stockChartViewController, UIViewController()]
     private let titles = ["Chart", "Test"]
 
     override func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {

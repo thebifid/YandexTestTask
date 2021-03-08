@@ -12,5 +12,6 @@ target 'YandexTestTask' do
     pod 'Cartography', '~> 3.0'
     pod 'EasyStash'
     pod 'AMScrollingNavbar', :inhibit_warnings => true
+    pod 'Charts'
 
 end

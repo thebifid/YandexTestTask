@@ -24,6 +24,9 @@
 		C171F14325F608AF00932732 /* StockDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F14225F608AF00932732 /* StockDetailViewModel.swift */; };
 		C171F14625F60E9C00932732 /* UInavigationItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F14525F60E9C00932732 /* UInavigationItem+Extension.swift */; };
 		C171F14B25F6143900932732 /* StockChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F14A25F6143900932732 /* StockChartViewController.swift */; };
+		C171F15B25F6396F00932732 /* WebSocketConntection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F15A25F6396F00932732 /* WebSocketConntection.swift */; };
+		C171F17A25F63F1000932732 /* TredesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F17925F63F1000932732 /* TredesModel.swift */; };
+		C171F17D25F65CAB00932732 /* CandlesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F17C25F65CAB00932732 /* CandlesModel.swift */; };
 		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* StocksListViewController.swift */; };
@@ -67,6 +70,9 @@
 		C171F14225F608AF00932732 /* StockDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailViewModel.swift; sourceTree = "<group>"; };
 		C171F14525F60E9C00932732 /* UInavigationItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInavigationItem+Extension.swift"; sourceTree = "<group>"; };
 		C171F14A25F6143900932732 /* StockChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockChartViewController.swift; sourceTree = "<group>"; };
+		C171F15A25F6396F00932732 /* WebSocketConntection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketConntection.swift; sourceTree = "<group>"; };
+		C171F17925F63F1000932732 /* TredesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TredesModel.swift; sourceTree = "<group>"; };
+		C171F17C25F65CAB00932732 /* CandlesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandlesModel.swift; sourceTree = "<group>"; };
 		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* StocksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +205,8 @@
 				C17F105B25E14E16006CCA52 /* CompanyQuoteModel.swift */,
 				C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */,
 				C19C957A25F36DDB00220CCF /* SymbolLookUpModel.swift */,
+				C171F17925F63F1000932732 /* TredesModel.swift */,
+				C171F17C25F65CAB00932732 /* CandlesModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +264,7 @@
 				C17F104525E12F06006CCA52 /* API.swift */,
 				C17F103D25E12242006CCA52 /* NetworkService.swift */,
 				C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */,
+				C171F15A25F6396F00932732 /* WebSocketConntection.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -463,12 +472,14 @@
 				C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
 				C19C956025F27A5D00220CCF /* TagsView.swift in Sources */,
+				C171F17A25F63F1000932732 /* TredesModel.swift in Sources */,
 				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
 				C17F105525E13740006CCA52 /* StocksListViewModel.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,
 				C17F105C25E14E16006CCA52 /* CompanyQuoteModel.swift in Sources */,
+				C171F17D25F65CAB00932732 /* CandlesModel.swift in Sources */,
 				C17F104625E12F06006CCA52 /* API.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
@@ -476,6 +487,7 @@
 				C19C956525F27B9400220CCF /* SearchView.swift in Sources */,
 				C14C9CB225ECE69E004E9505 /* BaseControllerWithTableView.swift in Sources */,
 				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
+				C171F15B25F6396F00932732 /* WebSocketConntection.swift in Sources */,
 				C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,
 				C19C956825F3675D00220CCF /* SearchResViewController.swift in Sources */,
