@@ -20,6 +20,9 @@
 		C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */; };
 		C14C9CB225ECE69E004E9505 /* BaseControllerWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */; };
 		C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */; };
+		C171F13F25F5FE8F00932732 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F13E25F5FE8F00932732 /* StockDetailViewController.swift */; };
+		C171F14325F608AF00932732 /* StockDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F14225F608AF00932732 /* StockDetailViewModel.swift */; };
+		C171F14625F60E9C00932732 /* UInavigationItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F14525F60E9C00932732 /* UInavigationItem+Extension.swift */; };
 		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* StocksListViewController.swift */; };
@@ -59,6 +62,9 @@
 		C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewController.swift; sourceTree = "<group>"; };
 		C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseControllerWithTableView.swift; sourceTree = "<group>"; };
 		C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		C171F13E25F5FE8F00932732 /* StockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
+		C171F14225F608AF00932732 /* StockDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailViewModel.swift; sourceTree = "<group>"; };
+		C171F14525F60E9C00932732 /* UInavigationItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInavigationItem+Extension.swift"; sourceTree = "<group>"; };
 		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* StocksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +139,7 @@
 		C11C6CE625DCFB85002F5EB6 /* YandexTestTask */ = {
 			isa = PBXGroup;
 			children = (
+				C171F14825F60EEB00932732 /* Extensions */,
 				C19C955E25F27A5400220CCF /* SearchView */,
 				C17F103C25E12228006CCA52 /* Service */,
 				C11C6D7825DD3476002F5EB6 /* Models */,
@@ -140,6 +147,7 @@
 				C17F103225E0EE45006CCA52 /* MenuSwipeBar */,
 				C19C956A25F3699800220CCF /* SearchResController */,
 				C11C6D7125DD3308002F5EB6 /* StocksScreen */,
+				C171F13D25F5FE6D00932732 /* StockDetailScreen */,
 				C11C6D6A25DD2CCE002F5EB6 /* Resources */,
 				C11C6D6725DD2B8D002F5EB6 /* Commons */,
 			);
@@ -210,6 +218,23 @@
 				C11C6D7F25DD4575002F5EB6 /* BetterSappingLayout.swift */,
 			);
 			path = Trash;
+			sourceTree = "<group>";
+		};
+		C171F13D25F5FE6D00932732 /* StockDetailScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C171F13E25F5FE8F00932732 /* StockDetailViewController.swift */,
+				C171F14225F608AF00932732 /* StockDetailViewModel.swift */,
+			);
+			path = StockDetailScreen;
+			sourceTree = "<group>";
+		};
+		C171F14825F60EEB00932732 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C171F14525F60E9C00932732 /* UInavigationItem+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		C17F103225E0EE45006CCA52 /* MenuSwipeBar */ = {
@@ -422,12 +447,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C171F14625F60E9C00932732 /* UInavigationItem+Extension.swift in Sources */,
+				C171F13F25F5FE8F00932732 /* StockDetailViewController.swift in Sources */,
 				C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */,
 				C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */,
 				C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */,
 				C19C957B25F36DDB00220CCF /* SymbolLookUpModel.swift in Sources */,
 				C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */,
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
+				C171F14325F608AF00932732 /* StockDetailViewModel.swift in Sources */,
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
 				C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,

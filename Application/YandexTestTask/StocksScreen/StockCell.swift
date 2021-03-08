@@ -63,6 +63,10 @@ class StockCell: UITableViewCell {
         return label
     }()
 
+    // MARK: - Private Properties
+
+    private var cellBackgroundColor: UIColor = .white
+
     // MARK: - Selectors
 
     @objc private func buttonTappedHandler(sender: UIButton) {
@@ -118,7 +122,7 @@ class StockCell: UITableViewCell {
     // MARK: - Public Methods
 
     func setupCell(color: UIColor, companyInfo: TrendingListFullInfoModel) {
-        backgroundColor = color
+        cellBackgroundColor = color
 
         addToFavButton.tintColor = CoreDataManager.sharedInstance.checkIfExist(byTicker: companyInfo.ticker) ?
             R.color.customYellow() : R.color.uncheckColor()
@@ -137,6 +141,22 @@ class StockCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         backgroundColor = .white
+    }
+
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        if highlighted == true {
+            backgroundColor = R.color.selectColor()
+        } else {
+            backgroundColor = cellBackgroundColor
+        }
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        setHighlighted(true, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+            self.setHighlighted(false, animated: true)
+        }
     }
 
     // MARK: - Private Methods
