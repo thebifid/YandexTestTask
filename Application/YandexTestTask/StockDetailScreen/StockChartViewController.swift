@@ -14,6 +14,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     // MARK: - UI Controls
 
+    var addOverallLayer: ((UIView, CGSize, MenuBarViewController.OverallAlign, UIEdgeInsets) -> Void)?
+
     private lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
         chartView.backgroundColor = .white
@@ -49,6 +51,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
+        addOverallLayer?(lineChartView, .init(width: Constants.deviceWidth, height: Constants.deviceHeight / 2), .top, .init(top: 60, left: 0, bottom: 0, right: 0))
         super.viewDidLoad()
         view.backgroundColor = R.color.selectColor()
         setupStockPriceInfoView()
@@ -74,14 +77,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         }
     }
 
-    private func setupLineChart() {
-        view.addSubview(lineChartView)
-        constrain(lineChartView, stockPriceInfoView) { lineChartView, bar in
-            lineChartView.top == bar.bottom
-            lineChartView.width == lineChartView.superview!.width
-            lineChartView.height == 400
-        }
-    }
+    private func setupLineChart() {}
 
     // MARK: - ChartViewDelegate
 

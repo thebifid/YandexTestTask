@@ -56,6 +56,34 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         setupUI()
     }
 
+    private var overallViews = [UIView]()
+
+    enum OverallAlign {
+        case top, bottom
+    }
+
+    func addOverallLayer(withView myView: UIView, size: CGSize, align: OverallAlign, insets: UIEdgeInsets) {
+        view.addSubview(myView)
+        overallViews.append(myView)
+        constrain(myView, barCollectionView) { view, bar in
+            view.centerX == view.superview!.centerX
+            view.width == size.width
+            view.height == size.height
+            switch align {
+            case .top:
+                view.top == bar.bottom + insets.top
+            case .bottom:
+                view.bottom == view.superview!.bottom
+            }
+        }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        overallViews.forEach { element in
+            element.center = .init(x: element.superview!.center.x - scrollView.contentOffset.x, y: element.center.y)
+        }
+    }
+
     // MARK: - UI Controls
 
     lazy var barCollectionView: UICollectionView = {
