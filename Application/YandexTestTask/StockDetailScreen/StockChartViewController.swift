@@ -41,6 +41,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return chartView
     }()
 
+    private let chartViewBackgroundLayer = UIView()
+
     private let stockPriceInfoView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -63,23 +65,42 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return label
     }()
 
+    private let buyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Buy for $300", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 16
+        return button
+    }()
+
     var webSocketTask: URLSessionWebSocketTask?
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setupStockPriceInfoView()
+        setupChartView()
+        setupButtons()
+        setupBuyButton()
+    }
+
+    // MARK: - UI Actions
+
+    private func setupChartView() {
         var options = OverallOptions()
         options.size = .init(width: Constants.deviceWidth, height: Constants.deviceHeight / 2)
         options.align = .top
         options.insets = .init(top: 60, left: 0, bottom: 0, right: 0)
         addOverallLayer?(lineChartView, options)
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setupStockPriceInfoView()
-        setupLineChart()
+        view.addSubview(chartViewBackgroundLayer)
+        constrain(chartViewBackgroundLayer, stockPriceInfoView) { chartViewBackgroundLayer, bar in
+            chartViewBackgroundLayer.top == bar.bottom
+            chartViewBackgroundLayer.height == Constants.deviceHeight / 2
+        }
     }
-
-    // MARK: - UI Actions
 
     private func setupStockPriceInfoView() {
         view.addSubview(stockPriceInfoView)
@@ -98,7 +119,46 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         }
     }
 
-    private func setupLineChart() {}
+    private func setupButtons() {
+        let buttonsStackView = makeButtonsStackView()
+        view.addSubview(buttonsStackView)
+        constrain(buttonsStackView, chartViewBackgroundLayer) { buttonsStackView, chartViewBackgroundLayer in
+            buttonsStackView.top == chartViewBackgroundLayer.bottom + 20
+            buttonsStackView.left == buttonsStackView.superview!.left + 20
+            buttonsStackView.right == buttonsStackView.superview!.right - 20
+            buttonsStackView.height == 30
+        }
+    }
+
+    private func setupBuyButton() {
+        var options = OverallOptions()
+        options.size = .init(width: Constants.deviceWidth, height: 60)
+        options.align = .bottom
+        options.insets = .init(top: 0, left: 20, bottom: 40, right: 20)
+        addOverallLayer?(buyButton, options)
+    }
+
+    // MARK: - Private Methods
+
+    private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
+
+    private func makeButtonsStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        for index in 0 ..< buttonTitles.count {
+            let button = UIButton()
+            button.setTitle(buttonTitles[index], for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.setTitleColor(.white, for: .selected)
+            button.titleLabel?.font = .boldSystemFont(ofSize: 12)
+            button.layer.cornerRadius = 12
+            button.backgroundColor = R.color.customLightGray()
+            stackView.addArrangedSubview(button)
+        }
+
+        return stackView
+    }
 
     // MARK: - ChartViewDelegate
 

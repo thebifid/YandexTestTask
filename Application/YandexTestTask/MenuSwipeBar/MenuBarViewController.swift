@@ -67,13 +67,13 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         overallViews.append(myView)
         constrain(myView, barCollectionView) { view, bar in
             view.centerX == view.superview!.centerX
-            view.width == options.size.width
+            view.width == options.size.width - (options.insets.left + options.insets.right)
             view.height == options.size.height
             switch options.align {
             case .top:
                 view.top == bar.bottom + options.insets.top
             case .bottom:
-                view.bottom == view.superview!.bottom
+                view.bottom == view.superview!.bottom - options.insets.bottom
             }
         }
     }
