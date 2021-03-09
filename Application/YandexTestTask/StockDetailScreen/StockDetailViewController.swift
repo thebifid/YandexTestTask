@@ -18,8 +18,8 @@ class StockDetailViewController: MenuBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        stockChartViewController.addOverallLayer = { view, size, align, insets in
-            self.addOverallLayer(withView: view, size: size, align: align, insets: insets)
+        stockChartViewController.addOverallLayer = { view, options in
+            self.addOverallLayer(withView: view, options: options)
         }
 
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)

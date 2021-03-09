@@ -14,13 +14,30 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     // MARK: - UI Controls
 
-    var addOverallLayer: ((UIView, CGSize, MenuBarViewController.OverallAlign, UIEdgeInsets) -> Void)?
+    struct OverallOptions {
+        var size: CGSize
+        var align: MenuBarViewController.OverallAlign
+        var insets: UIEdgeInsets
+
+        init() {
+            size = .zero
+            align = .top
+            insets = UIEdgeInsets.zero
+        }
+    }
+
+    var addOverallLayer: ((UIView, OverallOptions) -> Void)?
 
     private lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
         chartView.backgroundColor = .white
         chartView.delegate = self
         chartView.rightAxis.enabled = false
+        chartView.scaleXEnabled = false
+        chartView.scaleYEnabled = false
+        chartView.legend.enabled = false
+        chartView.leftAxis.enabled = false
+        chartView.xAxis.enabled = false
         return chartView
     }()
 
@@ -51,9 +68,13 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
-        addOverallLayer?(lineChartView, .init(width: Constants.deviceWidth, height: Constants.deviceHeight / 2), .top, .init(top: 60, left: 0, bottom: 0, right: 0))
+        var options = OverallOptions()
+        options.size = .init(width: Constants.deviceWidth, height: Constants.deviceHeight / 2)
+        options.align = .top
+        options.insets = .init(top: 60, left: 0, bottom: 0, right: 0)
+        addOverallLayer?(lineChartView, options)
         super.viewDidLoad()
-        view.backgroundColor = R.color.selectColor()
+        view.backgroundColor = .white
         setupStockPriceInfoView()
         setupLineChart()
     }
@@ -86,11 +107,22 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     }
 
     func setData(withPrices prices: [Double]) {
-        let set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices), label: "Kekw")
+        let set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices))
         set1.drawCirclesEnabled = false
-        set1.mode = .cubicBezier
+        set1.mode = .horizontalBezier
         set1.lineWidth = 2
         set1.setColor(.black)
+
+        let gradientColors = [
+            UIColor.white.cgColor,
+            ChartColorTemplates.colorFromString("#DCDCDC").cgColor
+        ]
+        let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+
+        set1.fillAlpha = 1
+        set1.fill = .fillWithLinearGradient(gradient, angle: 90)
+        set1.drawFilledEnabled = true
+
         let data = LineChartData(dataSet: set1)
         data.setDrawValues(false)
         lineChartView.data = data

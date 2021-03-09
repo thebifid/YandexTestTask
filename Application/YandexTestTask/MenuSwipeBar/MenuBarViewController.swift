@@ -62,16 +62,16 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         case top, bottom
     }
 
-    func addOverallLayer(withView myView: UIView, size: CGSize, align: OverallAlign, insets: UIEdgeInsets) {
+    func addOverallLayer(withView myView: UIView, options: StockChartViewController.OverallOptions) {
         view.addSubview(myView)
         overallViews.append(myView)
         constrain(myView, barCollectionView) { view, bar in
             view.centerX == view.superview!.centerX
-            view.width == size.width
-            view.height == size.height
-            switch align {
+            view.width == options.size.width
+            view.height == options.size.height
+            switch options.align {
             case .top:
-                view.top == bar.bottom + insets.top
+                view.top == bar.bottom + options.insets.top
             case .bottom:
                 view.bottom == view.superview!.bottom
             }
