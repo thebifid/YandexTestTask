@@ -37,6 +37,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
     // MARK: - Private Properties
 
     private var labels = [String]()
+    private var isTableMode = false
 
     // MARK: - Public Properties
 
@@ -100,9 +101,14 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         }
 
         view.addSubview(contentCollectionView)
-        constrain(contentCollectionView, barCollectionView) { contentCollectionView, _ in
+        constrain(contentCollectionView, barCollectionView) { contentCollectionView, barCollectionView in
 
-            contentCollectionView.top == contentCollectionView.superview!.top
+            if isTableMode {
+                contentCollectionView.top == contentCollectionView.superview!.top
+            } else {
+                contentCollectionView.top == barCollectionView.bottom
+            }
+
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right
             contentCollectionView.bottom == contentCollectionView.superview!.bottom
@@ -162,5 +168,14 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         contentCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         delegate?.menuBar(didScrolledToIndex: indexPath.item)
+    }
+
+    init(tableMode: Bool = false) {
+        super.init(nibName: nil, bundle: nil)
+        isTableMode = tableMode
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

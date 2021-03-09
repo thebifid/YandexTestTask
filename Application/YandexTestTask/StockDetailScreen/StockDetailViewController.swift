@@ -61,7 +61,7 @@ class StockDetailViewController: MenuBarViewController {
     // MARK: - Init
 
     init(viewModel: StockDetailViewModel) {
-        super.init(nibName: nil, bundle: nil)
+        super.init()
         self.viewModel = viewModel
     }
 

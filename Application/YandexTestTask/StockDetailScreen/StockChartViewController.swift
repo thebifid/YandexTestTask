@@ -24,8 +24,24 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     private let stockPriceInfoView: UIView = {
         let view = UIView()
-        view.backgroundColor = .orange
+        view.backgroundColor = .white
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 1
         return view
+    }()
+
+    private let currentPriceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "300 $"
+        label.font = .boldSystemFont(ofSize: 20)
+        return label
+    }()
+
+    private let priceChangeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "-2,24 $ (12,43 %)"
+        label.font = .systemFont(ofSize: 14)
+        return label
     }()
 
     var webSocketTask: URLSessionWebSocketTask?
@@ -44,9 +60,17 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     private func setupStockPriceInfoView() {
         view.addSubview(stockPriceInfoView)
         constrain(stockPriceInfoView) { view in
-            view.top == view.superview!.safeAreaLayoutGuide.top + barHeight
+            view.top == view.superview!.top
             view.width == view.superview!.width
-            view.height == 90
+            view.height == 60
+        }
+
+        let stackView = UIStackView(arrangedSubviews: [currentPriceLabel, priceChangeLabel])
+        stackView.axis = .vertical
+        stockPriceInfoView.addSubview(stackView)
+        constrain(stackView) { stackView in
+            stackView.left == stackView.superview!.left + 20
+            stackView.centerY == stackView.superview!.centerY
         }
     }
 
