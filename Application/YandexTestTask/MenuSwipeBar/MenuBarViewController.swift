@@ -100,7 +100,8 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         }
 
         view.addSubview(contentCollectionView)
-        constrain(contentCollectionView) { contentCollectionView in
+        constrain(contentCollectionView, barCollectionView) { contentCollectionView, _ in
+
             contentCollectionView.top == contentCollectionView.superview!.top
             contentCollectionView.left == contentCollectionView.superview!.left
             contentCollectionView.right == contentCollectionView.superview!.right

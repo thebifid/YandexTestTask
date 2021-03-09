@@ -10,10 +10,16 @@ import Foundation
 class StockDetailViewModel: WebSocketConnectionDelegate {
     private var stockInfo: TrendingListFullInfoModel!
 
-    var companyCandlesData: CandlesModel {
+    private var companyCandlesData: CandlesModel! { //!
         didSet {
-            print("kekw")
+            didUpdateCandles?()
         }
+    }
+
+    var didUpdateCandles: (() -> Void)?
+
+    var candles: [Double] {
+        return companyCandlesData.c!
     }
 
     var ticker: String {
