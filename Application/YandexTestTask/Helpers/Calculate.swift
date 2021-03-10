@@ -8,17 +8,17 @@
 import UIKit
 
 class Calculate {
-    static func calculateDailyChange(currency: String, currentPrice: Double, openPice: Double) -> NSAttributedString {
-        let dailyChange = round(100 * (openPice - currentPrice)) / 100
+    static func calculateDailyChange(currency: String, currentPrice: Double, previousClose: Double) -> NSAttributedString {
+        let dailyChange = round(100 * (previousClose - currentPrice)) / 100
         var color = UIColor.gray
 
         var resultString = ""
-        if dailyChange > 0 {
+        if dailyChange < 0 {
             color = R.color.customGreen()!
             if currency == "USD" {
-                resultString = "+$\(dailyChange)"
+                resultString = "+$\(abs(dailyChange))"
             } else {
-                resultString = "+\(dailyChange) Р"
+                resultString = "+\(abs(dailyChange)) Р"
             }
         } else {
             color = .red
@@ -29,7 +29,7 @@ class Calculate {
             }
         }
 
-        var percentDailyChange = abs(openPice - currentPrice) / openPice * 100
+        var percentDailyChange = abs(previousClose - currentPrice) / previousClose * 100
         percentDailyChange = round(100 * percentDailyChange) / 100
         resultString = "\(resultString) (\(percentDailyChange)%)"
         return NSAttributedString(string: resultString,

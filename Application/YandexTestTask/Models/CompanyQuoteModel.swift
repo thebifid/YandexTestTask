@@ -9,11 +9,11 @@ import Foundation
 
 struct CompanyQuoteModel: Decodable {
     let c: Double
-    let h: Float
-    let l: Float
+    let h: Double
+    let l: Double
     let o: Double
-    let pc: Float
-    let t: Float
+    let pc: Double
+    let t: Double
 
     init(stock: Stock) {
         c = stock.c

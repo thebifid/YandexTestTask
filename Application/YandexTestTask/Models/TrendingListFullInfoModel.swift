@@ -15,19 +15,19 @@ struct TrendingListFullInfoModel {
     let finnhubIndustry: String
     let ipo: String
     let logo: String
-    let marketCapitalization: Float
+    let marketCapitalization: Double
     let name: String
     let phone: String
-    let shareOutstanding: Float
+    let shareOutstanding: Double
     let ticker: String
     let weburl: String
 
     var c: Double
-    let h: Float
-    let l: Float
+    let h: Double
+    let l: Double
     var o: Double
-    let pc: Float
-    let t: Float
+    let pc: Double
+    let t: Double
 
     let logoData: Data
 

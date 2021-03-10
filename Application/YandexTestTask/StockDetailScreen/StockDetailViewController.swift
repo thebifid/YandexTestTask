@@ -31,7 +31,9 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.stockChartViewController.setData(withPrices: self.viewModel.candles,
-                                                      openPrice: self.viewModel.openPrice)
+                                                      openPrice: self.viewModel.previousClose)
+                self.stockChartViewController.setNewPrice(withCurrentPrice: self.viewModel.currentPrice,
+                                                          previousClose: self.viewModel.previousClose)
             }
         }
 
@@ -51,7 +53,7 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     private lazy var stockChartViewController: StockChartViewController = {
         let controller = StockChartViewController(barHeight: barCollectionView.frame.height,
                                                   activeInterval: viewModel.activeInterval.rawValue,
-                                                  currentPrice: viewModel.currentPrice, openPrice: viewModel.openPrice)
+                                                  currentPrice: viewModel.currentPrice, previousClose: viewModel.previousClose)
         controller.delegate = self
         return controller
     }()
@@ -83,6 +85,7 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     // MARK: - Deinit
 
     deinit {
+        print("controller deinit")
         self.viewModel.disconnectWebSocket()
     }
 }

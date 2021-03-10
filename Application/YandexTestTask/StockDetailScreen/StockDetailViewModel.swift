@@ -27,8 +27,8 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         return companyCandlesData?.c ?? []
     }
 
-    var openPrice: Double {
-        return stockInfo.o
+    var previousClose: Double {
+        return stockInfo.pc
     }
 
     var currentPrice: Double {
@@ -72,7 +72,7 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         return String(Int(Date().timeIntervalSince1970))
     }
 
-    private(set) var activeInterval: IntevalTime = .month {
+    private(set) var activeInterval: IntevalTime = .day {
         didSet {
             requestCompanyCandles()
         }
@@ -96,7 +96,7 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         switch activeInterval {
         case .day:
             fromIntervalTime = dayStartTimestamp
-            resolution = "1"
+            resolution = "5"
         case .week:
             fromIntervalTime = weekBackTimestamp
             resolution = "60"
@@ -143,11 +143,20 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
     }
 
     func onMessage(connection: WebSocketConnection, text: String) {
-        print(text)
+        let data = Data(text.utf8)
+        var jsonData = Trades()
+        do {
+            jsonData = try JSONDecoder().decode(Trades.self, from: data)
+            if let lastPrice = jsonData.data.last?.p {
+                print(lastPrice)
+                companyCandlesData!.c![companyCandlesData!.c!.endIndex - 1] = lastPrice
+                stockInfo.c = lastPrice
+            }
+        } catch {}
     }
 
     func onMessage(connection: WebSocketConnection, data: Data) {
-        print(data)
+        return
     }
 
     func connectWebSocket() {
@@ -166,5 +175,9 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
 
     init(stockModel: TrendingListFullInfoModel) {
         stockInfo = stockModel
+    }
+
+    deinit {
+        print("Model deinit")
     }
 }

@@ -208,10 +208,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return yValues
     }
 
-    private func setNewPrice(withCurrentPrice current: Double, openPrice: Double) {
+    func setNewPrice(withCurrentPrice current: Double, previousClose: Double) {
         buyButton.setTitle("Buy for $\(current)", for: .normal)
         currentPriceLabel.text = "$\(current)"
-        priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD", currentPrice: current, openPice: openPrice)
+        priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD",
+                                                                         currentPrice: current, previousClose: previousClose)
     }
 
     // MARK: - Selectors
@@ -256,11 +257,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     // MARK: - Init
 
-    init(barHeight: CGFloat = 0, activeInterval: Int, currentPrice: Double, openPrice: Double) {
+    init(barHeight: CGFloat = 0, activeInterval: Int, currentPrice: Double, previousClose: Double) {
         super.init(nibName: nil, bundle: nil)
         self.barHeight = barHeight
         self.activeInterval = activeInterval
-        setNewPrice(withCurrentPrice: currentPrice, openPrice: openPrice)
+        setNewPrice(withCurrentPrice: currentPrice, previousClose: previousClose)
     }
 
     required init?(coder: NSCoder) {

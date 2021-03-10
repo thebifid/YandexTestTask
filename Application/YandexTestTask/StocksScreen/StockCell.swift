@@ -133,7 +133,7 @@ class StockCell: UITableViewCell {
         stockPriceLabel.text = "$\(round(100 * companyInfo.c) / 100)" // Смотреть валюту!
 
         dayChangeLabel.attributedText = Calculate.calculateDailyChange(currency: companyInfo.currency,
-                                                                       currentPrice: companyInfo.c, openPice: companyInfo.o)
+                                                                       currentPrice: companyInfo.c, previousClose: companyInfo.pc)
 
         stockImageView.image = UIImage(data: companyInfo.logoData)
     }

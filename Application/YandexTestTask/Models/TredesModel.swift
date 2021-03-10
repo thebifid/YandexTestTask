@@ -10,11 +10,16 @@ import Foundation
 struct Trades: Decodable {
     let data: [PriceChange]
     let type: String
+
+    init() {
+        data = [PriceChange]()
+        type = ""
+    }
 }
 
 struct PriceChange: Decodable {
     let s: String
-    let p: Float
+    let p: Double
     let t: UInt
-    let v: Float
+    let v: Double
 }

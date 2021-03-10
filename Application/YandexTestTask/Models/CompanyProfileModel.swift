@@ -14,10 +14,10 @@ struct CompanyProfileModel: Decodable, Encodable {
     let finnhubIndustry: String
     let ipo: String
     let logo: String
-    let marketCapitalization: Float
+    let marketCapitalization: Double
     let name: String
     let phone: String
-    let shareOutstanding: Float
+    let shareOutstanding: Double
     let ticker: String
     let weburl: String
 

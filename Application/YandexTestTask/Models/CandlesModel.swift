@@ -11,7 +11,7 @@ struct CandlesModel: Decodable {
     let o: [Double]?
     let h: [Double]?
     let l: [Double]?
-    let c: [Double]?
+    var c: [Double]?
     let v: [Int]?
     let t: [UInt]?
     let s: String
