@@ -8,7 +8,11 @@
 import AMScrollingNavbar
 import UIKit
 
-class StockDetailViewController: MenuBarViewController {
+class StockDetailViewController: MenuBarViewController, IntervalDelegate {
+    func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime) {
+        viewModel.setActiveInterval(withNewInterval: interval)
+    }
+
     // MARK: - Private Properties
 
     private var viewModel: StockDetailViewModel!
@@ -24,7 +28,7 @@ class StockDetailViewController: MenuBarViewController {
 
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
 //        connectWebSocket()
-        viewModel.requestCompanyCandles(fromInterval: .month)
+        viewModel.requestCompanyCandles()
 
         viewModel.didUpdateCandles = { [weak self] in
             guard let self = self else { return }
@@ -44,7 +48,9 @@ class StockDetailViewController: MenuBarViewController {
     // MARK: - MenuBarDataSource
 
     private lazy var stockChartViewController: StockChartViewController = {
-        let controller = StockChartViewController(barHeight: barCollectionView.frame.height)
+        let controller = StockChartViewController(barHeight: barCollectionView.frame.height,
+                                                  activeInterval: viewModel.activeInterval.rawValue)
+        controller.delegate = self
         return controller
     }()
 

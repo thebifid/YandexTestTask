@@ -59,16 +59,26 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         return String(Int(Date().timeIntervalSince1970))
     }
 
+    var activeInterval: IntevalTime = .month {
+        didSet {
+            requestCompanyCandles()
+        }
+    }
+
+    func setActiveInterval(withNewInterval interval: IntevalTime) {
+        activeInterval = interval
+    }
+
     // MARK: - Public Methods
 
-    enum IntevalTime {
+    enum IntevalTime: Int {
         case day, week, month, sixMonths, year, all
     }
 
-    func requestCompanyCandles(fromInterval interval: IntevalTime) {
+    func requestCompanyCandles() {
         var fromIntervalTime: String!
         var resolution: String!
-        switch interval {
+        switch activeInterval {
         case .day:
             fromIntervalTime = dayStartTimestamp
             resolution = "1"

@@ -9,8 +9,15 @@ import Cartography
 import Charts
 import UIKit
 
+protocol IntervalDelegate: AnyObject {
+    func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime)
+}
+
 class StockChartViewController: UIViewController, ChartViewDelegate {
     private var barHeight: CGFloat = 0
+    private var activeInterval: Int = 0
+
+    weak var delegate: IntervalDelegate?
 
     // MARK: - UI Controls
 
@@ -141,23 +148,36 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     // MARK: - Private Methods
 
     private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
+    private var buttonsArray = [IntervalButton]()
 
     private func makeButtonsStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         for index in 0 ..< buttonTitles.count {
-            let button = UIButton()
-            button.setTitle(buttonTitles[index], for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.setTitleColor(.white, for: .selected)
-            button.titleLabel?.font = .boldSystemFont(ofSize: 12)
-            button.layer.cornerRadius = 12
-            button.backgroundColor = R.color.customLightGray()
+            let button = IntervalButton()
+            button.configure(withTitle: buttonTitles[index])
+            button.tag = index
+            button.addTarget(self, action: #selector(intervalButtonClicked(sender:)), for: .touchUpInside)
+            if index == activeInterval {
+                button.isActive = true
+            }
+            buttonsArray.append(button)
             stackView.addArrangedSubview(button)
         }
 
         return stackView
+    }
+
+    // MARK: - Selectors
+
+    @objc private func intervalButtonClicked(sender: UIButton) {
+        buttonsArray[activeInterval].isActive = false
+        activeInterval = sender.tag
+        if let button = sender as? IntervalButton {
+            button.isActive = true
+        }
+        delegate?.intervalDidChange(newInterval: StockDetailViewModel.IntevalTime(rawValue: sender.tag) ?? .day)
     }
 
     // MARK: - ChartViewDelegate
@@ -196,10 +216,10 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return yValues
     }
 
-    init(barHeight: CGFloat = 0) {
+    init(barHeight: CGFloat = 0, activeInterval: Int) {
         super.init(nibName: nil, bundle: nil)
         self.barHeight = barHeight
-        print(barHeight)
+        self.activeInterval = activeInterval
     }
 
     required init?(coder: NSCoder) {
