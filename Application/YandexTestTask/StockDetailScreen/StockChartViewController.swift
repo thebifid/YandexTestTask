@@ -14,13 +14,19 @@ protocol IntervalDelegate: AnyObject {
 }
 
 class StockChartViewController: UIViewController, ChartViewDelegate {
+    
+    // MARK: - Private Properties
+    
     private var barHeight: CGFloat = 0
     private var activeInterval: Int = 0
+    
+    private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
+    private var buttonsArray = [IntervalButton]()
+    
+    // MARK: - Public Properties
 
     weak var delegate: IntervalDelegate?
-
-    // MARK: - UI Controls
-
+    
     struct OverallOptions {
         var size: CGSize
         var align: MenuBarViewController.OverallAlign
@@ -32,8 +38,12 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
             insets = UIEdgeInsets.zero
         }
     }
-
+    
+    // MARK: - Handlers
+    
     var addOverallLayer: ((UIView, OverallOptions) -> Void)?
+
+    // MARK: - UI Controls
 
     private lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
@@ -80,8 +90,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         button.layer.cornerRadius = 16
         return button
     }()
-
-    var webSocketTask: URLSessionWebSocketTask?
 
     // MARK: - LifeCycle
 
@@ -147,9 +155,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     // MARK: - Private Methods
 
-    private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
-    private var buttonsArray = [IntervalButton]()
-
     private func makeButtonsStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -168,6 +173,21 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
         return stackView
     }
+    
+    
+    private func makeChartDataEntry(prices: [Double]) -> [ChartDataEntry] {
+        var yValues = [ChartDataEntry]()
+        for (index, element) in prices.enumerated() {
+            yValues.append(ChartDataEntry(x: Double(index), y: element))
+        }
+        return yValues
+    }
+
+    private func setNewPrice(withCurrentPrice current: Double, openPrice: Double) {
+        buyButton.setTitle("Buy for $\(current)", for: .normal)
+        currentPriceLabel.text = "$\(current)"
+        priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD", currentPrice: current, openPice: openPrice)
+    }
 
     // MARK: - Selectors
 
@@ -185,6 +205,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         print(entry)
     }
+    
+    // MARK: - Public Methods
 
     func setData(withPrices prices: [Double], openPrice: Double) {
         let set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices))
@@ -206,21 +228,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         data.setDrawValues(false)
         lineChartView.data = data
     }
-
-    private func makeChartDataEntry(prices: [Double]) -> [ChartDataEntry] {
-        var yValues = [ChartDataEntry]()
-        for (index, element) in prices.enumerated() {
-            yValues.append(ChartDataEntry(x: Double(index), y: element))
-        }
-        return yValues
-    }
-
-    private func setNewPrice(withCurrentPrice current: Double, openPrice: Double) {
-        buyButton.setTitle("Buy for $\(current)", for: .normal)
-        currentPriceLabel.text = "$\(current)"
-        priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD", currentPrice: current, openPice: openPrice)
-    }
-
+    
+    // MARK: - Init
+    
     init(barHeight: CGFloat = 0, activeInterval: Int, currentPrice: Double, openPrice: Double) {
         super.init(nibName: nil, bundle: nil)
         self.barHeight = barHeight

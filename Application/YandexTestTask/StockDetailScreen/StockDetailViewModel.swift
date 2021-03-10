@@ -8,18 +8,23 @@
 import Foundation
 
 class StockDetailViewModel: WebSocketConnectionDelegate {
-    private var stockInfo: TrendingListFullInfoModel!
+    // MARK: - Private Properties
 
-    private var companyCandlesData: CandlesModel! { //!
+    private var stockInfo: TrendingListFullInfoModel!
+    private var companyCandlesData: CandlesModel? {
         didSet {
             didUpdateCandles?()
         }
     }
 
+    // MARK: - Handlers
+
     var didUpdateCandles: (() -> Void)?
 
+    // MARK: - Public Properties
+
     var candles: [Double] {
-        return companyCandlesData.c!
+        return companyCandlesData?.c ?? []
     }
 
     var openPrice: Double {
@@ -67,20 +72,22 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         return String(Int(Date().timeIntervalSince1970))
     }
 
-    var activeInterval: IntevalTime = .month {
+    private(set) var activeInterval: IntevalTime = .month {
         didSet {
             requestCompanyCandles()
         }
     }
 
-    func setActiveInterval(withNewInterval interval: IntevalTime) {
-        activeInterval = interval
+    // MARK: - Enums
+
+    enum IntevalTime: Int {
+        case day, week, month, sixMonths, year, all
     }
 
     // MARK: - Public Methods
 
-    enum IntevalTime: Int {
-        case day, week, month, sixMonths, year, all
+    func setActiveInterval(withNewInterval interval: IntevalTime) {
+        activeInterval = interval
     }
 
     func requestCompanyCandles() {
@@ -154,6 +161,8 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
     func disconnectWebSocket() {
         webSocketConnection.disconnect()
     }
+
+    // MARK: - Init
 
     init(stockModel: TrendingListFullInfoModel) {
         stockInfo = stockModel

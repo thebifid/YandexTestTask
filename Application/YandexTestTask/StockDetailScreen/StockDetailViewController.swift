@@ -9,26 +9,23 @@ import AMScrollingNavbar
 import UIKit
 
 class StockDetailViewController: MenuBarViewController, IntervalDelegate {
-    func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime) {
-        viewModel.setActiveInterval(withNewInterval: interval)
-    }
-
     // MARK: - Private Properties
 
     private var viewModel: StockDetailViewModel!
+    private lazy var controllers = [stockChartViewController, UIViewController()]
+    private let titles = ["Chart", "Test"]
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        stockChartViewController.addOverallLayer = { [weak self] view, options in
-            self?.addOverallLayer(withView: view, options: options)
-        }
-
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
         viewModel.requestCompanyCandles()
+    }
 
+    // MARK: - Private Methods
+
+    private func enableBinding() {
         viewModel.didUpdateCandles = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -36,6 +33,16 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
                                                       openPrice: self.viewModel.openPrice)
             }
         }
+
+        stockChartViewController.addOverallLayer = { [weak self] view, options in
+            self?.addOverallLayer(withView: view, options: options)
+        }
+    }
+
+    // MARK: - IntervalDelegate
+
+    func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime) {
+        viewModel.setActiveInterval(withNewInterval: interval)
     }
 
     // MARK: - MenuBarDataSource
@@ -47,9 +54,6 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
         controller.delegate = self
         return controller
     }()
-
-    private lazy var controllers = [stockChartViewController, UIViewController()]
-    private let titles = ["Chart", "Test"]
 
     override func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {
         titles[index]
@@ -74,6 +78,8 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Deinit
 
     deinit {
         self.viewModel.disconnectWebSocket()
