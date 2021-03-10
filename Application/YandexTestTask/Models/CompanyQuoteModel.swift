@@ -8,10 +8,10 @@
 import Foundation
 
 struct CompanyQuoteModel: Decodable {
-    let c: Float
+    let c: Double
     let h: Float
     let l: Float
-    let o: Float
+    let o: Double
     let pc: Float
     let t: Float
 

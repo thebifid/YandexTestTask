@@ -186,13 +186,12 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         print(entry)
     }
 
-    func setData(withPrices prices: [Double]) {
+    func setData(withPrices prices: [Double], openPrice: Double) {
         let set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices))
         set1.drawCirclesEnabled = false
         set1.mode = .horizontalBezier
         set1.lineWidth = 2
         set1.setColor(.black)
-
         let gradientColors = [
             UIColor.white.cgColor,
             ChartColorTemplates.colorFromString("#DCDCDC").cgColor
@@ -216,10 +215,17 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         return yValues
     }
 
-    init(barHeight: CGFloat = 0, activeInterval: Int) {
+    private func setNewPrice(withCurrentPrice current: Double, openPrice: Double) {
+        buyButton.setTitle("Buy for $\(current)", for: .normal)
+        currentPriceLabel.text = "$\(current)"
+        priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD", currentPrice: current, openPice: openPrice)
+    }
+
+    init(barHeight: CGFloat = 0, activeInterval: Int, currentPrice: Double, openPrice: Double) {
         super.init(nibName: nil, bundle: nil)
         self.barHeight = barHeight
         self.activeInterval = activeInterval
+        setNewPrice(withCurrentPrice: currentPrice, openPrice: openPrice)
     }
 
     required init?(coder: NSCoder) {

@@ -22,10 +22,10 @@ struct TrendingListFullInfoModel {
     let ticker: String
     let weburl: String
 
-    var c: Float
+    var c: Double
     let h: Float
     let l: Float
-    var o: Float
+    var o: Double
     let pc: Float
     let t: Float
 

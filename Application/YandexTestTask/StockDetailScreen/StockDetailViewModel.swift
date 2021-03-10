@@ -22,6 +22,14 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         return companyCandlesData.c!
     }
 
+    var openPrice: Double {
+        return stockInfo.o
+    }
+
+    var currentPrice: Double {
+        return stockInfo.c
+    }
+
     var ticker: String {
         return stockInfo.ticker
     }

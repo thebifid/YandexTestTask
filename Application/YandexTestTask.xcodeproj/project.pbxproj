@@ -28,6 +28,7 @@
 		C171F17A25F63F1000932732 /* TredesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F17925F63F1000932732 /* TredesModel.swift */; };
 		C171F17D25F65CAB00932732 /* CandlesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F17C25F65CAB00932732 /* CandlesModel.swift */; };
 		C171F1C325F8AE7D00932732 /* IntervalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F1C225F8AE7D00932732 /* IntervalButton.swift */; };
+		C171F1C725F8CF5000932732 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F1C625F8CF5000932732 /* Calculate.swift */; };
 		C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */; };
 		C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */; };
 		C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F103325E0EE88006CCA52 /* StocksListViewController.swift */; };
@@ -75,6 +76,7 @@
 		C171F17925F63F1000932732 /* TredesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TredesModel.swift; sourceTree = "<group>"; };
 		C171F17C25F65CAB00932732 /* CandlesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandlesModel.swift; sourceTree = "<group>"; };
 		C171F1C225F8AE7D00932732 /* IntervalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalButton.swift; sourceTree = "<group>"; };
+		C171F1C625F8CF5000932732 /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
 		C17C451825E1600600B92050 /* TrendingListFullInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingListFullInfoModel.swift; sourceTree = "<group>"; };
 		C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		C17F103325E0EE88006CCA52 /* StocksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksListViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				C17F0FFE25DFE3EB006CCA52 /* EmptyViewController.swift */,
 				C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */,
 				C171F1C225F8AE7D00932732 /* IntervalButton.swift */,
+				C171F1C625F8CF5000932732 /* Calculate.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				C19C957B25F36DDB00220CCF /* SymbolLookUpModel.swift in Sources */,
 				C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */,
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
+				C171F1C725F8CF5000932732 /* Calculate.swift in Sources */,
 				C171F14325F608AF00932732 /* StockDetailViewModel.swift in Sources */,
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
 				C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */,
