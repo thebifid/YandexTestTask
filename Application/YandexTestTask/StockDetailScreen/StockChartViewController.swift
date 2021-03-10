@@ -14,19 +14,18 @@ protocol IntervalDelegate: AnyObject {
 }
 
 class StockChartViewController: UIViewController, ChartViewDelegate {
-    
     // MARK: - Private Properties
-    
+
     private var barHeight: CGFloat = 0
     private var activeInterval: Int = 0
-    
+
     private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
     private var buttonsArray = [IntervalButton]()
-    
+
     // MARK: - Public Properties
 
     weak var delegate: IntervalDelegate?
-    
+
     struct OverallOptions {
         var size: CGSize
         var align: MenuBarViewController.OverallAlign
@@ -38,9 +37,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
             insets = UIEdgeInsets.zero
         }
     }
-    
+
     // MARK: - Handlers
-    
+
     var addOverallLayer: ((UIView, OverallOptions) -> Void)?
 
     // MARK: - UI Controls
@@ -173,8 +172,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
         return stackView
     }
-    
-    
+
     private func makeChartDataEntry(prices: [Double]) -> [ChartDataEntry] {
         var yValues = [ChartDataEntry]()
         for (index, element) in prices.enumerated() {
@@ -205,7 +203,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         print(entry)
     }
-    
+
     // MARK: - Public Methods
 
     func setData(withPrices prices: [Double], openPrice: Double) {
@@ -228,9 +226,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         data.setDrawValues(false)
         lineChartView.data = data
     }
-    
+
     // MARK: - Init
-    
+
     init(barHeight: CGFloat = 0, activeInterval: Int, currentPrice: Double, openPrice: Double) {
         super.init(nibName: nil, bundle: nil)
         self.barHeight = barHeight

@@ -147,7 +147,7 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
     }
 
     func onMessage(connection: WebSocketConnection, data: Data) {
-        return
+        print(data)
     }
 
     func connectWebSocket() {

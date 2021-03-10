@@ -21,6 +21,7 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
         super.viewDidLoad()
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
         viewModel.requestCompanyCandles()
+        enableBinding()
     }
 
     // MARK: - Private Methods
