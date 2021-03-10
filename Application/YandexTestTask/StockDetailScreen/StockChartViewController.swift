@@ -54,23 +54,34 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         chartView.legend.enabled = false
         chartView.leftAxis.enabled = false
         chartView.xAxis.enabled = false
+        chartView.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
         return chartView
     }()
 
     private let chartViewBackgroundLayer = UIView()
 
+    private let topBorderLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+
+    private let bottomBorderLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+
     private let stockPriceInfoView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 1
         return view
     }()
 
     private let currentPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "300 $"
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 24)
         return label
     }()
 
@@ -85,6 +96,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         let button = UIButton()
         button.setTitle("Buy for $300", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
         button.backgroundColor = .black
         button.layer.cornerRadius = 16
         return button
@@ -108,6 +120,21 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         options.size = .init(width: Constants.deviceWidth, height: Constants.deviceHeight / 2)
         options.align = .top
         options.insets = .init(top: 60, left: 0, bottom: 0, right: 0)
+
+        lineChartView.addSubview(topBorderLineView)
+        constrain(topBorderLineView) { borderLineView in
+            borderLineView.top == borderLineView.superview!.top
+            borderLineView.height == 0.5
+            borderLineView.width == borderLineView.superview!.width
+        }
+
+        lineChartView.addSubview(bottomBorderLineView)
+        constrain(bottomBorderLineView) { borderLineView in
+            borderLineView.bottom == borderLineView.superview!.bottom
+            borderLineView.height == 0.5
+            borderLineView.width == borderLineView.superview!.width
+        }
+
         addOverallLayer?(lineChartView, options)
         view.addSubview(chartViewBackgroundLayer)
         constrain(chartViewBackgroundLayer, stockPriceInfoView) { chartViewBackgroundLayer, bar in

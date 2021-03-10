@@ -92,7 +92,7 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         layout.scrollDirection = .horizontal
         layout.sectionInset = .init(top: 0, left: 20, bottom: 0, right: 0)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
+        cv.backgroundColor = R.color.barColor()
         cv.dataSource = self
         cv.delegate = self
         cv.tag = 0
