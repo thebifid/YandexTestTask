@@ -143,7 +143,7 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         return
     }
 
-    private func connectWebSocket() {
+    func connectWebSocket() {
         guard let url = URL(string: "wss://ws.finnhub.io?token=c0mgb5748v6ue78flnkg") else { return }
         webSocketConnection = WebSocketTaskConnection(url: url)
         webSocketConnection.delegate = self
@@ -151,16 +151,11 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
         webSocketConnection.send(text: "{\"type\":\"subscribe\",\"symbol\":\"\(ticker)\"}")
     }
 
-    private func disconnectWebSocket() {
-//        webSocketConnection.disconnect()
+    func disconnectWebSocket() {
+        webSocketConnection.disconnect()
     }
 
     init(stockModel: TrendingListFullInfoModel) {
         stockInfo = stockModel
-//        connectWebSocket()
-    }
-
-    deinit {
-        disconnectWebSocket()
     }
 }

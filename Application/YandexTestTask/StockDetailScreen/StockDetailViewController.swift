@@ -22,12 +22,11 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        stockChartViewController.addOverallLayer = { view, options in
-            self.addOverallLayer(withView: view, options: options)
+        stockChartViewController.addOverallLayer = { [weak self] view, options in
+            self?.addOverallLayer(withView: view, options: options)
         }
 
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
-//        connectWebSocket()
         viewModel.requestCompanyCandles()
 
         viewModel.didUpdateCandles = { [weak self] in
@@ -38,13 +37,6 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
             }
         }
     }
-
-//    private func connectWebSocket() {
-//        webSocketConnection = WebSocketTaskConnection(url: URL(string: "wss://ws.finnhub.io?token=c0mgb5748v6ue78flnkg")!)
-//        webSocketConnection.delegate = self
-//        webSocketConnection.connect()
-//        webSocketConnection.send(text: "{\"type\":\"subscribe\",\"symbol\":\"AAPL\"}")
-//    }
 
     // MARK: - MenuBarDataSource
 
@@ -76,9 +68,14 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     init(viewModel: StockDetailViewModel) {
         super.init()
         self.viewModel = viewModel
+        self.viewModel.connectWebSocket()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        self.viewModel.disconnectWebSocket()
     }
 }
