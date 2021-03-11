@@ -9,32 +9,15 @@ import Cartography
 import UIKit
 
 class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchViewDelegate, SearchResControllerDelegate {
-    func favButtonClicked(atIndexPath indexPath: IndexPath) {
-        viewModel.stocksFavButtonTapped(list: .search, index: indexPath.row) { _ in
-        }
-    }
-
-    func searchView(_ searchView: SearchView, didClickTag tag: String) {
-        searchController.searchBar.searchTextField.text = tag
-        searchBarSearchButtonClicked(searchController.searchBar)
-        searchController.searchBar.resignFirstResponder()
-    }
-
-    override func menuBar(didScrolledToIndex to: Int) {
-        controllers.forEach { $0.deactivateFollowingNavbar() }
-        controllers[to].activateFollowingNavbar()
-    }
-
     // MARK: - Private Properties
 
-    private let viewModel = StocksListViewModel()
+    private let viewModel = StocksViewModel()
     private let tabs = ["Stocks", "Favourite"]
-    private lazy var controllers = [StocksListViewController(viewModel: viewModel), FavouriteListViewController(viewModel: viewModel)]
+    private lazy var controllers = [StocksListViewController(), FavouriteListViewController()]
 
     // MARK: - UI Controls
 
     private let searchResController = SearchResViewController()
-
     private lazy var searchController = UISearchController(searchResultsController: searchResController)
     private var searchView: SearchView?
 
@@ -43,44 +26,77 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
     override func viewDidLoad() {
         super.viewDidLoad()
         barItemFontSize = 24
-        setupSearchBar()
-        enabliBinding()
         searchResController.delegate = self
-    }
-
-    private func enabliBinding() {
-        viewModel.didUpdatePopularList = { [weak self] in
-            guard self?.searchView != nil else { return }
-            DispatchQueue.main.async {
-                self?.searchView!.setPopularTags(tags: self?.viewModel.popularList ?? [])
-            }
-        }
-
-        viewModel.didUpdateSearchList = { [weak self] in
-            self?.searchResController.setSearchResults(results: self?.viewModel.searchResult ?? [])
-        }
+        requestPopularRequests()
+        enableBinding()
+        setupSearchBar()
     }
 
     // MARK: - Private Methods
 
+    private func enableBinding() {
+        viewModel.didUpdatePopularList = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.searchView?.setPopularTags(tags: self.viewModel.popularList)
+            }
+        }
+
+        viewModel.didFavButtonClicked = { [weak self] in
+            self?.searchResController.tableView.reloadData()
+        }
+    }
+
+    private func requestPopularRequests() {
+        viewModel.requestTrendingList { [weak self] result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
+                    self?.requestPopularRequests()
+                }
+                DispatchQueue.main.async {
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            case .success:
+                break
+            }
+        }
+    }
+
     // MARK: - UI Actions
 
     private func setupSearchBar() {
-        // Разобраться когда дойду
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.placeholder = "Find company or ticker"
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.showsSearchResultsController = false
-
-        // Include the search bar within the navigation bar.
         navigationItem.titleView = searchController.searchBar
         definesPresentationContext = true
-
         searchController.searchBar.delegate = self
     }
 
+    // MARK: - SearchResControllerDelegate
+
+    func favButtonClicked(atIndexPath indexPath: IndexPath) {
+        viewModel.stockFavButtonTapped(index: indexPath.item) { [weak self] result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithCancel(withError: error)
+                self?.present(alert, animated: true, completion: nil)
+            case .success:
+                break
+            }
+        }
+    }
+
     // MARK: - SearchBarDelegate
+
+    func searchView(_ searchView: SearchView, didClickTag tag: String) {
+        searchController.searchBar.searchTextField.text = tag
+        searchBarSearchButtonClicked(searchController.searchBar)
+        searchController.searchBar.resignFirstResponder()
+    }
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.tintColor = .systemBlue
@@ -88,7 +104,7 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         guard searchView == nil else { return true }
         searchView = SearchView()
         searchView!.delegate = self
-        searchView!.setPopularTags(tags: viewModel.popularList ?? [String]())
+        searchView!.setPopularTags(tags: viewModel.popularList)
         searchView!.setSearchedTags(tags: viewModel.searchedList)
         view.addSubview(searchView!)
         constrain(searchView!) { searchView in
@@ -105,7 +121,6 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
             }
             searchResController.startedSearch()
             viewModel.searchRequest(withText: searchText.uppercased()) { result in
-
                 switch result {
                 case let .failure(error):
                     print(error.localizedDescription)
@@ -120,6 +135,13 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         searchBar.tintColor = .white
         searchView?.removeFromSuperview()
         searchView = nil
+    }
+
+    // MARK: - MenuBarDelegate
+
+    override func menuBar(didScrolledToIndex to: Int) {
+        controllers.forEach { $0.deactivateFollowingNavbar() }
+        controllers[to].activateFollowingNavbar()
     }
 
     // MARK: - MenuBarDataSource

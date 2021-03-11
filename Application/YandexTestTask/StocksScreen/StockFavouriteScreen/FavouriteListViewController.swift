@@ -15,7 +15,7 @@ protocol CellDidScrollDelegate: AnyObject {
 class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
     // MARK: - Private Properties
 
-    private let viewModel: StocksListViewModel!
+    private let viewModel = FavouriteListViewModel()
 
     // MARK: - LifeCycle
 
@@ -151,7 +151,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
     func favButtonTapped(cell: StockCell) {
         let indexPath = tableView.indexPath(for: cell)
         let index = indexPath!.row
-        viewModel.stocksFavButtonTapped(list: .favourite, index: index) { result in
+        viewModel.stocksFavButtonTapped(index: index) { result in
             switch result {
             case let .failure(error):
                 let alert = AlertAssist.AlertWithCancel(withError: error)
@@ -164,8 +164,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
         }
     }
 
-    init(viewModel: StocksListViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
 
