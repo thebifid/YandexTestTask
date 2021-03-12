@@ -90,6 +90,12 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         }
     }
 
+    func clickedCell(atIndexPath indexPath: IndexPath) {
+        let detailViewModel = StockDetailViewModel(stockModel: viewModel.searchResult[indexPath.row])
+        let controller = StockDetailViewController(viewModel: detailViewModel)
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
     // MARK: - SearchBarDelegate
 
     func searchView(_ searchView: SearchView, didClickTag tag: String) {

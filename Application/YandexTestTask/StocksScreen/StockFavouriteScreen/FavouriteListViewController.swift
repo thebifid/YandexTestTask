@@ -135,11 +135,19 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
         let color: UIColor = indexPath.row % 2 == 0 ? R.color.customLightGray()! : .white
         cell.setupCell(color: color, companyInfo: viewModel.favListInfo[indexPath.row])
         cell.delegate = self
+        cell.selectionStyle = .none
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let detailViewModel = StockDetailViewModel(stockModel: viewModel.favListInfo[indexPath.row])
+        let controller = StockDetailViewController(viewModel: detailViewModel)
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

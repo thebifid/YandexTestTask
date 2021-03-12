@@ -154,7 +154,7 @@ class StockCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         setHighlighted(true, animated: true)
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(400)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             self.setHighlighted(false, animated: true)
         }
     }

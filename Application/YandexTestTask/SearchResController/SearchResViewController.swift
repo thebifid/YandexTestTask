@@ -10,6 +10,7 @@ import UIKit
 
 protocol SearchResControllerDelegate: AnyObject {
     func favButtonClicked(atIndexPath indexPath: IndexPath)
+    func clickedCell(atIndexPath indexPath: IndexPath)
 }
 
 class SearchResViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
@@ -54,6 +55,7 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.contentInset = .init(top: 20, left: 0, bottom: 0, right: 0)
     }
 
     private func vibrate() {
@@ -93,7 +95,13 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         let color: UIColor = indexPath.row % 2 == 0 ? R.color.customLightGray()! : .white
         cell.setupCell(color: color, companyInfo: searchResult[indexPath.row])
         cell.delegate = self
+        cell.selectionStyle = .none
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        delegate?.clickedCell(atIndexPath: indexPath)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
