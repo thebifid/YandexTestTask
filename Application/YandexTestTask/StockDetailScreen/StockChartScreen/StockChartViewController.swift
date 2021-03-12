@@ -10,12 +10,13 @@ import Charts
 import UIKit
 
 protocol IntervalDelegate: AnyObject {
-    func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime)
+    func intervalDidChange(newInterval interval: StockChartViewModel.IntevalTime)
 }
 
 class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRecognizerDelegate {
     // MARK: - Private Properties
 
+    private let viewModel: StockChartViewModel!
     private var barHeight: CGFloat = 0
     private var activeInterval: Int = 0
 
@@ -124,31 +125,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return label
     }()
 
-    @objc private func pressed(sender: UILongPressGestureRecognizer) {
-        switch sender.state {
-        case .began:
-            UIView.animate(withDuration: 0.1) {
-                self.currentPriceLabel.alpha = 0
-                self.priceChangeLabel.alpha = 0
-                self.detailPriceLabel.alpha = 1
-                self.isDrawVerticalHighlightIndicatorEnabled = true
-                self.set1.drawVerticalHighlightIndicatorEnabled = true
-                self.lineChartView.setNeedsDisplay()
-            }
-        case .ended:
-            UIView.animate(withDuration: 0.1) {
-                self.currentPriceLabel.alpha = 1
-                self.priceChangeLabel.alpha = 1
-                self.detailPriceLabel.alpha = 0
-                self.set1.drawVerticalHighlightIndicatorEnabled = false
-                self.isDrawVerticalHighlightIndicatorEnabled = false
-                self.lineChartView.setNeedsDisplay()
-            }
-        default:
-            break
-        }
-    }
-
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -158,6 +134,22 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         setupChartView()
         setupButtons()
         setupBuyButton()
+        viewModel.requestCompanyCandles()
+        viewModel.connectWebSocket()
+        setNewPrice(withCurrentPrice: viewModel.currentPrice, previousClose: viewModel.previousClose)
+        enableBinding()
+    }
+
+    private func enableBinding() {
+        viewModel.didUpdateCandles = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.setData(withPrices: self.viewModel.candles,
+                             openPrice: self.viewModel.previousClose)
+                self.setNewPrice(withCurrentPrice: self.viewModel.currentPrice,
+                                 previousClose: self.viewModel.previousClose)
+            }
+        }
     }
 
     // MARK: - UI Actions
@@ -260,34 +252,23 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return yValues
     }
 
-    func setNewPrice(withCurrentPrice current: Double, previousClose: Double) {
+    private func intervalDidChange(newInterval interval: StockChartViewModel.IntevalTime) {
+        setData(withPrices: [],
+                openPrice: 0)
+        setNewPrice(withCurrentPrice: 0,
+                    previousClose: 0)
+        viewModel.setActiveInterval(withNewInterval: interval)
+    }
+
+    private func setNewPrice(withCurrentPrice current: Double, previousClose: Double) {
         buyButton.setTitle("Buy for $\(current)", for: .normal)
         currentPriceLabel.text = "$\(current)"
         priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD",
                                                                          currentPrice: current,
                                                                          previousClose: previousClose)
     }
-
-    // MARK: - Selectors
-
-    @objc private func intervalButtonClicked(sender: UIButton) {
-        buttonsArray[activeInterval].isActive = false
-        activeInterval = sender.tag
-        if let button = sender as? IntervalButton {
-            button.isActive = true
-        }
-        delegate?.intervalDidChange(newInterval: StockDetailViewModel.IntevalTime(rawValue: sender.tag) ?? .day)
-    }
-
-    // MARK: - ChartViewDelegate
-
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        detailPriceLabel.text = String(entry.y)
-    }
-
-    // MARK: - Public Methods
-
-    func setData(withPrices prices: [Double], openPrice: Double) {
+    
+    private func setData(withPrices prices: [Double], openPrice: Double) {
         set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices))
         set1.drawCirclesEnabled = false
         set1.mode = .horizontalBezier
@@ -311,16 +292,64 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         lineChartView.data = data
     }
 
+    // MARK: - Selectors
+
+    @objc private func intervalButtonClicked(sender: UIButton) {
+        buttonsArray[activeInterval].isActive = false
+        activeInterval = sender.tag
+        if let button = sender as? IntervalButton {
+            button.isActive = true
+        }
+        intervalDidChange(newInterval: StockChartViewModel.IntevalTime(rawValue: sender.tag) ?? .day)
+    }
+
+    @objc private func pressed(sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            UIView.animate(withDuration: 0.1) {
+                self.currentPriceLabel.alpha = 0
+                self.priceChangeLabel.alpha = 0
+                self.detailPriceLabel.alpha = 1
+                self.isDrawVerticalHighlightIndicatorEnabled = true
+                self.set1.drawVerticalHighlightIndicatorEnabled = true
+                self.lineChartView.setNeedsDisplay()
+            }
+        case .ended:
+            UIView.animate(withDuration: 0.1) {
+                self.currentPriceLabel.alpha = 1
+                self.priceChangeLabel.alpha = 1
+                self.detailPriceLabel.alpha = 0
+                self.set1.drawVerticalHighlightIndicatorEnabled = false
+                self.isDrawVerticalHighlightIndicatorEnabled = false
+                self.lineChartView.setNeedsDisplay()
+            }
+        default:
+            break
+        }
+    }
+
+    // MARK: - ChartViewDelegate
+
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        detailPriceLabel.text = String(entry.y)
+    }
+
+    // MARK: - Public Methods
+
+
     // MARK: - Init
 
-    init(barHeight: CGFloat = 0, activeInterval: Int, currentPrice: Double, previousClose: Double) {
+    init(barHeight: CGFloat = 0, viewModel: StockChartViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.barHeight = barHeight
-        self.activeInterval = activeInterval
-        setNewPrice(withCurrentPrice: currentPrice, previousClose: previousClose)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        viewModel.disconnectWebSocket()
     }
 }

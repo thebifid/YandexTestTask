@@ -91,7 +91,7 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
     }
 
     func clickedCell(atIndexPath indexPath: IndexPath) {
-        let detailViewModel = StockDetailViewModel(stockModel: viewModel.searchResult[indexPath.row])
+        let detailViewModel = StockDetailViewModel(stock: viewModel.searchResult[indexPath.row])
         let controller = StockDetailViewController(viewModel: detailViewModel)
         navigationController?.pushViewController(controller, animated: true)
     }

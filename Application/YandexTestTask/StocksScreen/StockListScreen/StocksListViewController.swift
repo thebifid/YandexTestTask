@@ -120,7 +120,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let detailViewModel = StockDetailViewModel(stockModel: viewModel.trendingListInfo[indexPath.row])
+        let detailViewModel = StockDetailViewModel(stock: viewModel.trendingListInfo[indexPath.row])
         let controller = StockDetailViewController(viewModel: detailViewModel)
         navigationController?.pushViewController(controller, animated: true)
     }

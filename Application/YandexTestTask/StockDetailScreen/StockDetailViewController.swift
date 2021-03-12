@@ -8,10 +8,10 @@
 import AMScrollingNavbar
 import UIKit
 
-class StockDetailViewController: MenuBarViewController, IntervalDelegate {
+class StockDetailViewController: MenuBarViewController {
     // MARK: - Private Properties
 
-    private var viewModel: StockDetailViewModel!
+    private let viewModel: StockDetailViewModel!
     private lazy var controllers = [stockChartViewController, UIViewController()]
     private let titles = ["Chart", "Test"]
 
@@ -20,45 +20,21 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
-        viewModel.requestCompanyCandles()
-        enableBinding()
-    }
-
-    // MARK: - Private Methods
-
-    private func enableBinding() {
-        viewModel.didUpdateCandles = { [weak self] in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.stockChartViewController.setData(withPrices: self.viewModel.candles,
-                                                      openPrice: self.viewModel.previousClose)
-                self.stockChartViewController.setNewPrice(withCurrentPrice: self.viewModel.currentPrice,
-                                                          previousClose: self.viewModel.previousClose)
-            }
-        }
 
         stockChartViewController.addOverallLayer = { [weak self] view, options in
             self?.addOverallLayer(withView: view, options: options)
         }
     }
 
-    // MARK: - IntervalDelegate
+    // MARK: - Private Methods
 
-    func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime) {
-        stockChartViewController.setData(withPrices: [],
-                                         openPrice: 0)
-        stockChartViewController.setNewPrice(withCurrentPrice: 0,
-                                             previousClose: 0)
-        viewModel.setActiveInterval(withNewInterval: interval)
-    }
+    // MARK: - IntervalDelegate
 
     // MARK: - MenuBarDataSource
 
     private lazy var stockChartViewController: StockChartViewController = {
         let controller = StockChartViewController(barHeight: barCollectionView.frame.height,
-                                                  activeInterval: viewModel.activeInterval.rawValue,
-                                                  currentPrice: viewModel.currentPrice, previousClose: viewModel.previousClose)
-        controller.delegate = self
+                                                  viewModel: StockChartViewModel(stockModel: viewModel.stockInfo))
         return controller
     }()
 
@@ -77,9 +53,8 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     // MARK: - Init
 
     init(viewModel: StockDetailViewModel) {
-        super.init()
         self.viewModel = viewModel
-        self.viewModel.connectWebSocket()
+        super.init()
     }
 
     required init?(coder: NSCoder) {
@@ -87,9 +62,4 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     }
 
     // MARK: - Deinit
-
-    deinit {
-        print("controller deinit")
-        self.viewModel.disconnectWebSocket()
-    }
 }

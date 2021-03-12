@@ -145,7 +145,7 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let detailViewModel = StockDetailViewModel(stockModel: viewModel.favListInfo[indexPath.row])
+        let detailViewModel = StockDetailViewModel(stock: viewModel.favListInfo[indexPath.row])
         let controller = StockDetailViewController(viewModel: detailViewModel)
         navigationController?.pushViewController(controller, animated: true)
     }
