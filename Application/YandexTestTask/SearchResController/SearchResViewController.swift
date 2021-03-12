@@ -55,7 +55,6 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.contentInset = .init(top: 20, left: 0, bottom: 0, right: 0)
     }
 
     private func vibrate() {

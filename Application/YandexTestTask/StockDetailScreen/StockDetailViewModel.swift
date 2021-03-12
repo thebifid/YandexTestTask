@@ -28,7 +28,11 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
     }
 
     var previousClose: Double {
-        return stockInfo.pc
+        if activeInterval == .day {
+            return stockInfo.pc
+        } else {
+            return (companyCandlesData?.c?.first)! //!
+        }
     }
 
     var currentPrice: Double {
@@ -86,6 +90,12 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
 
     // MARK: - Public Methods
 
+    private var weekCompanyCandles: CandlesModel?
+    private var monthCompanyCandles: CandlesModel?
+    private var sixMonthCompanyCandles: CandlesModel?
+    private var yearCompanyCandles: CandlesModel?
+    private var allCompanyCadles: CandlesModel?
+
     func setActiveInterval(withNewInterval interval: IntevalTime) {
         activeInterval = interval
     }
@@ -98,18 +108,38 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
             fromIntervalTime = dayStartTimestamp
             resolution = "5"
         case .week:
+            if weekCompanyCandles != nil {
+                companyCandlesData = weekCompanyCandles
+                return
+            }
             fromIntervalTime = weekBackTimestamp
             resolution = "60"
         case .month:
+            if monthCompanyCandles != nil {
+                companyCandlesData = monthCompanyCandles
+                return
+            }
             fromIntervalTime = monthBackTimestamp
             resolution = "240"
         case .sixMonths:
+            if sixMonthCompanyCandles != nil {
+                companyCandlesData = sixMonthCompanyCandles
+                return
+            }
             fromIntervalTime = sixMonthBackTimestamp
             resolution = "D"
         case .year:
+            if yearCompanyCandles != nil {
+                companyCandlesData = yearCompanyCandles
+                return
+            }
             fromIntervalTime = yearBackTimestamp
             resolution = "D"
         case .all:
+            if allCompanyCadles != nil {
+                companyCandlesData = allCompanyCadles
+                return
+            }
             fromIntervalTime = "0"
             resolution = "M"
         }
@@ -122,6 +152,21 @@ class StockDetailViewModel: WebSocketConnectionDelegate {
                 print(error.localizedDescription)
             case let .success(candles):
                 self.companyCandlesData = candles
+
+                switch self.activeInterval {
+                case .week:
+                    self.weekCompanyCandles = candles
+                case .month:
+                    self.monthCompanyCandles = candles
+                case .sixMonths:
+                    self.sixMonthCompanyCandles = candles
+                case .year:
+                    self.yearCompanyCandles = candles
+                case .all:
+                    self.allCompanyCadles = candles
+                default:
+                    break
+                }
             }
         }
     }

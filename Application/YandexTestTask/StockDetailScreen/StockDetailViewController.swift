@@ -45,6 +45,10 @@ class StockDetailViewController: MenuBarViewController, IntervalDelegate {
     // MARK: - IntervalDelegate
 
     func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime) {
+        stockChartViewController.setData(withPrices: [],
+                                         openPrice: 0)
+        stockChartViewController.setNewPrice(withCurrentPrice: 0,
+                                             previousClose: 0)
         viewModel.setActiveInterval(withNewInterval: interval)
     }
 

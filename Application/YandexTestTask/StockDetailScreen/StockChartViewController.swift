@@ -212,7 +212,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         buyButton.setTitle("Buy for $\(current)", for: .normal)
         currentPriceLabel.text = "$\(current)"
         priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD",
-                                                                         currentPrice: current, previousClose: previousClose)
+                                                                         currentPrice: current,
+                                                                         previousClose: previousClose)
     }
 
     // MARK: - Selectors
