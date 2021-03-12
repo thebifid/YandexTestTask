@@ -12,6 +12,14 @@ class CoreDataManager {
     private init() {}
 
     static let sharedInstance = CoreDataManager()
+    private var modelsWithStocks: [ViewModelWithSotcks] = []
+    func subscribeModelToCoreDataChanges(viewModel: ViewModelWithSotcks) {
+        modelsWithStocks.append(viewModel)
+    }
+
+    private func notifyViewModels() {
+        modelsWithStocks.forEach { $0.coreDataDidChanges() }
+    }
 
     // reference to managed object context
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -68,11 +76,12 @@ class CoreDataManager {
     func removeFromCoreData(byTicker ticker: String, completion: @escaping ((Result<Void, Error>) -> Void)) {
         if let stockToDelete = fetchObject(byTicker: ticker) {
             context.delete(stockToDelete)
-            (UIApplication.shared.delegate as! AppDelegate).saveContext { result in
+            (UIApplication.shared.delegate as! AppDelegate).saveContext { [weak self] result in
                 switch result {
                 case let .failure(error):
                     completion(.failure(error))
                 case .success:
+                    self?.notifyViewModels()
                     completion(.success(()))
                 }
             }
@@ -107,11 +116,12 @@ class CoreDataManager {
 
         newStock.logoData = stockInfo.logoData
 
-        (UIApplication.shared.delegate as! AppDelegate).saveContext { result in
+        (UIApplication.shared.delegate as! AppDelegate).saveContext { [weak self] result in
             switch result {
             case let .failure(error):
                 completion(.failure(error))
             case .success:
+                self?.notifyViewModels()
                 completion(.success(()))
             }
         }

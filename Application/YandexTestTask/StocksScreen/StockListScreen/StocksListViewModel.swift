@@ -7,7 +7,15 @@
 
 import Foundation
 
-class StocksListViewModel {
+protocol ViewModelWithSotcks {
+    func coreDataDidChanges()
+}
+
+class StocksListViewModel: ViewModelWithSotcks {
+    func coreDataDidChanges() {
+        didUpdateStocksList?()
+    }
+
     // MARK: - Public Properties
 
     var trendingListInfo: [TrendingListFullInfoModel] = [] {
@@ -63,5 +71,9 @@ class StocksListViewModel {
                 }
             }
         }
+    }
+
+    init() {
+        CoreDataManager.sharedInstance.subscribeModelToCoreDataChanges(viewModel: self)
     }
 }

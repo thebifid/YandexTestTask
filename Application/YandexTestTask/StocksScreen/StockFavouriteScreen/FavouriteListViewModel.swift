@@ -7,7 +7,18 @@
 
 import Foundation
 
-class FavouriteListViewModel {
+class FavouriteListViewModel: ViewModelWithSotcks {
+    func coreDataDidChanges() {
+        CoreDataManager.sharedInstance.fetchFavs { [weak self] result in
+            switch result {
+            case let .failure(error):
+                print(error)
+            case let .success(model):
+                self?.favListInfo = model
+            }
+        }
+    }
+
     // MARK: - Public Properties
 
     var favListInfo: [TrendingListFullInfoModel] = [] {
@@ -46,23 +57,12 @@ class FavouriteListViewModel {
 
     /// Action for fav button tapped in StoksScreen
     func stocksFavButtonTapped(index: Int, completion: @escaping ((Result<Void, Error>) -> Void)) {
-        if CoreDataManager.sharedInstance.checkIfExist(byTicker: favListInfo[index].ticker) == false {
-            CoreDataManager.sharedInstance.saveToFavCoreData(stockInfo: favListInfo[index]) { [weak self] result in
-                switch result {
-                case let .failure(error):
-                    completion(.failure(error))
-                case .success:
-                    self?.didUpdateFavsList?()
-                }
-            }
-        } else {
-            CoreDataManager.sharedInstance.removeFromCoreData(byTicker: favListInfo[index].ticker) { [weak self] result in
-                switch result {
-                case let .failure(error):
-                    completion(.failure(error))
-                case .success:
-                    self?.didUpdateFavsList?()
-                }
+        CoreDataManager.sharedInstance.removeFromCoreData(byTicker: favListInfo[index].ticker) { [weak self] result in
+            switch result {
+            case let .failure(error):
+                completion(.failure(error))
+            case .success:
+                self?.didUpdateFavsList?()
             }
         }
     }
@@ -85,5 +85,9 @@ class FavouriteListViewModel {
                 completion(.success(info))
             }
         }
+    }
+
+    init() {
+        CoreDataManager.sharedInstance.subscribeModelToCoreDataChanges(viewModel: self)
     }
 }
