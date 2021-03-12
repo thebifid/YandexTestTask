@@ -13,7 +13,7 @@ protocol IntervalDelegate: AnyObject {
     func intervalDidChange(newInterval interval: StockDetailViewModel.IntevalTime)
 }
 
-class StockChartViewController: UIViewController, ChartViewDelegate {
+class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRecognizerDelegate {
     // MARK: - Private Properties
 
     private var barHeight: CGFloat = 0
@@ -21,6 +21,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
 
     private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
     private var buttonsArray = [IntervalButton]()
+
+    private var set1 = LineChartDataSet()
+    private var isDrawVerticalHighlightIndicatorEnabled: Bool = true
 
     // MARK: - Public Properties
 
@@ -54,9 +57,20 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         chartView.legend.enabled = false
         chartView.leftAxis.enabled = false
         chartView.xAxis.enabled = false
+
+        let pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(pressed(sender:)))
+        pressRecognizer.delegate = self
+        pressRecognizer.minimumPressDuration = 0
+        chartView.addGestureRecognizer(pressRecognizer)
+
         chartView.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
         return chartView
     }()
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 
     private let chartViewBackgroundLayer = UIView()
 
@@ -101,6 +115,39 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         button.layer.cornerRadius = 16
         return button
     }()
+
+    private let detailPriceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textColor = .black
+        label.alpha = 0
+        return label
+    }()
+
+    @objc private func pressed(sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            UIView.animate(withDuration: 0.1) {
+                self.currentPriceLabel.alpha = 0
+                self.priceChangeLabel.alpha = 0
+                self.detailPriceLabel.alpha = 1
+                self.isDrawVerticalHighlightIndicatorEnabled = true
+                self.set1.drawVerticalHighlightIndicatorEnabled = true
+                self.lineChartView.setNeedsDisplay()
+            }
+        case .ended:
+            UIView.animate(withDuration: 0.1) {
+                self.currentPriceLabel.alpha = 1
+                self.priceChangeLabel.alpha = 1
+                self.detailPriceLabel.alpha = 0
+                self.set1.drawVerticalHighlightIndicatorEnabled = false
+                self.isDrawVerticalHighlightIndicatorEnabled = false
+                self.lineChartView.setNeedsDisplay()
+            }
+        default:
+            break
+        }
+    }
 
     // MARK: - LifeCycle
 
@@ -157,6 +204,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
         constrain(stackView) { stackView in
             stackView.left == stackView.superview!.left + 20
             stackView.centerY == stackView.superview!.centerY
+        }
+
+        stockPriceInfoView.addSubview(detailPriceLabel)
+        constrain(detailPriceLabel) { detailPriceLabel in
+            detailPriceLabel.center == detailPriceLabel.superview!.center
         }
     }
 
@@ -230,16 +282,19 @@ class StockChartViewController: UIViewController, ChartViewDelegate {
     // MARK: - ChartViewDelegate
 
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        print(entry)
+        detailPriceLabel.text = String(entry.y)
     }
 
     // MARK: - Public Methods
 
     func setData(withPrices prices: [Double], openPrice: Double) {
-        let set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices))
+        set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices))
         set1.drawCirclesEnabled = false
         set1.mode = .horizontalBezier
         set1.lineWidth = 2
+        set1.drawHorizontalHighlightIndicatorEnabled = false
+        set1.drawVerticalHighlightIndicatorEnabled = isDrawVerticalHighlightIndicatorEnabled
+        set1.highlightColor = .black
         set1.setColor(.black)
         let gradientColors = [
             UIColor.white.cgColor,
