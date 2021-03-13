@@ -107,15 +107,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return label
     }()
 
-    private let buyButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Buy for $300", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        button.backgroundColor = .black
-        button.layer.cornerRadius = 16
-        return button
-    }()
+    private let buyButton = BuyButton()
 
     private let detailDataLabel: UILabel = {
         let label = UILabel()
@@ -276,7 +268,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     }
 
     private func setNewPrice(withCurrentPrice current: Double, previousClose: Double) {
-        buyButton.setTitle("Buy for $\(current)", for: .normal)
+        buyButton.configure(withTitle: "Buy for $\(current)")
         currentPriceLabel.text = "$\(current)"
         priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD",
                                                                          currentPrice: current,
