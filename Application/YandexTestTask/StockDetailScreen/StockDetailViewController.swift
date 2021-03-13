@@ -19,14 +19,38 @@ class StockDetailViewController: MenuBarViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
-
+        setupNavBar()
         stockChartViewController.addOverallLayer = { [weak self] view, options in
             self?.addOverallLayer(withView: view, options: options)
         }
     }
 
     // MARK: - Private Methods
+
+    private func setupNavBar() {
+        navigationController?.navigationBar.topItem?.title = ""
+        navigationItem.setTitle(title: viewModel.ticker, subtitle: viewModel.companyName)
+        if viewModel.inFav {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"),
+                                                                style: .plain, target: self, action: #selector(favButtonTapped))
+            navigationItem.rightBarButtonItem?.tintColor = R.color.customYellow()
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"),
+                                                                style: .plain, target: self, action: #selector(favButtonTapped))
+            navigationItem.rightBarButtonItem?.tintColor = .black
+        }
+    }
+
+    @objc private func favButtonTapped() {
+        viewModel.stocksFavButtonTapped { [weak self] result in
+            switch result {
+            case let .failure(error):
+                print(error)
+            case .success:
+                self?.setupNavBar()
+            }
+        }
+    }
 
     // MARK: - IntervalDelegate
 
