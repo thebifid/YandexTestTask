@@ -117,12 +117,27 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return button
     }()
 
+    private let detailDataLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .lightGray
+        return label
+    }()
+
     private let detailPriceLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = .black
-        label.alpha = 0
         return label
+    }()
+
+    private lazy var datailInfoStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [detailDataLabel, detailPriceLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        stackView.alpha = 0
+        stackView.alignment = .center
+        return stackView
     }()
 
     // MARK: - LifeCycle
@@ -198,9 +213,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
             stackView.centerY == stackView.superview!.centerY
         }
 
-        stockPriceInfoView.addSubview(detailPriceLabel)
-        constrain(detailPriceLabel) { detailPriceLabel in
-            detailPriceLabel.center == detailPriceLabel.superview!.center
+        stockPriceInfoView.addSubview(datailInfoStackView)
+        constrain(datailInfoStackView) { datailInfoStackView in
+            datailInfoStackView.center == datailInfoStackView.superview!.center
         }
     }
 
@@ -267,7 +282,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
                                                                          currentPrice: current,
                                                                          previousClose: previousClose)
     }
-    
+
     private func setData(withPrices prices: [Double], openPrice: Double) {
         set1 = LineChartDataSet(entries: makeChartDataEntry(prices: prices))
         set1.drawCirclesEnabled = false
@@ -309,16 +324,15 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
             UIView.animate(withDuration: 0.1) {
                 self.currentPriceLabel.alpha = 0
                 self.priceChangeLabel.alpha = 0
-                self.detailPriceLabel.alpha = 1
+                self.datailInfoStackView.alpha = 1
                 self.isDrawVerticalHighlightIndicatorEnabled = true
                 self.set1.drawVerticalHighlightIndicatorEnabled = true
-                self.lineChartView.setNeedsDisplay()
             }
         case .ended:
             UIView.animate(withDuration: 0.1) {
                 self.currentPriceLabel.alpha = 1
                 self.priceChangeLabel.alpha = 1
-                self.detailPriceLabel.alpha = 0
+                self.datailInfoStackView.alpha = 0
                 self.set1.drawVerticalHighlightIndicatorEnabled = false
                 self.isDrawVerticalHighlightIndicatorEnabled = false
                 self.lineChartView.setNeedsDisplay()
@@ -332,10 +346,10 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
 
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         detailPriceLabel.text = String(entry.y)
+        detailDataLabel.text = viewModel.dateForCandle(forIndex: Int(entry.x))
     }
 
     // MARK: - Public Methods
-
 
     // MARK: - Init
 

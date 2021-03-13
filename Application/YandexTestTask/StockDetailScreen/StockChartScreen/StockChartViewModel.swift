@@ -96,6 +96,23 @@ class StockChartViewModel: WebSocketConnectionDelegate {
     private var yearCompanyCandles: CandlesModel?
     private var allCompanyCadles: CandlesModel?
 
+    func dateForCandle(forIndex index: Int) -> String {
+        let timeStamp = companyCandlesData?.t?[index]
+        guard timeStamp != nil else { return "" }
+        let date = Date(timeIntervalSince1970: Double(timeStamp!))
+        let dateFormatter = DateFormatter()
+
+        if activeInterval.rawValue < 3 {
+            dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
+        } else {
+            dateFormatter.dateFormat = "dd MMM yyyy"
+        }
+
+        let strDate = dateFormatter.string(from: date)
+
+        return strDate
+    }
+
     func setActiveInterval(withNewInterval interval: IntevalTime) {
         activeInterval = interval
     }
