@@ -18,7 +18,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
 
     private let viewModel: StockChartViewModel!
     private var barHeight: CGFloat = 0
-    private var activeInterval: Int = 0
 
     private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
     private var buttonsArray = [IntervalButton]()
@@ -241,7 +240,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
             button.configure(withTitle: buttonTitles[index])
             button.tag = index
             button.addTarget(self, action: #selector(intervalButtonClicked(sender:)), for: .touchUpInside)
-            if index == activeInterval {
+            if index == viewModel.activeInterval.rawValue {
                 button.isActive = true
             }
             buttonsArray.append(button)
@@ -302,8 +301,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     // MARK: - Selectors
 
     @objc private func intervalButtonClicked(sender: UIButton) {
-        buttonsArray[activeInterval].isActive = false
-        activeInterval = sender.tag
+        buttonsArray[viewModel.activeInterval.rawValue].isActive = false
         if let button = sender as? IntervalButton {
             button.isActive = true
         }

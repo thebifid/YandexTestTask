@@ -31,7 +31,11 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         if activeInterval == .day {
             return stockInfo.pc
         } else {
-            return (companyCandlesData?.c?.first)! //!
+            if let previousClose = companyCandlesData?.c?.first {
+                return previousClose
+            } else {
+                return 0
+            }
         }
     }
 
@@ -76,7 +80,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         return String(Int(Date().timeIntervalSince1970))
     }
 
-    private(set) var activeInterval: IntevalTime = .day {
+    private(set) var activeInterval: IntevalTime = IntevalTime(rawValue: UserDefaults.standard.value(forKey: "activeInterval")
+        as? Int ?? 0)! {
         didSet {
             requestCompanyCandles()
         }
@@ -114,6 +119,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
     }
 
     func setActiveInterval(withNewInterval interval: IntevalTime) {
+        UserDefaults.standard.set(interval.rawValue, forKey: "activeInterval")
         activeInterval = interval
     }
 
