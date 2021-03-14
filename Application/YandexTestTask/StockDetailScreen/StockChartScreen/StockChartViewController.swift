@@ -311,6 +311,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     @objc private func pressed(sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
+            let h = lineChartView.getHighlightByTouchPoint(sender.location(in: lineChartView))
+            lineChartView.highlightValue(h, callDelegate: true)
             UIView.animate(withDuration: 0.1) {
                 self.currentPriceLabel.alpha = 0
                 self.priceChangeLabel.alpha = 0
