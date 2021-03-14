@@ -47,6 +47,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
 
     // MARK: - UI Controls
 
+    private let markerView = DotMarkerView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+
     private lazy var lineChartView: LineChartView = {
         let chartView = LineChartView()
         chartView.backgroundColor = .white
@@ -57,6 +59,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         chartView.legend.enabled = false
         chartView.leftAxis.enabled = false
         chartView.xAxis.enabled = false
+        chartView.noDataText = "Loading..."
+
+        chartView.marker = markerView
 
         let pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(pressed(sender:)))
         pressRecognizer.delegate = self
@@ -313,7 +318,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         case .began:
             let h = lineChartView.getHighlightByTouchPoint(sender.location(in: lineChartView))
             lineChartView.highlightValue(h, callDelegate: true)
+
             UIView.animate(withDuration: 0.1) {
+                self.markerView.alpha = 1
                 self.currentPriceLabel.alpha = 0
                 self.priceChangeLabel.alpha = 0
                 self.datailInfoStackView.alpha = 1
@@ -322,6 +329,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
             }
         case .ended:
             UIView.animate(withDuration: 0.1) {
+                self.markerView.alpha = 0
                 self.currentPriceLabel.alpha = 1
                 self.priceChangeLabel.alpha = 1
                 self.datailInfoStackView.alpha = 0
@@ -329,6 +337,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
                 self.isDrawVerticalHighlightIndicatorEnabled = false
                 self.lineChartView.setNeedsDisplay()
             }
+
         default:
             break
         }

@@ -19,6 +19,7 @@
 		C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6D8225DD5031002F5EB6 /* Constants.swift */; };
 		C11CCBC025E8E2DC00394969 /* FavouriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */; };
 		C14C9CB225ECE69E004E9505 /* BaseControllerWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */; };
+		C14DB73225FE4FC90079B960 /* DotMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB73125FE4FC90079B960 /* DotMarkerView.swift */; };
 		C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */; };
 		C1526A2E25FA6A8300123673 /* FavouriteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */; };
 		C1526A3125FA6B3D00123673 /* StoksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A3025FA6B3D00123673 /* StoksViewModel.swift */; };
@@ -71,6 +72,7 @@
 		C11C6D8225DD5031002F5EB6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C11CCBBF25E8E2DC00394969 /* FavouriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewController.swift; sourceTree = "<group>"; };
 		C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseControllerWithTableView.swift; sourceTree = "<group>"; };
+		C14DB73125FE4FC90079B960 /* DotMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotMarkerView.swift; sourceTree = "<group>"; };
 		C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewModel.swift; sourceTree = "<group>"; };
 		C1526A3025FA6B3D00123673 /* StoksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoksViewModel.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 			children = (
 				C171F14A25F6143900932732 /* StockChartViewController.swift */,
 				C171F14225F608AF00932732 /* StockChartViewModel.swift */,
+				C14DB73125FE4FC90079B960 /* DotMarkerView.swift */,
 			);
 			path = StockChartScreen;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				C171F17D25F65CAB00932732 /* CandlesModel.swift in Sources */,
 				C17F104625E12F06006CCA52 /* API.swift in Sources */,
 				C171F1C325F8AE7D00932732 /* IntervalButton.swift in Sources */,
+				C14DB73225FE4FC90079B960 /* DotMarkerView.swift in Sources */,
 				C11C6D8325DD5031002F5EB6 /* Constants.swift in Sources */,
 				C11C6D6F25DD31CD002F5EB6 /* R.generated.swift in Sources */,
 				C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */,
