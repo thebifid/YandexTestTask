@@ -122,9 +122,25 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         return strDate
     }
 
+    private var requestCandlesTimer: Timer?
+
+    private func setRequestCandlesTimer() {
+        if activeInterval == .day {
+            requestCandlesTimer = Timer.scheduledTimer(timeInterval: 300.0, target: self,
+                                                       selector: #selector(requestCandles), userInfo: nil, repeats: true)
+        } else {
+            requestCandlesTimer?.invalidate()
+        }
+    }
+
     func setActiveInterval(withNewInterval interval: IntevalTime) {
         UserDefaults.standard.set(interval.rawValue, forKey: "activeInterval")
         activeInterval = interval
+        setRequestCandlesTimer()
+    }
+
+    @objc private func requestCandles() {
+        requestCompanyCandles { _ in }
     }
 
     func requestCompanyCandles(completion: @escaping (Result<Void, Error>) -> Void) {
@@ -247,5 +263,6 @@ class StockChartViewModel: WebSocketConnectionDelegate {
 
     init(stockModel: TrendingListFullInfoModel) {
         stockInfo = stockModel
+        setRequestCandlesTimer()
     }
 }
