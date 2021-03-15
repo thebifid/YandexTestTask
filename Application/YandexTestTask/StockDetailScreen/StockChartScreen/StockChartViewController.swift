@@ -72,11 +72,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return chartView
     }()
 
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-
     private let chartViewBackgroundLayer = UIView()
 
     private let topBorderLineView: UIView = {
@@ -151,18 +146,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         enableBinding()
     }
 
-    private func enableBinding() {
-        viewModel.didUpdateCandles = { [weak self] in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.setData(withPrices: self.viewModel.candles,
-                             openPrice: self.viewModel.previousClose)
-                self.setNewPrice(withCurrentPrice: self.viewModel.currentPrice,
-                                 previousClose: self.viewModel.previousClose)
-            }
-        }
-    }
-
     // MARK: - UI Actions
 
     private func setupChartView() {
@@ -235,6 +218,18 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     }
 
     // MARK: - Private Methods
+
+    private func enableBinding() {
+        viewModel.didUpdateCandles = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.setData(withPrices: self.viewModel.candles,
+                             openPrice: self.viewModel.previousClose)
+                self.setNewPrice(withCurrentPrice: self.viewModel.currentPrice,
+                                 previousClose: self.viewModel.previousClose)
+            }
+        }
+    }
 
     private func makeButtonsStackView() -> UIStackView {
         let stackView = UIStackView()
@@ -352,6 +347,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
 
     // MARK: - Public Methods
 
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
     // MARK: - Init
 
     init(barHeight: CGFloat = 0, viewModel: StockChartViewModel) {
@@ -363,6 +363,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - Deinit
 
     deinit {
         viewModel.disconnectWebSocket()
