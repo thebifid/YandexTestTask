@@ -6,6 +6,7 @@
 //
 
 import Cartography
+import SafariServices
 import UIKit
 
 class NewsViewController: UITableViewController {
@@ -35,6 +36,13 @@ class NewsViewController: UITableViewController {
         }
     }
 
+    private func goToSource(index: Int) {
+        if let url = URL(string: viewModel.news[index].url) {
+            let vc = SFSafariViewController(url: url)
+            present(vc, animated: true)
+        }
+    }
+
     // MARK: - TableView
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,6 +57,7 @@ class NewsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        goToSource(index: indexPath.row)
     }
 
     // MARK: - Init
