@@ -302,6 +302,29 @@ class NetworkService {
         }.resume()
     }
 
+    func requestCompanyNews(withSymbol symbol: String, from: String, to: String,
+                            completion: @escaping (Result<[NewsModel], Error>) -> Void) {
+        let url = BuildUrl(path: API.news, params: ["symbol": symbol, "from": from, "to": to])
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+
+            if error != nil {
+                completion(.failure(error!))
+                return
+            }
+
+            if let data = data {
+                do {
+                    let news = try JSONDecoder().decode([NewsModel].self, from: data)
+                    completion(.success(news))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+
+        }.resume()
+    }
+
     private func BuildUrl(path: String, params: [String: String]) -> URL {
         var components = URLComponents()
 

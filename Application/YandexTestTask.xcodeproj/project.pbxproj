@@ -21,6 +21,10 @@
 		C14C9CB225ECE69E004E9505 /* BaseControllerWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */; };
 		C14DB73225FE4FC90079B960 /* DotMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB73125FE4FC90079B960 /* DotMarkerView.swift */; };
 		C14DB73625FE58940079B960 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB73525FE58940079B960 /* String+Extension.swift */; };
+		C14DB73A25FF51570079B960 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB73925FF51570079B960 /* NewsViewController.swift */; };
+		C14DB76D25FF53260079B960 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB76C25FF53260079B960 /* NewsViewModel.swift */; };
+		C14DB77025FF53E20079B960 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB76F25FF53E20079B960 /* NewsModel.swift */; };
+		C14DB77725FF6FC20079B960 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB77625FF6FC20079B960 /* NewsCell.swift */; };
 		C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */; };
 		C1526A2E25FA6A8300123673 /* FavouriteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */; };
 		C1526A3125FA6B3D00123673 /* StoksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A3025FA6B3D00123673 /* StoksViewModel.swift */; };
@@ -75,6 +79,10 @@
 		C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseControllerWithTableView.swift; sourceTree = "<group>"; };
 		C14DB73125FE4FC90079B960 /* DotMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotMarkerView.swift; sourceTree = "<group>"; };
 		C14DB73525FE58940079B960 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		C14DB73925FF51570079B960 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
+		C14DB76C25FF53260079B960 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
+		C14DB76F25FF53E20079B960 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		C14DB77625FF6FC20079B960 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewModel.swift; sourceTree = "<group>"; };
 		C1526A3025FA6B3D00123673 /* StoksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoksViewModel.swift; sourceTree = "<group>"; };
@@ -223,6 +231,7 @@
 				C19C957A25F36DDB00220CCF /* SymbolLookUpModel.swift */,
 				C171F17925F63F1000932732 /* TredesModel.swift */,
 				C171F17C25F65CAB00932732 /* CandlesModel.swift */,
+				C14DB76F25FF53E20079B960 /* NewsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -249,6 +258,16 @@
 			path = Trash;
 			sourceTree = "<group>";
 		};
+		C14DB73825FF510C0079B960 /* NewsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C14DB73925FF51570079B960 /* NewsViewController.swift */,
+				C14DB76C25FF53260079B960 /* NewsViewModel.swift */,
+				C14DB77625FF6FC20079B960 /* NewsCell.swift */,
+			);
+			path = NewsScreen;
+			sourceTree = "<group>";
+		};
 		C15005E025FA68C300ECC378 /* StockListScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +292,7 @@
 				C171F13E25F5FE8F00932732 /* StockDetailViewController.swift */,
 				C1A96B3325FBB19200E4FBA5 /* StockDetailViewModel.swift */,
 				C1A96B2F25FBAF6800E4FBA5 /* StockChartScreen */,
+				C14DB73825FF510C0079B960 /* NewsScreen */,
 			);
 			path = StockDetailScreen;
 			sourceTree = "<group>";
@@ -522,12 +542,14 @@
 				C14DB73625FE58940079B960 /* String+Extension.swift in Sources */,
 				C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
+				C14DB76D25FF53260079B960 /* NewsViewModel.swift in Sources */,
 				C19C956025F27A5D00220CCF /* TagsView.swift in Sources */,
 				C171F17A25F63F1000932732 /* TredesModel.swift in Sources */,
 				C17F105925E14507006CCA52 /* CompanyProfileModel.swift in Sources */,
 				C17F105525E13740006CCA52 /* StocksListViewModel.swift in Sources */,
 				C17F0FFF25DFE3EB006CCA52 /* EmptyViewController.swift in Sources */,
 				C11C6D8025DD4575002F5EB6 /* BetterSappingLayout.swift in Sources */,
+				C14DB77725FF6FC20079B960 /* NewsCell.swift in Sources */,
 				C11C6D7425DD3325002F5EB6 /* StocksViewController.swift in Sources */,
 				C17F105C25E14E16006CCA52 /* CompanyQuoteModel.swift in Sources */,
 				C1A6F7F825FCDB7A001FE340 /* BuyButton.swift in Sources */,
@@ -540,8 +562,10 @@
 				C17F105125E132C7006CCA52 /* ConstituentsModel.swift in Sources */,
 				C19C956525F27B9400220CCF /* SearchView.swift in Sources */,
 				C14C9CB225ECE69E004E9505 /* BaseControllerWithTableView.swift in Sources */,
+				C14DB73A25FF51570079B960 /* NewsViewController.swift in Sources */,
 				C17C451925E1600600B92050 /* TrendingListFullInfoModel.swift in Sources */,
 				C171F15B25F6396F00932732 /* WebSocketConntection.swift in Sources */,
+				C14DB77025FF53E20079B960 /* NewsModel.swift in Sources */,
 				C1A96B3425FBB19200E4FBA5 /* StockDetailViewModel.swift in Sources */,
 				C1DADC7125E4F508003AB7E3 /* MenuBarCell.swift in Sources */,
 				C11C6D7C25DD4529002F5EB6 /* HorizontalSnappingController.swift in Sources */,

@@ -81,6 +81,11 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         overallViews.forEach { element in
             element.center = .init(x: element.superview!.center.x - scrollView.contentOffset.x, y: element.center.y)
+            if scrollView.contentOffset.x >= Constants.deviceWidth {
+                overallViews.forEach { $0.alpha = 0 }
+            } else {
+                overallViews.forEach { $0.alpha = 1 }
+            }
         }
     }
 
