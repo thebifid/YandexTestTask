@@ -272,7 +272,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     }
 
     private func setNewPrice(withCurrentPrice current: Double, previousClose: Double) {
-        buyButton.configure(withTitle: "Buy for $\(current)")
+        buyButton.configure(withTitle: "Buy for \(String(current).withCurrency(currency: viewModel.currency))")
         currentPriceLabel.text = "$\(current)"
         priceChangeLabel.attributedText = Calculate.calculateDailyChange(currency: "USD",
                                                                          currentPrice: current,
@@ -346,7 +346,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     // MARK: - ChartViewDelegate
 
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        detailPriceLabel.text = String(entry.y)
+        detailPriceLabel.text = String(entry.y).withCurrency(currency: viewModel.currency)
         detailDataLabel.text = viewModel.dateForCandle(forIndex: Int(entry.x))
     }
 

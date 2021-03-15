@@ -15,18 +15,10 @@ class Calculate {
         var resultString = ""
         if dailyChange < 0 {
             color = R.color.customGreen()!
-            if currency == "USD" {
-                resultString = "+$\(abs(dailyChange))"
-            } else {
-                resultString = "+\(abs(dailyChange)) Р"
-            }
+            resultString = "\(abs(dailyChange))".withCurrency(currency: currency, withSign: "+")
         } else {
             color = .red
-            if currency == "USD" {
-                resultString = "-$\(abs(dailyChange))"
-            } else {
-                resultString = "-\(abs(dailyChange)) Р"
-            }
+            resultString = "\(abs(dailyChange))".withCurrency(currency: currency, withSign: "-")
         }
 
         var percentDailyChange = abs(previousClose - currentPrice) / previousClose * 100

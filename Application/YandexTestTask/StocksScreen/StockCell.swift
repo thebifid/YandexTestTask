@@ -130,7 +130,7 @@ class StockCell: UITableViewCell {
         tickerLabel.text = companyInfo.ticker
         complanyNameLabel.text = companyInfo.name
 
-        stockPriceLabel.text = "$\(round(100 * companyInfo.c) / 100)" // Смотреть валюту!
+        stockPriceLabel.text = "\(round(100 * companyInfo.c) / 100)".withCurrency(currency: companyInfo.currency)
 
         dayChangeLabel.attributedText = Calculate.calculateDailyChange(currency: companyInfo.currency,
                                                                        currentPrice: companyInfo.c, previousClose: companyInfo.pc)

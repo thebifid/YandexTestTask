@@ -51,6 +51,10 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         return stockInfo.name
     }
 
+    var currency: String {
+        return stockInfo.currency
+    }
+
     // MARK: - Private Properties
 
     private var dayStartTimestamp: String {
