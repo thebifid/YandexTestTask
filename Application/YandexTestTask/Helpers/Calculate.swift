@@ -9,6 +9,10 @@ import UIKit
 
 class Calculate {
     static func calculateDailyChange(currency: String, currentPrice: Double, previousClose: Double) -> NSAttributedString {
+        if currentPrice == 0, previousClose == 0 {
+            return NSAttributedString(string: "0.0", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        }
+
         let dailyChange = round(100 * (previousClose - currentPrice)) / 100
         var color = UIColor.gray
 
