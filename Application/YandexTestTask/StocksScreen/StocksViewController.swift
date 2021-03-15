@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 17.02.2021.
 //
 
+import AMScrollingNavbar
 import Cartography
 import UIKit
 
@@ -30,6 +31,13 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         requestPopularRequests()
         enableBinding()
         setupSearchBar()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.showNavbar(animated: true)
+        }
     }
 
     // MARK: - Private Methods
