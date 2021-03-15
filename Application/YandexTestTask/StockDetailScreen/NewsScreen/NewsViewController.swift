@@ -14,19 +14,57 @@ class NewsViewController: UITableViewController {
 
     private let viewModel: NewsViewModel!
 
+    // MARK: - UI Controls
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView(style: .large)
+        ai.color = .black
+        ai.hidesWhenStopped = true
+        return ai
+    }()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestCompanyNews()
         enableBinding()
-        viewModel.requestCompanyNews()
+        setupTableView()
+    }
+
+    // MARK: - Private Methods
+
+    private func setupTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         tableView.register(NewsCell.self, forCellReuseIdentifier: "cellId")
         tableView.tableFooterView = UIView(frame: .zero)
+
+        tableView.addSubview(activityIndicator)
+        constrain(activityIndicator) { activityIndicator in
+            activityIndicator.centerX == activityIndicator.superview!.centerX
+            activityIndicator.centerY == activityIndicator.superview!.centerY / 2
+        }
     }
 
-    // MARK: - Private Methods
+    private func requestCompanyNews() {
+        activityIndicator.startAnimating()
+        viewModel.requestCompanyNews { [weak self] result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
+                    self?.requestCompanyNews()
+                }
+                DispatchQueue.main.async {
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            case .success:
+                DispatchQueue.main.async {
+                    self?.activityIndicator.stopAnimating()
+                }
+            }
+        }
+    }
 
     private func enableBinding() {
         viewModel.didUpdateModel = { [weak self] in

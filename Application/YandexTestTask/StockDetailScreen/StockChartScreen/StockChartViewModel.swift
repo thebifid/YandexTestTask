@@ -87,7 +87,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
     private(set) var activeInterval: IntevalTime = IntevalTime(rawValue: UserDefaults.standard.value(forKey: "activeInterval")
         as? Int ?? 0)! {
         didSet {
-            requestCompanyCandles()
+            requestCompanyCandles { _ in }
         }
     }
 
@@ -127,7 +127,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         activeInterval = interval
     }
 
-    func requestCompanyCandles() {
+    func requestCompanyCandles(completion: @escaping (Result<Void, Error>) -> Void) {
         var fromIntervalTime: String!
         var resolution: String!
         switch activeInterval {
@@ -176,7 +176,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
             guard let self = self else { return }
             switch result {
             case let .failure(error):
-                print(error.localizedDescription)
+                completion(.failure(error))
             case let .success(candles):
                 self.companyCandlesData = candles
 

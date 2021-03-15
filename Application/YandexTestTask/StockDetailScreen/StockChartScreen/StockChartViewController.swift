@@ -140,7 +140,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         setupChartView()
         setupButtons()
         setupBuyButton()
-        viewModel.requestCompanyCandles()
+        requestCompanyCandles()
         viewModel.connectWebSocket()
         setNewPrice(withCurrentPrice: viewModel.currentPrice, previousClose: viewModel.previousClose)
         enableBinding()
@@ -218,6 +218,22 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     }
 
     // MARK: - Private Methods
+
+    private func requestCompanyCandles() {
+        viewModel.requestCompanyCandles { [weak self] result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
+                    self?.requestCompanyCandles()
+                }
+                DispatchQueue.main.async {
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            case .success:
+                break
+            }
+        }
+    }
 
     private func enableBinding() {
         viewModel.didUpdateCandles = { [weak self] in
