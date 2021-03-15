@@ -129,6 +129,15 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         cellDidScrollDelegate?.cellDidScroll(scrollView: scrollView)
     }
 
+    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
+                navigationController.showNavbar(animated: true, scrollToTop: true)
+            }
+        }
+        return true
+    }
+
     // MARK: - StockCellDelegate
 
     func favButtonTapped(cell: StockCell) {

@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 26.02.2021.
 //
 
+import AMScrollingNavbar
 import Cartography
 import UIKit
 
@@ -152,6 +153,15 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         cellDidScrollDelegate?.cellDidScroll(scrollView: scrollView)
+    }
+
+    func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(600)) {
+                navigationController.showNavbar(animated: true, scrollToTop: true)
+            }
+        }
+        return true
     }
 
     // MARK: - StockCellDelegate
