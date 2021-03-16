@@ -31,6 +31,15 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         requestPopularRequests()
         enableBinding()
         setupSearchBar()
+
+        NetworkService.sharedInstance.requestCompanyMetrics(withSymbol: "AAPL") { result in
+            switch result {
+            case let .failure(error):
+                print(error.localizedDescription)
+            case let .success(model):
+                print(model)
+            }
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {

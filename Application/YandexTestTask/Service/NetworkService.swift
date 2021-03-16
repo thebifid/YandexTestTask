@@ -325,7 +325,29 @@ class NetworkService {
         }.resume()
     }
 
-    private func BuildUrl(path: String, params: [String: String]) -> URL {
+    func requestCompanyMetrics(withSymbol symbol: String, completion: @escaping (Result<MetricsModel, Error>) -> Void) {
+        let url = BuildUrl(path: API.metrics, params: ["symbol": symbol, "metric": "all"])
+
+        URLSession.shared.dataTask(with: url) { data, _, error in
+
+            if error != nil {
+                completion(.failure(error!))
+                return
+            }
+
+            if let data = data {
+                do {
+                    let model = try JSONDecoder().decode(MetricsModel.self, from: data)
+                    completion(.success(model))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+
+        }.resume()
+    }
+
+    private func BuildUrl(path: String, params: [String: String]) -> URL { //! Big latter
         var components = URLComponents()
 
         components.scheme = API.scheme

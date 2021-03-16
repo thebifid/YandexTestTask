@@ -17,6 +17,7 @@ struct API {
     static let search = "/api/v1/search"
     static let candle = "/api/v1/stock/candle"
     static let news = "/api/v1/company-news"
+    static let metrics = "/api/v1/stock/metric"
 
     static let token = "c0mgb5748v6ue78flnkg"
 }

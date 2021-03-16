@@ -238,8 +238,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
             if let lastPrice = jsonData.data.last?.p {
                 print(lastPrice)
                 if companyCandlesData != nil {
-                companyCandlesData!.c![companyCandlesData!.c!.endIndex - 1] = lastPrice
-                stockInfo.c = lastPrice
+                    companyCandlesData!.c![companyCandlesData!.c!.endIndex - 1] = lastPrice
+                    stockInfo.c = lastPrice
                 }
             }
         } catch {}

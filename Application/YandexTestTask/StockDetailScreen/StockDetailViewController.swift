@@ -12,8 +12,8 @@ class StockDetailViewController: MenuBarViewController {
     // MARK: - Private Properties
 
     private let viewModel: StockDetailViewModel!
-    private lazy var controllers = [stockChartViewController, newsViewController]
-    private let titles = ["Chart", "News"]
+    private lazy var controllers = [stockChartViewController, metricsViewController, newsViewController]
+    private let titles = ["Chart", "Metrics", "News"]
 
     // MARK: - LifeCycle
 
@@ -59,6 +59,11 @@ class StockDetailViewController: MenuBarViewController {
     private lazy var stockChartViewController: StockChartViewController = {
         let controller = StockChartViewController(barHeight: barCollectionView.frame.height,
                                                   viewModel: StockChartViewModel(stockModel: viewModel.stockInfo))
+        return controller
+    }()
+
+    private lazy var metricsViewController: MetricsViewController = {
+        let controller = MetricsViewController()
         return controller
     }()
 
