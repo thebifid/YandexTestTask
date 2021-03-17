@@ -11,14 +11,16 @@ import UIKit
 class HeaderView: UIView {
     private let label: UILabel = {
         let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 20)
         return label
     }()
 
     private func setupUI() {
+        backgroundColor = .white
         addSubview(label)
         constrain(label) { label in
             label.left == label.superview!.left + 20
-            label.centerY == label.superview!.centerY
+            label.bottom == label.superview!.bottom
         }
     }
 
