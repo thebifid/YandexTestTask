@@ -13,37 +13,38 @@ struct MetricsModel: Codable {
 
 struct Metric: Codable {
     //     financial indicators
-    let marketCapitalization: Double
-    let _freeOperatingCashFlowRevenue5Y: Double
+    let marketCapitalization: Double?
+    let _freeOperatingCashFlowRevenue5Y: Double?
 
     // cost estimation
-    let peNormalizedAnnual: Double
-    let psAnnual: Double
-    let epsInclExtraItemsTTM: Double
-    let epsGrowth5Y: Double
-    let revenueGrowth5Y: Double
+    let peNormalizedAnnual: Double?
+    let psAnnual: Double?
+    let epsInclExtraItemsTTM: Double?
+    let epsGrowth5Y: Double?
+    let revenueGrowth5Y: Double?
 
     // Profitability
 
-    let roaeTTM: Double
-    let roaRfy: Double
-    let _totalDebtTotalEquityAnnyal: Double
-    let netProfitMargin5Y: Double
+    let roaeTTM: Double?
+    let roaRfy: Double?
+    let _totalDebtTotalEquityAnnyal: Double?
+    let netProfitMargin5Y: Double?
 
     // dividends
-    let payoutRatioAnnual: Double
-    let dividendYield5Y: Double
-    let currentDividendYieldTTM: Double
+    let payoutRatioAnnual: Double?
+    let dividendYield5Y: Double?
+    let currentDividendYieldTTM: Double?
 
     // trade
-    let _52WeekHigh: Double
-    let _52WeekLow: Double
-    let _10DayAverageTradingVolume: Double
-    let _3MonthAverageTradingVolume: Double
+    let _52WeekHigh: Double?
+    let _52WeekLow: Double?
+    let _10DayAverageTradingVolume: Double?
+    let _3MonthAverageTradingVolume: Double?
+    let beta: Double?
 
     enum CodingKeys: String, CodingKey {
         case marketCapitalization, peNormalizedAnnual, psAnnual, epsInclExtraItemsTTM, epsGrowth5Y, revenueGrowth5Y,
-            roaeTTM, roaRfy, netProfitMargin5Y, payoutRatioAnnual, dividendYield5Y, currentDividendYieldTTM
+            roaeTTM, roaRfy, netProfitMargin5Y, payoutRatioAnnual, dividendYield5Y, currentDividendYieldTTM, beta
 
         case _freeOperatingCashFlowRevenue5Y = "freeOperatingCashFlow/revenue5Y"
         case _10DayAverageTradingVolume = "10DayAverageTradingVolume"

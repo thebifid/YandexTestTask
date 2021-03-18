@@ -11,6 +11,7 @@ import UIKit
 class MetricsCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 16)
         return label
     }()
 
@@ -34,7 +35,7 @@ class MetricsCell: UITableViewCell {
     private func setupUI() {
         addSubview(titleLabel)
         constrain(titleLabel) { titleLabel in
-            titleLabel.top == titleLabel.superview!.top + 5
+            titleLabel.top == titleLabel.superview!.top + 15
             titleLabel.left == titleLabel.superview!.left + 20
         }
 
@@ -63,7 +64,12 @@ class MetricsCell: UITableViewCell {
     func configure(withTitle title: String, subtitle: String, value: String) {
         titleLabel.text = title
         subTitleLabel.text = subtitle
-        valueLabel.text = value
+
+        if value == "0.0" {
+            valueLabel.text = "-"
+        } else {
+            valueLabel.text = value
+        }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

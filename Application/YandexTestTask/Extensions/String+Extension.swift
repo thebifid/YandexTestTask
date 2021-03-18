@@ -28,4 +28,28 @@ extension String {
 
         return newString
     }
+
+    func addSignToEnd(currency: String, extraWord: String = "") -> String {
+        var newString = self
+
+        if !extraWord.isEmpty {
+            newString.append(" \(extraWord)")
+        }
+
+        if currency == "USD" {
+            newString.append(" $")
+        } else if currency == "RUB" {
+            newString.append(" ₽")
+        } else {
+            newString.append(" ¤")
+        }
+
+        return newString
+    }
+
+    func addPercent() -> String {
+        var newString = self
+        newString.append(" %")
+        return newString
+    }
 }

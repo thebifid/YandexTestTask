@@ -327,7 +327,7 @@ class NetworkService {
 
     func requestCompanyMetrics(withSymbol symbol: String, completion: @escaping (Result<MetricsModel, Error>) -> Void) {
         let url = BuildUrl(path: API.metrics, params: ["symbol": symbol, "metric": "all"])
-
+        print(url)
         URLSession.shared.dataTask(with: url) { data, _, error in
 
             if error != nil {

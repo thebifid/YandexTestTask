@@ -63,7 +63,7 @@ class StockDetailViewController: MenuBarViewController {
     }()
 
     private lazy var metricsViewController: MetricsViewController = {
-        let controller = MetricsViewController()
+        let controller = MetricsViewController(viewModel: MetricsViewModel(stockInfo: viewModel.stockInfo))
         return controller
     }()
 
