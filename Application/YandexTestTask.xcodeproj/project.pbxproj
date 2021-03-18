@@ -34,7 +34,9 @@
 		C1526A2E25FA6A8300123673 /* FavouriteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */; };
 		C1526A3125FA6B3D00123673 /* StoksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A3025FA6B3D00123673 /* StoksViewModel.swift */; };
 		C16591B4260356EA0051CECC /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16591B3260356EA0051CECC /* NetworkMonitor.swift */; };
-		C16591B726035C170051CECC /* NoInternetConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16591B626035C170051CECC /* NoInternetConnectionView.swift */; };
+		C16591B726035C170051CECC /* NoInternetConnectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16591B626035C170051CECC /* NoInternetConnectionHeaderView.swift */; };
+		C16591BB260363440051CECC /* NoInternetConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16591BA260363440051CECC /* NoInternetConnectionView.swift */; };
+		C16FFC81260372AC0009F8DB /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16FFC80260372AC0009F8DB /* RefreshButton.swift */; };
 		C171F13F25F5FE8F00932732 /* StockDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F13E25F5FE8F00932732 /* StockDetailViewController.swift */; };
 		C171F14325F608AF00932732 /* StockChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F14225F608AF00932732 /* StockChartViewModel.swift */; };
 		C171F14625F60E9C00932732 /* UInavigationItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C171F14525F60E9C00932732 /* UInavigationItem+Extension.swift */; };
@@ -99,7 +101,9 @@
 		C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewModel.swift; sourceTree = "<group>"; };
 		C1526A3025FA6B3D00123673 /* StoksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoksViewModel.swift; sourceTree = "<group>"; };
 		C16591B3260356EA0051CECC /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
-		C16591B626035C170051CECC /* NoInternetConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetConnectionView.swift; sourceTree = "<group>"; };
+		C16591B626035C170051CECC /* NoInternetConnectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetConnectionHeaderView.swift; sourceTree = "<group>"; };
+		C16591BA260363440051CECC /* NoInternetConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetConnectionView.swift; sourceTree = "<group>"; };
+		C16FFC80260372AC0009F8DB /* RefreshButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		C171F13E25F5FE8F00932732 /* StockDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailViewController.swift; sourceTree = "<group>"; };
 		C171F14225F608AF00932732 /* StockChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockChartViewModel.swift; sourceTree = "<group>"; };
 		C171F14525F60E9C00932732 /* UInavigationItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInavigationItem+Extension.swift"; sourceTree = "<group>"; };
@@ -261,7 +265,9 @@
 				C1A6F7F725FCDB7A001FE340 /* BuyButton.swift */,
 				C171F1C625F8CF5000932732 /* Calculate.swift */,
 				C14DB78A260100FC0079B960 /* HeaderView.swift */,
-				C16591B626035C170051CECC /* NoInternetConnectionView.swift */,
+				C16591B626035C170051CECC /* NoInternetConnectionHeaderView.swift */,
+				C16591BA260363440051CECC /* NoInternetConnectionView.swift */,
+				C16FFC80260372AC0009F8DB /* RefreshButton.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -558,6 +564,7 @@
 			files = (
 				C171F14625F60E9C00932732 /* UInavigationItem+Extension.swift in Sources */,
 				C171F13F25F5FE8F00932732 /* StockDetailViewController.swift in Sources */,
+				C16591BB260363440051CECC /* NoInternetConnectionView.swift in Sources */,
 				C1DADC7225E4F508003AB7E3 /* MenuBarViewController.swift in Sources */,
 				C12054AC26023685003D986F /* MetricsCell.swift in Sources */,
 				C14DB7812600C5590079B960 /* MetricsViewController.swift in Sources */,
@@ -607,9 +614,10 @@
 				C171F14B25F6143900932732 /* StockChartViewController.swift in Sources */,
 				C1EC470F25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld in Sources */,
 				C14DB7882600C6BA0079B960 /* MetricsModel.swift in Sources */,
-				C16591B726035C170051CECC /* NoInternetConnectionView.swift in Sources */,
+				C16591B726035C170051CECC /* NoInternetConnectionHeaderView.swift in Sources */,
 				C17F103E25E12242006CCA52 /* NetworkService.swift in Sources */,
 				C17F103425E0EE88006CCA52 /* StocksListViewController.swift in Sources */,
+				C16FFC81260372AC0009F8DB /* RefreshButton.swift in Sources */,
 				C14DB78B260100FC0079B960 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

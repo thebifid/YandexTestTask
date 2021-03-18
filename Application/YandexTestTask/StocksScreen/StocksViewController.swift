@@ -56,6 +56,7 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
     }
 
     private func requestPopularRequests() {
+        guard NetworkMonitor.sharedInstance.isConnected else { return }
         viewModel.requestTrendingList { [weak self] result in
             switch result {
             case let .failure(error):

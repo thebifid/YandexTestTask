@@ -20,24 +20,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
         }
 
-        let noICView = NoInternetConnectionView()
-        noICView.alpha = 0
+        let noICView = NoInternetConnectionHeaderView()
         window?.addSubview(noICView)
         constrain(noICView) { noICView in
             noICView.left == noICView.superview!.left
             noICView.right == noICView.superview!.right
-            noICView.top == noICView.superview!.top
+            noICView.top == noICView.superview!.top - 50
             noICView.height == 50
+        }
+
+        if !NetworkMonitor.sharedInstance.isConnected {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.4) {
+                    noICView.transform = CGAffineTransform(translationX: 0, y: 50)
+                }
+            }
         }
 
         NetworkMonitor.sharedInstance.didUpdateNetworkState = { state in
             if state {
                 DispatchQueue.main.async {
-                    noICView.alpha = 0
+                    UIView.animate(withDuration: 0.4) {
+                        noICView.transform = CGAffineTransform.identity
+                    }
                 }
             } else {
                 DispatchQueue.main.async {
-                    noICView.alpha = 1
+                    UIView.animate(withDuration: 0.4) {
+                        noICView.transform = CGAffineTransform(translationX: 0, y: 50)
+                    }
                 }
             }
         }

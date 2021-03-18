@@ -31,6 +31,7 @@ class StocksListViewModel: ViewModelWithSotcks {
     // MARK: - Public Methods
 
     func requestTrendingList(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard NetworkMonitor.sharedInstance.isConnected else { return }
         NetworkService.sharedInstance.requestTrendingList { result in
             switch result {
             case let .failure(error):

@@ -71,6 +71,7 @@ class FavouriteListViewModel: ViewModelWithSotcks {
 
     private func updateQuotes(model: [TrendingListFullInfoModel],
                               completion: @escaping ((Result<[TrendingListFullInfoModel], Error>) -> Void)) {
+        guard NetworkMonitor.sharedInstance.isConnected else { return }
         var info = model
         let tickers = info.map { $0.ticker }
         NetworkService.sharedInstance.requestCompanyQuote(tickers: tickers) { result in

@@ -9,26 +9,47 @@ import Cartography
 import UIKit
 
 class NoInternetConnectionView: UIView {
-    private let noICLabel: UILabel = {
-        let label = UILabel()
-        label.text = "No internet connection"
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .white
-        return label
+    private var actionHander: (() -> Void)?
 
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.text = "Error receiving data, check your internet connection"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
     }()
 
+    private let refreshButton: RefreshButton = {
+        let button = RefreshButton()
+        button.addTarget(self, action: #selector(doAction), for: .touchUpInside)
+        return button
+    }()
+
+    @objc private func doAction() {
+        actionHander?()
+    }
+
     private func setupUI() {
-        backgroundColor = R.color.customLightRed()
-        addSubview(noICLabel)
-        constrain(noICLabel) { noICLabel in
-            noICLabel.bottom == noICLabel.superview!.bottom
-            noICLabel.centerX == noICLabel.superview!.centerX
+        addSubview(errorLabel)
+        constrain(errorLabel) { errorLabel in
+            errorLabel.top == errorLabel.superview!.top
+            errorLabel.centerX == errorLabel.superview!.centerX
+            errorLabel.width == errorLabel.superview!.width
+        }
+
+        addSubview(refreshButton)
+        constrain(refreshButton, errorLabel) { refreshButton, _ in
+            refreshButton.bottom == refreshButton.superview!.bottom
+            refreshButton.centerX == refreshButton.superview!.centerX
+            refreshButton.width == refreshButton.superview!.width / 2
+            refreshButton.height == 30
         }
     }
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(withAction action: @escaping (() -> Void)) {
+        super.init(frame: .zero)
+        actionHander = action
         setupUI()
     }
 

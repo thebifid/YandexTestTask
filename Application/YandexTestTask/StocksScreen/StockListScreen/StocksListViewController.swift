@@ -39,6 +39,10 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         return refreshControl
     }()
 
+    private let noICview = NoInternetConnectionView {
+        print("NAZHATO")
+    }
+
     // MARK: - Selectors
 
     @objc private func refreshHandler(sender: UIRefreshControl) {
