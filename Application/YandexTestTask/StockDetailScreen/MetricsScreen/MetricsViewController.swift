@@ -5,43 +5,42 @@
 //  Created by Vasiliy Matveev on 16.03.2021.
 //
 
+import Cartography
 import UIKit
 
 class MetricsViewController: UITableViewController {
-    private let sectionTitles = ["Financial indicators", "Cost estimation", "Profitability", "Dividends", "Trade"]
+    // MARK: - Private Properties
 
+    private let sectionTitles = ["Financial indicators", "Cost estimation", "Profitability", "Dividends", "Trade"]
     private let viewModel: MetricsViewModel!
+
+    // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         enableBinding()
         requestData()
+        setupUI()
         view.backgroundColor = .white
     }
 
-    private func enableBinding() {
-        viewModel.didUpdateModel = { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
-    }
+    // MARK: - UI Controls
 
-    private func requestData() {
-        viewModel.requestCompanyMetrics { [weak self] result in
-            switch result {
-            case let .failure(error):
-                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
-                    self?.requestData()
-                }
-                DispatchQueue.main.async {
-                    self?.present(alert, animated: true, completion: nil)
-                }
+    private let activityIndicator: UIActivityIndicatorView = {
+        let ai = UIActivityIndicatorView(style: .large)
+        ai.color = .black
+        ai.hidesWhenStopped = true
+        return ai
+    }()
 
-            case .success:
-                break
-            }
+    // MARK: - UI Actions
+
+    private func setupUI() {
+        view.addSubview(activityIndicator)
+        constrain(activityIndicator) { activityIndicator in
+            activityIndicator.centerX == activityIndicator.superview!.centerX
+            activityIndicator.centerY == activityIndicator.superview!.centerY / 2
         }
     }
 
@@ -57,6 +56,39 @@ class MetricsViewController: UITableViewController {
         tableView.estimatedRowHeight = 30
         tableView.allowsSelection = false
     }
+
+    // MARK: - Private Methods
+
+    private func enableBinding() {
+        viewModel.didUpdateModel = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+    }
+
+    private func requestData() {
+        activityIndicator.startAnimating()
+        viewModel.requestCompanyMetrics { [weak self] result in
+            switch result {
+            case let .failure(error):
+                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
+                    self?.requestData()
+                }
+                DispatchQueue.main.async {
+                    self?.present(alert, animated: true, completion: nil)
+                    self?.activityIndicator.stopAnimating()
+                }
+
+            case .success:
+                DispatchQueue.main.async {
+                    self?.activityIndicator.stopAnimating()
+                }
+            }
+        }
+    }
+
+    // MARK: - TableView
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return HeaderView(withTitle: sectionTitles[section])
@@ -83,6 +115,8 @@ class MetricsViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.metricsData.count
     }
+
+    // MARK: - Init
 
     init(viewModel: MetricsViewModel) {
         self.viewModel = viewModel

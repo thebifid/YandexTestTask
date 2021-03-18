@@ -110,7 +110,7 @@ class MetricsViewModel {
             case let .failure(error):
                 completion(.failure(error))
             case let .success(metrics):
-                print(metrics)
+                completion(.success(()))
                 self.metrics = metrics.metric
             }
         }
