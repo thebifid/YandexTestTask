@@ -6,6 +6,7 @@
 //
 
 import AMScrollingNavbar
+import Cartography
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -17,6 +18,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.rootViewController = ScrollingNavigationController(rootViewController: StocksViewController(tableMode: true))
             window.makeKeyAndVisible()
             self.window = window
+        }
+
+        let noICView = NoInternetConnectionView()
+        noICView.alpha = 0
+        window?.addSubview(noICView)
+        constrain(noICView) { noICView in
+            noICView.left == noICView.superview!.left
+            noICView.right == noICView.superview!.right
+            noICView.top == noICView.superview!.top
+            noICView.height == 50
+        }
+
+        NetworkMonitor.sharedInstance.didUpdateNetworkState = { state in
+            if state {
+                DispatchQueue.main.async {
+                    noICView.alpha = 0
+                }
+            } else {
+                DispatchQueue.main.async {
+                    noICView.alpha = 1
+                }
+            }
         }
     }
 

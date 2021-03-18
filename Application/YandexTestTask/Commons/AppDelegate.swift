@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import Network
 import UIKit
 
 @main
@@ -22,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
+
+        NetworkMonitor.sharedInstance.startMonitoring()
 
         return true
     }
