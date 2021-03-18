@@ -41,6 +41,11 @@ class FavouriteListViewModel: ViewModelWithSotcks {
             case let .failure(error):
                 completion(.failure(error))
             case let .success(info):
+                guard NetworkMonitor.sharedInstance.isConnected else {
+                    self.favListInfo = info
+                    completion(.success(()))
+                    return
+                }
                 self.updateQuotes(model: info) { [weak self] result in
                     switch result {
                     case let .failure(error):
@@ -71,7 +76,6 @@ class FavouriteListViewModel: ViewModelWithSotcks {
 
     private func updateQuotes(model: [TrendingListFullInfoModel],
                               completion: @escaping ((Result<[TrendingListFullInfoModel], Error>) -> Void)) {
-        guard NetworkMonitor.sharedInstance.isConnected else { return }
         var info = model
         let tickers = info.map { $0.ticker }
         NetworkService.sharedInstance.requestCompanyQuote(tickers: tickers) { result in

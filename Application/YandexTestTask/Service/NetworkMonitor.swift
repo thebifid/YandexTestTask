@@ -22,6 +22,11 @@ class NetworkMonitor {
         }
     }
 
+    enum ConnectionStatus: Error {
+        case connected(Error)
+        case notConnected
+    }
+
     var didUpdateNetworkState: ((Bool) -> Void)?
 
     func startMonitoring() {

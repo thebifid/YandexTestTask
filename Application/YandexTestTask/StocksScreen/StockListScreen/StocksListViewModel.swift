@@ -30,18 +30,20 @@ class StocksListViewModel: ViewModelWithSotcks {
 
     // MARK: - Public Methods
 
-    func requestTrendingList(completion: @escaping (Result<Void, Error>) -> Void) {
-        guard NetworkMonitor.sharedInstance.isConnected else { return }
+    func requestTrendingList(completion: @escaping (Result<Void, NetworkMonitor.ConnectionStatus>) -> Void) {
+        guard NetworkMonitor.sharedInstance.isConnected else {
+            completion(.failure(.notConnected))
+            return
+        }
         NetworkService.sharedInstance.requestTrendingList { result in
             switch result {
             case let .failure(error):
-                completion(.failure(error))
+                completion(.failure(.connected(error)))
             case let .success(companies):
                 NetworkService.sharedInstance.requestCompaniesInfo(companies: companies.constituents) { result in
                     switch result {
                     case let .failure(error):
-                        completion(.failure(error))
-
+                        completion(.failure(.connected(error)))
                     case let .success(info):
                         self.trendingListInfo = info
                         completion(.success(()))

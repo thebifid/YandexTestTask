@@ -22,6 +22,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         enableBinding()
         requestData()
         activateFollowingNavbar()
+        setupNoICview()
     }
 
     // MARK: - UI Controls
@@ -39,8 +40,8 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         return refreshControl
     }()
 
-    private let noICview = NoInternetConnectionView {
-        print("NAZHATO")
+    private lazy var noICview = NoInternetConnectionView {
+        self.requestData()
     }
 
     // MARK: - Selectors
@@ -50,6 +51,16 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
     }
 
     // MARK: - UI Actions
+
+    private func setupNoICview() {
+        view.addSubview(noICview)
+        noICview.isHidden = true
+        constrain(noICview) { noICview in
+            noICview.center == noICview.superview!.center
+            noICview.width == Constants.deviceWidth / 1.5
+            noICview.height == 80
+        }
+    }
 
     private func setupTableView() {
         tableView.dataSource = self
@@ -80,11 +91,18 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         if viewModel.trendingListInfo.isEmpty {
             DispatchQueue.main.async {
                 self.activityIndicator.startAnimating()
+                self.noICview.isHidden = true
             }
         }
         viewModel.requestTrendingList { [weak self] result in
             guard let self = self else { return }
             switch result {
+            case .failure(.notConnected):
+                DispatchQueue.main.async {
+                    self.noICview.isHidden = false
+                    self.activityIndicator.stopAnimating()
+                }
+
             case let .failure(error):
                 DispatchQueue.main.async {
                     let alert = AlertAssist.AlertWithTryAgainAction(withError: error, action: { _ in
@@ -93,11 +111,13 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
                     self.activityIndicator.stopAnimating()
                     self.refreshControl.endRefreshing()
                     self.present(alert, animated: true, completion: nil)
+                    self.noICview.isHidden = true
                 }
             case .success:
                 DispatchQueue.main.async {
                     self.refreshControl.endRefreshing()
                     self.activityIndicator.stopAnimating()
+                    self.noICview.isHidden = true
                 }
             }
         }
