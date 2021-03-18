@@ -11,7 +11,7 @@ import UIKit
 class HeaderView: UIView {
     private let label: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 24)
         return label
     }()
 
