@@ -148,6 +148,9 @@ class StockChartViewModel: WebSocketConnectionDelegate {
 
         var fromIntervalTime: String!
         var resolution: String!
+
+        let activeInterval = self.activeInterval
+
         switch activeInterval {
         case .day:
             fromIntervalTime = dayStartTimestamp
@@ -198,7 +201,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
             case let .success(candles):
                 self.companyCandlesData = candles
 
-                switch self.activeInterval {
+                switch activeInterval {
                 case .week:
                     self.weekCompanyCandles = candles
                 case .month:
