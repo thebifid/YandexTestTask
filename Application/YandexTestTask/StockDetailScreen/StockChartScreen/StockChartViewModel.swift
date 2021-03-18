@@ -144,6 +144,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
     }
 
     func requestCompanyCandles(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard NetworkMonitor.sharedInstance.isConnected else { return }
+
         var fromIntervalTime: String!
         var resolution: String!
         switch activeInterval {

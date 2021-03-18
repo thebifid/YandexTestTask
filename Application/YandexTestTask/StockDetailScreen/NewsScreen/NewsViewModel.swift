@@ -42,15 +42,20 @@ class NewsViewModel {
 
     // MARK: - Public Methods
 
-    func requestCompanyNews(completion: @escaping (Result<Void, Error>) -> Void) {
+    func requestCompanyNews(completion: @escaping (Result<Void, NetworkMonitor.ConnectionStatus>) -> Void) {
+        guard NetworkMonitor.sharedInstance.isConnected else {
+            completion(.failure(.notConnected))
+            return
+        }
+
         NetworkService.sharedInstance.requestCompanyNews(withSymbol: symbol,
                                                          from: weekAgoDateString, to: currentDateString) { [weak self] result in
             switch result {
             case let .failure(error):
-                completion(.failure(error))
+                completion(.failure(.connected(error)))
             case let .success(news):
-                self?.news = news
                 completion(.success(()))
+                self?.news = news
             }
         }
     }

@@ -23,6 +23,10 @@ class NewsViewController: UITableViewController {
         return ai
     }()
 
+    private lazy var noICview = NoInternetConnectionView {
+        self.requestCompanyNews()
+    }
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -30,9 +34,20 @@ class NewsViewController: UITableViewController {
         requestCompanyNews()
         enableBinding()
         setupTableView()
+        setupNoICView()
     }
 
     // MARK: - Private Methods
+
+    private func setupNoICView() {
+        view.addSubview(noICview)
+        noICview.isHidden = true
+        constrain(noICview) { noICview in
+            noICview.center == noICview.superview!.center
+            noICview.width == Constants.deviceWidth / 1.5
+            noICview.height == 80
+        }
+    }
 
     private func setupTableView() {
         tableView.rowHeight = UITableView.automaticDimension
@@ -49,17 +64,26 @@ class NewsViewController: UITableViewController {
 
     private func requestCompanyNews() {
         activityIndicator.startAnimating()
+        noICview.isHidden = true
         viewModel.requestCompanyNews { [weak self] result in
             switch result {
-            case let .failure(error):
+            case let .failure(.connected(error)):
                 let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
                     self?.requestCompanyNews()
                 }
                 DispatchQueue.main.async {
                     self?.present(alert, animated: true, completion: nil)
+                    self?.noICview.isHidden = true
                 }
             case .success:
                 DispatchQueue.main.async {
+                    self?.activityIndicator.stopAnimating()
+                    self?.noICview.isHidden = true
+                }
+
+            case .failure(.notConnected):
+                DispatchQueue.main.async {
+                    self?.noICview.isHidden = false
                     self?.activityIndicator.stopAnimating()
                 }
             }

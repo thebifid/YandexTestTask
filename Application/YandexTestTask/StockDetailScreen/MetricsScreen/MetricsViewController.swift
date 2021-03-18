@@ -22,6 +22,7 @@ class MetricsViewController: UITableViewController {
         enableBinding()
         requestData()
         setupUI()
+        setupNoICView()
         view.backgroundColor = .white
     }
 
@@ -34,7 +35,21 @@ class MetricsViewController: UITableViewController {
         return ai
     }()
 
+    private lazy var noICview = NoInternetConnectionView {
+        self.requestData()
+    }
+
     // MARK: - UI Actions
+
+    private func setupNoICView() {
+        view.addSubview(noICview)
+        noICview.isHidden = true
+        constrain(noICview) { noICview in
+            noICview.center == noICview.superview!.center
+            noICview.width == Constants.deviceWidth / 1.5
+            noICview.height == 80
+        }
+    }
 
     private func setupUI() {
         view.addSubview(activityIndicator)
@@ -69,8 +84,15 @@ class MetricsViewController: UITableViewController {
 
     private func requestData() {
         activityIndicator.startAnimating()
+        noICview.isHidden = true
         viewModel.requestCompanyMetrics { [weak self] result in
             switch result {
+            case .failure(.notConnected):
+                DispatchQueue.main.async {
+                    self?.noICview.isHidden = false
+                    self?.activityIndicator.stopAnimating()
+                }
+
             case let .failure(error):
                 let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
                     self?.requestData()
@@ -78,11 +100,13 @@ class MetricsViewController: UITableViewController {
                 DispatchQueue.main.async {
                     self?.present(alert, animated: true, completion: nil)
                     self?.activityIndicator.stopAnimating()
+                    self?.noICview.isHidden = true
                 }
 
             case .success:
                 DispatchQueue.main.async {
                     self?.activityIndicator.stopAnimating()
+                    self?.noICview.isHidden = true
                 }
             }
         }

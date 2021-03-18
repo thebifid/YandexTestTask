@@ -325,8 +325,8 @@
 				C171F13E25F5FE8F00932732 /* StockDetailViewController.swift */,
 				C1A96B3325FBB19200E4FBA5 /* StockDetailViewModel.swift */,
 				C1A96B2F25FBAF6800E4FBA5 /* StockChartScreen */,
-				C14DB73825FF510C0079B960 /* NewsScreen */,
 				C14DB77F2600C5430079B960 /* MetricsScreen */,
+				C14DB73825FF510C0079B960 /* NewsScreen */,
 			);
 			path = StockDetailScreen;
 			sourceTree = "<group>";

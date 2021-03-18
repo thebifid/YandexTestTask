@@ -104,11 +104,16 @@ class MetricsViewModel {
 
     var didUpdateModel: (() -> Void)?
 
-    func requestCompanyMetrics(completion: @escaping (Result<Void, Error>) -> Void) {
+    func requestCompanyMetrics(completion: @escaping (Result<Void, NetworkMonitor.ConnectionStatus>) -> Void) {
+        guard NetworkMonitor.sharedInstance.isConnected else {
+            completion(.failure(.notConnected))
+            return
+        }
+
         NetworkService.sharedInstance.requestCompanyMetrics(withSymbol: symbol) { result in
             switch result {
             case let .failure(error):
-                completion(.failure(error))
+                completion(.failure(.connected(error)))
             case let .success(metrics):
                 completion(.success(()))
                 self.metrics = metrics.metric
@@ -151,7 +156,7 @@ class MetricsViewModel {
                 String(roundValue(value: metrics._52WeekHigh ?? 0)).addSignToEnd(currency: currency),
                 String(roundValue(value: metrics._52WeekLow ?? 0)).addSignToEnd(currency: currency),
                 String(roundValue(value: (metrics._10DayAverageTradingVolume ?? 0) / 10)).addSignToEnd(currency: "USD", extraWord: "B"),
-                String(roundValue(value: metrics._3MonthAverageTradingVolume ?? 0) / 10).addSignToEnd(currency: "USD", extraWord: "B"),
+                String(roundValue(value: (metrics._3MonthAverageTradingVolume ?? 0) / 10)).addSignToEnd(currency: "USD", extraWord: "B"),
                 String(roundValue(value: metrics.beta ?? 0))
             ]
         ]

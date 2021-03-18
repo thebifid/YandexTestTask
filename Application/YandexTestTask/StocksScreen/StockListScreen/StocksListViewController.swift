@@ -22,7 +22,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         enableBinding()
         requestData()
         activateFollowingNavbar()
-        setupNoICview()
+        setupNoICView()
     }
 
     // MARK: - UI Controls
@@ -52,7 +52,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
 
     // MARK: - UI Actions
 
-    private func setupNoICview() {
+    private func setupNoICView() {
         view.addSubview(noICview)
         noICview.isHidden = true
         constrain(noICview) { noICview in
