@@ -147,8 +147,15 @@ class StockCell: UITableViewCell {
         super.setHighlighted(highlighted, animated: animated)
         if highlighted == true {
             backgroundColor = R.color.selectColor()
+            UIView.animate(withDuration: 0.3) {
+                self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }
+
         } else {
             backgroundColor = cellBackgroundColor
+            UIView.animate(withDuration: 0.2) {
+                self.transform = .identity
+            }
         }
     }
 
