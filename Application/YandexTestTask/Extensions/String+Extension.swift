@@ -13,7 +13,7 @@ extension String {
 
         if currency == "USD" {
             newString.append("$")
-            newString.append(self)
+            newString.append(addSpaceIfNeeded())
         } else if currency == "RUB" {
             newString = self
             newString.append(" ₽")
@@ -51,5 +51,18 @@ extension String {
         var newString = self
         newString.append(" %")
         return newString
+    }
+
+    private func addSpaceIfNeeded() -> String {
+        guard let intValue = Double(self) else { return "" }
+        var result = self
+
+        if intValue > 999, intValue < 9999 {
+            result.insert(" ", at: result.index(result.startIndex, offsetBy: 1))
+        } else if intValue > 9999 {
+            result.insert(" ", at: result.index(result.startIndex, offsetBy: 2))
+        }
+
+        return result
     }
 }
