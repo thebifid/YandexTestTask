@@ -12,7 +12,7 @@ class NoInternetConnectionHeaderView: UIView {
     private let noICLabel: UILabel = {
         let label = UILabel()
         label.text = "No internet connection"
-        label.font = .systemFont(ofSize: 14)
+        label.font = R.font.montserratLight(size: 14)
         label.textColor = .white
         return label
 

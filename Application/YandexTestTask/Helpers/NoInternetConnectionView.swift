@@ -15,6 +15,7 @@ class NoInternetConnectionView: UIView {
         let label = UILabel()
         label.textColor = .gray
         label.text = "Error receiving data, check your internet connection"
+        label.font = R.font.montserratMedium(size: 14)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label

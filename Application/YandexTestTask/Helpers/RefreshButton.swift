@@ -27,6 +27,7 @@ class RefreshButton: UIButton {
         layer.borderWidth = 1
         layer.borderColor = UIColor.gray.cgColor
         layer.cornerRadius = 6
+        titleLabel?.font = R.font.montserratMedium(size: 14)
         setTitle("Refresh", for: .normal)
         setTitleColor(.gray, for: .normal)
     }

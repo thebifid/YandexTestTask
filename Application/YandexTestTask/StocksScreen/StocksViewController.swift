@@ -84,6 +84,7 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.placeholder = "Find company or ticker"
+        searchController.searchBar.searchTextField.font = R.font.montserratMedium(size: 14)
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.showsSearchResultsController = false
         navigationItem.titleView = searchController.searchBar
