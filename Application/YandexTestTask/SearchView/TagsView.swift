@@ -191,7 +191,7 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
             button.setTitle("   \($0)   ", for: .normal)
             button.setTitleColor(.black, for: .normal)
             button.backgroundColor = R.color.customLightGray()
-            button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+            button.titleLabel?.font = R.font.montserratMedium(size: 14)
             button.layer.cornerRadius = 16
             button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
             buttonArray.append(button)

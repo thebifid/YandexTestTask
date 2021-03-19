@@ -29,14 +29,14 @@ class StockCell: UITableViewCell {
 
     private let tickerLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = R.font.montserratBold(size: 18)
         label.text = "AAPL"
         return label
     }()
 
     private let complanyNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 12)
+        label.font = R.font.montserratMedium(size: 12)
         label.text = "Apple Inc."
         label.numberOfLines = 2
         return label
@@ -51,13 +51,13 @@ class StockCell: UITableViewCell {
 
     private let stockPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = R.font.montserratBold(size: 18)
         return label
     }()
 
     private let dayChangeLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 12)
+        label.font = R.font.montserratMedium(size: 12)
         label.textColor = R.color.customGreen()
         label.text = "+0.12 (1,15%)"
         return label
@@ -92,11 +92,11 @@ class StockCell: UITableViewCell {
         let companyInfoStackView = UIStackView(arrangedSubviews: [nameLabelFavButtonStackView, complanyNameLabel])
         companyInfoStackView.axis = .vertical
         companyInfoStackView.distribution = .equalCentering
-        companyInfoStackView.spacing = 2
+        companyInfoStackView.spacing = 5
 
         let companyPriceInfoStackView = UIStackView(arrangedSubviews: [stockPriceLabel, dayChangeLabel])
         companyPriceInfoStackView.axis = .vertical
-        companyPriceInfoStackView.spacing = 2
+        companyPriceInfoStackView.spacing = 5
         companyPriceInfoStackView.alignment = .trailing
 
         addSubview(companyInfoStackView)

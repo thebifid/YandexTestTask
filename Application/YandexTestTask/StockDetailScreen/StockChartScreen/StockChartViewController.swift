@@ -95,14 +95,14 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     private let currentPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "300 $"
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = R.font.montserratBold(size: 24)
         return label
     }()
 
     private let priceChangeLabel: UILabel = {
         let label = UILabel()
         label.text = "-2,24 $ (12,43 %)"
-        label.font = .systemFont(ofSize: 14)
+        label.font = R.font.montserratMedium(size: 14)
         return label
     }()
 
@@ -110,14 +110,14 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
 
     private let detailDataLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
+        label.font = R.font.montserratMedium(size: 14)
         label.textColor = .lightGray
         return label
     }()
 
     private let detailPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = R.font.montserratBold(size: 18)
         label.textColor = .black
         return label
     }()

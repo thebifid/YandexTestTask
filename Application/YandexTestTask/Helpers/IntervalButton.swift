@@ -23,7 +23,7 @@ class IntervalButton: UIButton {
     // MARK: - UI Actions
 
     private func setupUI() {
-        titleLabel?.font = .boldSystemFont(ofSize: 12)
+        titleLabel?.font = R.font.montserratBold(size: 12)
         layer.cornerRadius = 12
     }
 

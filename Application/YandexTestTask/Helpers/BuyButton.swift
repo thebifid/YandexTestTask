@@ -13,7 +13,7 @@ class BuyButton: UIButton {
     private func setupUI() {
         backgroundColor = .black
         setTitleColor(.white, for: .normal)
-        titleLabel?.font = .boldSystemFont(ofSize: 16)
+        titleLabel?.font = R.font.montserratBold(size: 16)
         layer.cornerRadius = 16
     }
 

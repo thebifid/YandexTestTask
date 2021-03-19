@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7A9F7093CD9C87301A789C5C /* Pods_YandexTestTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FB55BFF3EC1A037D523A87 /* Pods_YandexTestTask.framework */; };
+		C11524762604C980009D4402 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C11524742604C977009D4402 /* Montserrat-Medium.ttf */; };
+		C11524782604C983009D4402 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C11524752604C977009D4402 /* Montserrat-Light.ttf */; };
+		C115247B2604CA25009D4402 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C115247A2604CA1F009D4402 /* Montserrat-Bold.ttf */; };
 		C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */; };
 		C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */; };
 		C11C6CF125DCFB87002F5EB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */; };
@@ -73,6 +76,9 @@
 /* Begin PBXFileReference section */
 		7B3A807B9087AC7587D5956F /* Pods-YandexTestTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexTestTask.release.xcconfig"; path = "Target Support Files/Pods-YandexTestTask/Pods-YandexTestTask.release.xcconfig"; sourceTree = "<group>"; };
 		A6F1A2E74ED6AA9AD7BBDDAA /* Pods-YandexTestTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YandexTestTask.debug.xcconfig"; path = "Target Support Files/Pods-YandexTestTask/Pods-YandexTestTask.debug.xcconfig"; sourceTree = "<group>"; };
+		C11524742604C977009D4402 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		C11524752604C977009D4402 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		C115247A2604CA1F009D4402 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		C11C6CE425DCFB85002F5EB6 /* YandexTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +173,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C11524732604C967009D4402 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C115247A2604CA1F009D4402 /* Montserrat-Bold.ttf */,
+				C11524752604C977009D4402 /* Montserrat-Light.ttf */,
+				C11524742604C977009D4402 /* Montserrat-Medium.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		C11C6CDB25DCFB85002F5EB6 = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +235,7 @@
 		C11C6D6A25DD2CCE002F5EB6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C11524732604C967009D4402 /* Fonts */,
 				C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */,
 				C17F103925E0FF6C006CCA52 /* Colors.xcassets */,
 				C1EC470D25E8CF80004B99E7 /* YandexTestTask.xcdatamodeld */,
@@ -451,8 +468,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C11524782604C983009D4402 /* Montserrat-Light.ttf in Resources */,
 				C17F103A25E0FF6C006CCA52 /* Colors.xcassets in Resources */,
+				C115247B2604CA25009D4402 /* Montserrat-Bold.ttf in Resources */,
 				C11C6D6525DD2B75002F5EB6 /* LaunchScreen.storyboard in Resources */,
+				C11524762604C980009D4402 /* Montserrat-Medium.ttf in Resources */,
 				C11C6CF125DCFB87002F5EB6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

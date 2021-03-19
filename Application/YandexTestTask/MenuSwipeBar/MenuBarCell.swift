@@ -14,8 +14,8 @@ class MenuBarCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             UIView.transition(with: self.label, duration: 0.1, options: .transitionCrossDissolve, animations: {
-                self.label.font = self.isSelected ? .boldSystemFont(ofSize: self.fontSize) :
-                    .boldSystemFont(ofSize: self.fontSize)
+                self.label.font = self.isSelected ? R.font.montserratBold(size: self.fontSize) :
+                    R.font.montserratBold(size: self.fontSize)
                 self.label.textColor = self.isSelected ? UIColor.black : .lightGray
             }, completion: nil)
         }
@@ -62,8 +62,7 @@ class MenuBarCell: UICollectionViewCell {
         if let fontSize = fontSize {
             self.fontSize = fontSize
         }
-
-        self.label.font = .boldSystemFont(ofSize: self.fontSize)
+        self.label.font = R.font.montserratBold(size: self.fontSize)
     }
 
     // MARK: - UI Actions

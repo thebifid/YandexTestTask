@@ -13,7 +13,7 @@ class NewsCell: UITableViewCell {
 
     private let headlineLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = R.font.montserratBold(size: 18)
         label.numberOfLines = 0
         return label
     }()
@@ -21,7 +21,7 @@ class NewsCell: UITableViewCell {
     private let summaryLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 16)
+        label.font = R.font.montserratMedium(size: 16)
         label.textColor = .gray
         return label
     }()
@@ -29,14 +29,14 @@ class NewsCell: UITableViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
-        label.font = .systemFont(ofSize: 14)
+        label.font = R.font.montserratMedium(size: 14)
         return label
     }()
 
     private let sourceLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
-        label.font = .systemFont(ofSize: 14)
+        label.font = R.font.montserratMedium(size: 14)
         return label
     }()
 

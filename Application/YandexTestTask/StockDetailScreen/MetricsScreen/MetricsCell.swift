@@ -11,18 +11,20 @@ import UIKit
 class MetricsCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = R.font.montserratBold(size: 16)
         return label
     }()
 
     private let valueLabel: UILabel = {
         let label = UILabel()
+        label.font = R.font.montserratMedium(size: 16)
         return label
     }()
 
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
+        label.font = R.font.montserratMedium(size: 14)
         return label
     }()
 

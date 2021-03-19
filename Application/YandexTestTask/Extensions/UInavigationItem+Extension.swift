@@ -11,12 +11,12 @@ extension UINavigationItem {
     func setTitle(title: String, subtitle: String) {
         let one = UILabel()
         one.text = title
-        one.font = .boldSystemFont(ofSize: 18)
+        one.font = R.font.montserratBold(size: 18)
         one.sizeToFit()
 
         let two = UILabel()
         two.text = subtitle
-        two.font = .systemFont(ofSize: 12)
+        two.font = R.font.montserratMedium(size: 12)
         two.textAlignment = .center
         two.sizeToFit()
 
