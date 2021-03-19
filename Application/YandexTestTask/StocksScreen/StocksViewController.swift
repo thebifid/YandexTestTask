@@ -55,10 +55,16 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         }
     }
 
+    func refreshButtonClicked(_ searchView: SearchView) {
+        requestPopularRequests()
+    }
+
     private func requestPopularRequests() {
-        guard NetworkMonitor.sharedInstance.isConnected else { return }
         viewModel.requestTrendingList { [weak self] result in
             switch result {
+            case .failure(.notConnected):
+                self?.searchView?.setICStatus(status: NetworkMonitor.sharedInstance.isConnected)
+
             case let .failure(error):
                 let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
                     self?.requestPopularRequests()
@@ -121,6 +127,7 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         searchView!.delegate = self
         searchView!.setPopularTags(tags: viewModel.popularList)
         searchView!.setSearchedTags(tags: viewModel.searchedList)
+        searchView!.setICStatus(status: NetworkMonitor.sharedInstance.isConnected)
         view.addSubview(searchView!)
         constrain(searchView!) { searchView in
             searchView.edges == searchView.superview!.edges

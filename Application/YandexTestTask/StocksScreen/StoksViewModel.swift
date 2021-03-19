@@ -5,6 +5,7 @@
 //  Created by Vasiliy Matveev on 11.03.2021.
 //
 
+import EasyStash
 import Foundation
 
 class StocksViewModel {
@@ -29,12 +30,17 @@ class StocksViewModel {
     // MARK: - Public Methods
 
     /// Request list of trending stoks
-    func requestTrendingList(completion: @escaping (Result<Void, Error>) -> Void) {
-        guard NetworkMonitor.sharedInstance.isConnected else { return }
+    func requestTrendingList(completion: @escaping (Result<Void, NetworkMonitor.ConnectionStatus>) -> Void) {
+        guard NetworkMonitor.sharedInstance.isConnected else {
+            completion(.failure(.notConnected))
+            return
+        }
+
         NetworkService.sharedInstance.requestTrendingList { result in
             switch result {
             case let .failure(error):
-                completion(.failure(error))
+                completion(.failure(.connected(error)))
+                self.popularList = []
             case let .success(list):
                 let first18 = Array(list.constituents.prefix(18))
                 self.popularList = first18

@@ -10,9 +10,14 @@ import UIKit
 
 protocol SearchViewDelegate: AnyObject {
     func searchView(_ searchView: SearchView, didClickTag tag: String)
+    func refreshButtonClicked(_ searchView: SearchView)
 }
 
 class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
+    func refreshButtonClicked(_ tagview: TagsView) {
+        delegate?.refreshButtonClicked(self)
+    }
+
     weak var delegate: SearchViewDelegate?
 
     func tagDidClicked(_ tagView: TagsView, tagText text: String) {
@@ -59,6 +64,10 @@ class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
 
     func addTag(withTag tag: String) {
         searchedRequestsTagView.addTag(withTag: tag)
+    }
+
+    func setICStatus(status: Bool) {
+        popularRequestsTagView.setICStatus(status: status)
     }
 
     // MARK: - UI Controls

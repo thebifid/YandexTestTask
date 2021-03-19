@@ -15,6 +15,7 @@ protocol TagsViewDataSource: AnyObject {
 
 protocol TagsViewDelegate: AnyObject {
     func tagDidClicked(_ tagView: TagsView, tagText text: String)
+    func refreshButtonClicked(_ tagview: TagsView)
 }
 
 class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
@@ -56,11 +57,43 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         return ai
     }()
 
+    private let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.refresh(), for: .normal)
+        return button
+    }()
+
+    @objc private func refreshButtonTapped() {
+        activityIndicator.startAnimating()
+        refreshButton.isHidden = true
+        delegate?.refreshButtonClicked(self)
+    }
+
     private let topStackView = UIStackView()
     private let bottomStackView = UIStackView()
 
     enum TagsViewType {
         case internet, local
+    }
+
+    private func setupRefreshButton() {
+        scrollView.addSubview(refreshButton)
+        refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
+        refreshButton.isHidden = true
+        constrain(refreshButton) { refreshButton in
+            refreshButton.center == refreshButton.superview!.center
+            refreshButton.height == 40
+            refreshButton.width == 40
+        }
+    }
+
+    func setICStatus(status: Bool) {
+        if status, !dataSource!.titlesForButtons(self).isEmpty {
+            refreshButton.isHidden = true
+        } else {
+            refreshButton.isHidden = false
+            activityIndicator.stopAnimating()
+        }
     }
 
     private func setupUI() {
@@ -105,6 +138,12 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
     private func setupTags() {
         let arrayOfTitles = dataSource?.titlesForButtons(self)
         guard let unwrapArrayOfTitles = arrayOfTitles else { return }
+
+        if unwrapArrayOfTitles.isEmpty {
+            activityIndicator.stopAnimating()
+            refreshButton.isHidden = false
+        }
+
         guard !unwrapArrayOfTitles.isEmpty else { return }
         activityIndicator.stopAnimating()
         emptyPlaceholderLabel.alpha = 0
@@ -169,6 +208,7 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
                 emptyPlaceholderLabel.center == emptyPlaceholderLabel.superview!.center
             }
         case .internet:
+            setupRefreshButton()
             addSubview(activityIndicator)
             constrain(activityIndicator) { ai in
                 ai.center == ai.superview!.center
