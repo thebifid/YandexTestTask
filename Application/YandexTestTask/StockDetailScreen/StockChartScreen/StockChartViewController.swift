@@ -41,6 +41,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
 
     // MARK: - Handlers
 
+    /// Описано в MenuBarViewController
     var addOverallLayer: ((UIView, OverallOptions) -> Void)?
 
     // MARK: - UI Controls

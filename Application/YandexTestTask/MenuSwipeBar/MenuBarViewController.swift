@@ -65,6 +65,9 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         case top, bottom
     }
 
+    /// Костыль, используется в StockChartDetailController, нужно для того, чтобы добавить график и кнопку купить поверх окна
+    /// Если не добавлять поверх, то при взаимодействии с графиком (свайп по графику влево-вправо) прокручивается и сама
+    /// коллекция. А так при взаимодействии с графиком всё остаётся на месте
     func addOverallLayer(withView myView: UIView, options: StockChartViewController.OverallOptions) {
         view.addSubview(myView)
         overallViews.append(myView)
