@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
         }
 
-        
         /// When no Internet Conntection show this header
         let noICView = NoInternetConnectionHeaderView()
         window?.addSubview(noICView)
