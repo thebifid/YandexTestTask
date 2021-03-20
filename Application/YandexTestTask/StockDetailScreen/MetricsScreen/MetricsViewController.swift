@@ -12,7 +12,6 @@ import UIKit
 class MetricsViewController: UITableViewController {
     // MARK: - Private Properties
 
-    private let sectionTitles = ["Financial indicators", "Cost estimation", "Profitability", "Dividends", "Trade"]
     private let viewModel: MetricsViewModel!
 
     // MARK: - LifeCycle
@@ -114,7 +113,7 @@ class MetricsViewController: UITableViewController {
     // MARK: - TableView
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return HeaderView(withTitle: sectionTitles[section])
+        return HeaderView(withTitle: viewModel.sectionTitles[section])
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

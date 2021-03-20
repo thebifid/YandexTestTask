@@ -29,6 +29,10 @@ class MetricsViewModel {
         return stockInfo.currency
     }
 
+    var sectionTitles: [String] {
+        return ["Financial indicators", "Cost estimation", "Profitability", "Dividends", "Trade"]
+    }
+
     var metricsData = [[String]]()
 
     // Названия не приходят из API, поэтому хардкод
