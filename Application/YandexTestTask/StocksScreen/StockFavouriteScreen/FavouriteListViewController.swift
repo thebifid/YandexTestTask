@@ -7,6 +7,7 @@
 
 import AMScrollingNavbar
 import Cartography
+import MaterialComponents.MDCActivityIndicator
 import UIKit
 
 protocol CellDidScrollDelegate: AnyObject {
@@ -30,10 +31,8 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     // MARK: - UI Controls
 
-    private let activityIndicator: UIActivityIndicatorView = {
-        let ai = UIActivityIndicatorView(style: .large)
-        ai.color = .black
-        ai.hidesWhenStopped = true
+    private let activityIndicator: MDCActivityIndicator = {
+        let ai = MDCActivityIndicator()
         return ai
     }()
 

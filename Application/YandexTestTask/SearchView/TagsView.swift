@@ -6,6 +6,7 @@
 //
 
 import Cartography
+import MaterialComponents.MDCActivityIndicator
 import UIKit
 
 protocol TagsViewDataSource: AnyObject {
@@ -44,10 +45,8 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         return label
     }()
 
-    private let activityIndicator: UIActivityIndicatorView = {
-        let ai = UIActivityIndicatorView(style: .large)
-        ai.color = .black
-        ai.hidesWhenStopped = true
+    private let activityIndicator: MDCActivityIndicator = {
+        let ai = MDCActivityIndicator()
         return ai
     }()
 

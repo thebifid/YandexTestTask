@@ -13,5 +13,7 @@ target 'YandexTestTask' do
     pod 'EasyStash'
     pod 'AMScrollingNavbar', :inhibit_warnings => true
     pod 'Charts'
+    pod 'MaterialComponents/ActivityIndicator'
+
 
 end

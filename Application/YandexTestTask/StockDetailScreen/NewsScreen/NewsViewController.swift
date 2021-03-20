@@ -6,6 +6,7 @@
 //
 
 import Cartography
+import MaterialComponents.MDCActivityIndicator
 import SafariServices
 import UIKit
 
@@ -16,10 +17,8 @@ class NewsViewController: UITableViewController {
 
     // MARK: - UI Controls
 
-    private let activityIndicator: UIActivityIndicatorView = {
-        let ai = UIActivityIndicatorView(style: .large)
-        ai.color = .black
-        ai.hidesWhenStopped = true
+    private let activityIndicator: MDCActivityIndicator = {
+        let ai = MDCActivityIndicator()
         return ai
     }()
 
