@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// func withCurrency() = "100", "USD" -> "$100";  func addSignToEnd() =  "100" -> "100%"
 extension String {
     func withCurrency(currency: String, withSign sign: String = "") -> String {
         var newString = ""

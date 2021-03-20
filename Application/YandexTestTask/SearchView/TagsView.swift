@@ -18,15 +18,9 @@ protocol TagsViewDelegate: AnyObject {
     func refreshButtonClicked(_ tagview: TagsView)
 }
 
+/// Subview for SearchView
 class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
-    weak var dataSource: TagsViewDataSource? {
-        didSet {
-            setupUI()
-        }
-    }
-
-    weak var delegate: TagsViewDelegate?
-    var type: TagsViewType = .local
+    // MARK: - UI Controls
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -63,17 +57,30 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         return button
     }()
 
+    private let topStackView = UIStackView()
+    private let bottomStackView = UIStackView()
+
+    // MARK: - Public Properties
+
+    weak var delegate: TagsViewDelegate?
+    var type: TagsViewType = .local
+
+    weak var dataSource: TagsViewDataSource? {
+        didSet {
+            setupUI()
+        }
+    }
+
+    enum TagsViewType {
+        case internet, local
+    }
+
+    // MARK: - Private Methods
+
     @objc private func refreshButtonTapped() {
         activityIndicator.startAnimating()
         refreshButton.isHidden = true
         delegate?.refreshButtonClicked(self)
-    }
-
-    private let topStackView = UIStackView()
-    private let bottomStackView = UIStackView()
-
-    enum TagsViewType {
-        case internet, local
     }
 
     private func setupRefreshButton() {
@@ -87,6 +94,64 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         }
     }
 
+    private func setupTags() {
+        let arrayOfTitles = dataSource?.titlesForButtons(self)
+        guard let unwrapArrayOfTitles = arrayOfTitles else { return }
+
+        if unwrapArrayOfTitles.isEmpty {
+            activityIndicator.stopAnimating()
+            refreshButton.isHidden = false
+        }
+
+        guard !unwrapArrayOfTitles.isEmpty else { return }
+        activityIndicator.stopAnimating()
+        emptyPlaceholderLabel.alpha = 0
+        var topArrayTitles = [String]()
+        var bottomArrayTitles = [String]()
+
+        if unwrapArrayOfTitles.count < 6 {
+            topArrayTitles = unwrapArrayOfTitles
+        } else {
+            for index in stride(from: 0, to: unwrapArrayOfTitles.count, by: 2) {
+                topArrayTitles.append(unwrapArrayOfTitles[index])
+                if index + 1 < unwrapArrayOfTitles.count {
+                    bottomArrayTitles.append(unwrapArrayOfTitles[index + 1])
+                }
+            }
+        }
+
+        let topArrayButtons = makeButtons(withTitles: topArrayTitles)
+        let bottomArrayButtons = makeButtons(withTitles: bottomArrayTitles)
+
+        topArrayButtons.forEach { topStackView.addArrangedSubview($0) }
+        bottomArrayButtons.forEach { bottomStackView.addArrangedSubview($0) }
+    }
+
+    private func makeButtons(withTitles titles: [String]) -> [UIButton] {
+        var buttonArray = [UIButton]()
+
+        titles.forEach {
+            let button = UIButton()
+            button.setTitle("   \($0)   ", for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.backgroundColor = R.color.customLightGray()
+            button.titleLabel?.font = R.font.montserratMedium(size: 14)
+            button.layer.cornerRadius = 16
+            button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
+            buttonArray.append(button)
+        }
+
+        return buttonArray
+    }
+
+    @objc private func buttonClicked(sender: UIButton) {
+        if let searchTerm = sender.titleLabel?.text?.trimmingCharacters(in: .whitespaces) {
+            delegate?.tagDidClicked(self, tagText: searchTerm)
+        }
+    }
+
+    // MARK: - Public Methods
+
     func setICStatus(status: Bool) {
         if status, !dataSource!.titlesForButtons(self).isEmpty {
             refreshButton.isHidden = true
@@ -95,6 +160,23 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
             activityIndicator.stopAnimating()
         }
     }
+
+    func reloadData() {
+        setupTags()
+    }
+
+    func addTag(withTag tag: String) {
+        if emptyPlaceholderLabel.alpha == 1 {
+            emptyPlaceholderLabel.alpha = 0
+        }
+        if bottomStackView.subviews.count < topStackView.subviews.count, topStackView.subviews.count > 5 {
+            bottomStackView.addArrangedSubview(makeButtons(withTitles: [tag]).first!)
+        } else {
+            topStackView.addArrangedSubview(makeButtons(withTitles: [tag]).first!)
+        }
+    }
+
+    // MARK: - UI Actions
 
     private func setupUI() {
         backgroundColor = .white
@@ -135,71 +217,6 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
         }
     }
 
-    private func setupTags() {
-        let arrayOfTitles = dataSource?.titlesForButtons(self)
-        guard let unwrapArrayOfTitles = arrayOfTitles else { return }
-
-        if unwrapArrayOfTitles.isEmpty {
-            activityIndicator.stopAnimating()
-            refreshButton.isHidden = false
-        }
-
-        guard !unwrapArrayOfTitles.isEmpty else { return }
-        activityIndicator.stopAnimating()
-        emptyPlaceholderLabel.alpha = 0
-        var topArrayTitles = [String]()
-        var bottomArrayTitles = [String]()
-
-        if unwrapArrayOfTitles.count < 6 {
-            topArrayTitles = unwrapArrayOfTitles
-        } else {
-            for index in stride(from: 0, to: unwrapArrayOfTitles.count, by: 2) {
-                topArrayTitles.append(unwrapArrayOfTitles[index])
-                if index + 1 < unwrapArrayOfTitles.count {
-                    bottomArrayTitles.append(unwrapArrayOfTitles[index + 1])
-                }
-            }
-        }
-
-        let topArrayButtons = makeButtons(withTitles: topArrayTitles)
-        let bottomArrayButtons = makeButtons(withTitles: bottomArrayTitles)
-
-        topArrayButtons.forEach { topStackView.addArrangedSubview($0) }
-        bottomArrayButtons.forEach { bottomStackView.addArrangedSubview($0) }
-    }
-
-    func reloadData() {
-        setupTags()
-    }
-
-    func addTag(withTag tag: String) {
-        if emptyPlaceholderLabel.alpha == 1 {
-            emptyPlaceholderLabel.alpha = 0
-        }
-        if bottomStackView.subviews.count < topStackView.subviews.count, topStackView.subviews.count > 5 {
-            bottomStackView.addArrangedSubview(makeButtons(withTitles: [tag]).first!)
-        } else {
-            topStackView.addArrangedSubview(makeButtons(withTitles: [tag]).first!)
-        }
-    }
-
-    private func makeButtons(withTitles titles: [String]) -> [UIButton] {
-        var buttonArray = [UIButton]()
-
-        titles.forEach {
-            let button = UIButton()
-            button.setTitle("   \($0)   ", for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.backgroundColor = R.color.customLightGray()
-            button.titleLabel?.font = R.font.montserratMedium(size: 14)
-            button.layer.cornerRadius = 16
-            button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
-            buttonArray.append(button)
-        }
-
-        return buttonArray
-    }
-
     private func initSetup() {
         switch type {
         case .local:
@@ -214,12 +231,6 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
                 ai.center == ai.superview!.center
             }
             activityIndicator.startAnimating()
-        }
-    }
-
-    @objc private func buttonClicked(sender: UIButton) {
-        if let searchTerm = sender.titleLabel?.text?.trimmingCharacters(in: .whitespaces) {
-            delegate?.tagDidClicked(self, tagText: searchTerm)
         }
     }
 

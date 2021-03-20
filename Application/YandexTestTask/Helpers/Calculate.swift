@@ -8,6 +8,7 @@
 import UIKit
 
 class Calculate {
+    /// Return attributed string with calculate daily change like ( +$0.12 (1,15%) )
     static func calculateDailyChange(currency: String, currentPrice: Double, previousClose: Double) -> NSAttributedString {
         if currentPrice == 0, previousClose == 0 {
             return NSAttributedString(string: "0.0", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])

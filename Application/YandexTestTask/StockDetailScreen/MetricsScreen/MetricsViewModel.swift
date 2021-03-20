@@ -8,11 +8,9 @@
 import Foundation
 
 class MetricsViewModel {
-    private let stockInfo: TrendingListFullInfoModel!
+    // MARK: - Private Properties
 
-    var symbol: String {
-        return stockInfo.ticker
-    }
+    private let stockInfo: TrendingListFullInfoModel!
 
     private var metrics: Metric? {
         didSet {
@@ -21,11 +19,19 @@ class MetricsViewModel {
         }
     }
 
+    // MARK: - Public Properties
+
+    var symbol: String {
+        return stockInfo.ticker
+    }
+
     var currency: String {
         return stockInfo.currency
     }
 
     var metricsData = [[String]]()
+
+    // Названия не приходят из API, поэтому хардкод
     var metricsTitles = [
         [
             "Market Cap",
@@ -64,6 +70,7 @@ class MetricsViewModel {
         ]
     ]
 
+    // Та же причина
     var metricsSubtitles = [
         [
             "Company value",
@@ -102,7 +109,11 @@ class MetricsViewModel {
         ]
     ]
 
+    // MARK: - Handlers
+
     var didUpdateModel: (() -> Void)?
+
+    // MARK: - Public Methods
 
     func requestCompanyMetrics(completion: @escaping (Result<Void, NetworkMonitor.ConnectionStatus>) -> Void) {
         guard NetworkMonitor.sharedInstance.isConnected else {
@@ -120,6 +131,8 @@ class MetricsViewModel {
             }
         }
     }
+
+    // MARK: - Private Methods
 
     private func metricsToArray(metric: Metric) -> [[String]] {
         guard let metrics = self.metrics else { return [[]] }
@@ -162,9 +175,11 @@ class MetricsViewModel {
         ]
     }
 
-    func roundValue(value: Double) -> Double {
+    private func roundValue(value: Double) -> Double {
         return round(100 * value) / 100
     }
+
+    // MARK: - Init
 
     init(stockInfo: TrendingListFullInfoModel) {
         self.stockInfo = stockInfo

@@ -18,10 +18,8 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
 
     private let viewModel: StockChartViewModel!
     private var barHeight: CGFloat = 0
-
     private let buttonTitles = ["D", "W", "M", "6M", "1Y", "ALL"]
     private var buttonsArray = [IntervalButton]()
-
     private var set1 = LineChartDataSet()
     private var isDrawVerticalHighlightIndicatorEnabled: Bool = true
 
@@ -60,14 +58,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         chartView.leftAxis.enabled = false
         chartView.xAxis.enabled = false
         chartView.noDataText = "Loading..."
-
         chartView.marker = markerView
-
         let pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(pressed(sender:)))
         pressRecognizer.delegate = self
         pressRecognizer.minimumPressDuration = 0
         chartView.addGestureRecognizer(pressRecognizer)
-
         chartView.setViewPortOffsets(left: 0, top: 0, right: 0, bottom: 0)
         return chartView
     }()
@@ -304,11 +299,9 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
             ChartColorTemplates.colorFromString("#DCDCDC").cgColor
         ]
         let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
-
         set1.fillAlpha = 1
         set1.fill = .fillWithLinearGradient(gradient, angle: 90)
         set1.drawFilledEnabled = true
-
         let data = LineChartData(dataSet: set1)
         data.setDrawValues(false)
         lineChartView.data = data
@@ -361,7 +354,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         detailDataLabel.text = viewModel.dateForCandle(forIndex: Int(entry.x))
     }
 
-    // MARK: - Public Methods
+    // MARK: - Gesture Recognizer Delegate
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

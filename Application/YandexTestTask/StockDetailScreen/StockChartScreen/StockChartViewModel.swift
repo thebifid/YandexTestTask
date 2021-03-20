@@ -17,6 +17,14 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         }
     }
 
+    private var weekCompanyCandles: CandlesModel?
+    private var monthCompanyCandles: CandlesModel?
+    private var sixMonthCompanyCandles: CandlesModel?
+    private var yearCompanyCandles: CandlesModel?
+    private var allCompanyCadles: CandlesModel?
+
+    private var requestCandlesTimer: Timer?
+
     // MARK: - Handlers
 
     var didUpdateCandles: (() -> Void)?
@@ -99,12 +107,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
 
     // MARK: - Public Methods
 
-    private var weekCompanyCandles: CandlesModel?
-    private var monthCompanyCandles: CandlesModel?
-    private var sixMonthCompanyCandles: CandlesModel?
-    private var yearCompanyCandles: CandlesModel?
-    private var allCompanyCadles: CandlesModel?
-
+    /// Return stringDate from timestamp
     func dateForCandle(forIndex index: Int) -> String {
         let timeStamp = companyCandlesData?.t?[index]
         guard timeStamp != nil else { return "" }
@@ -122,17 +125,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         return strDate
     }
 
-    private var requestCandlesTimer: Timer?
-
-    private func setRequestCandlesTimer() {
-        if activeInterval == .day {
-            requestCandlesTimer = Timer.scheduledTimer(timeInterval: 300.0, target: self,
-                                                       selector: #selector(requestCandles), userInfo: nil, repeats: true)
-        } else {
-            requestCandlesTimer?.invalidate()
-        }
-    }
-
+    /// Change interval (D, W, M, 6M, 1Y, ALL) when user click button
     func setActiveInterval(withNewInterval interval: IntevalTime) {
         UserDefaults.standard.set(interval.rawValue, forKey: "activeInterval")
         activeInterval = interval
@@ -216,6 +209,20 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                     break
                 }
             }
+        }
+    }
+
+    // MARK: - Private Methods
+
+    /// Получение информации для графика каждые 5 минут
+    /// Когда приходит новая цена через веб сокет, то обновляется только последнее значение в графике, без удлинения графика по оси х (потому что
+    /// интервал графика = 5 минут
+    private func setRequestCandlesTimer() {
+        if activeInterval == .day {
+            requestCandlesTimer = Timer.scheduledTimer(timeInterval: 300.0, target: self,
+                                                       selector: #selector(requestCandles), userInfo: nil, repeats: true)
+        } else {
+            requestCandlesTimer?.invalidate()
         }
     }
 

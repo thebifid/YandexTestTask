@@ -8,6 +8,7 @@
 import Cartography
 import UIKit
 
+/// Need to display when no Internet Connection on top screen
 class NoInternetConnectionHeaderView: UIView {
     private let noICLabel: UILabel = {
         let label = UILabel()

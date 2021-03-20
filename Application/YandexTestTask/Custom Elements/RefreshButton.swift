@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Custom Button for NoInternetConnectionView
 class RefreshButton: UIButton {
     override var isHighlighted: Bool {
         didSet {

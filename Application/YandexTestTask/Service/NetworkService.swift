@@ -12,6 +12,11 @@ import UIKit
 class NetworkService {
     static let sharedInstance = NetworkService()
 
+    /// Request companies info needed to display stock cell (image, like ticker, name, price)
+    /// В эту функцию передаётся список тикеров, проверяется есть ли у тикера логотип (В API сервиса не у всех тикеров есть картинка, к сожалению)
+    /// Далее, у тех тикеров, что имеют логотип запрашивается информация, необходмая для отображения ячейки ( requestCompanyProfile() и requestCompanyQuote() )
+    /// Когда вся информация загружена вызывается completion
+    /// Вся информация, кроме актуальных цен кешируется
     func requestCompaniesInfo(companies: [String], completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var companyQuotes = [String: CompanyQuoteModel]()
@@ -74,8 +79,11 @@ class NetworkService {
         }
     }
 
+    /// Эта функция возвращает список, необходимый для отображения акций на начальном экране, в данном случае
+    /// Я использовал список Nasdaq 100 ( ^NDX)
+    /// Так же используется при поиске для заполнения поля с Popular Requests
     func requestTrendingList(completion: @escaping (Result<ConstituentsModel, Error>) -> Void) {
-        let url = BuildUrl(path: API.list, params: ["symbol": "^NDX"])
+        let url = buildUrl(path: API.list, params: ["symbol": "^NDX"])
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
@@ -92,6 +100,7 @@ class NetworkService {
         }.resume()
     }
 
+    /// Request company name, exhange, etc (Information about company)
     private func requestCompanyProfile(tickers: [String], completion: @escaping (Result<[String: CompanyProfileModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var isAnyError: Error?
@@ -108,7 +117,7 @@ class NetworkService {
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
 
-            let url = BuildUrl(path: API.companyProfile, params: ["symbol": ticker])
+            let url = buildUrl(path: API.companyProfile, params: ["symbol": ticker])
 
             if storage != nil {
                 if storage!.exists(forKey: "\(ticker)Profile") {
@@ -156,13 +165,14 @@ class NetworkService {
         }
     }
 
+    /// Request company open price, current price, previous close price, etc
     func requestCompanyQuote(tickers: [String], completion: @escaping (Result<[String: CompanyQuoteModel], Error>) -> Void) {
         var companyQuotes = [String: CompanyQuoteModel]()
         var isAnyError: Error?
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
             dispatchGroup.enter()
-            let url = BuildUrl(path: API.companyQuote, params: ["symbol": ticker])
+            let url = buildUrl(path: API.companyQuote, params: ["symbol": ticker])
             URLSession.shared.dataTask(with: url) { data, _, error in
                 guard error == nil else {
                     completion(.failure(error!))
@@ -189,6 +199,7 @@ class NetworkService {
         }
     }
 
+    /// Check if company has logo
     private func ifHasImage(tickers: [String], completion: @escaping (Result<[String: Data], Error>) -> Void) {
         var tickerDataDict = [String: Data]()
         let dispatchGroup = DispatchGroup()
@@ -205,7 +216,7 @@ class NetworkService {
         let first15 = tickers.prefix(25)
 
         first15.forEach { ticker in
-            let url = BuildUrl(path: API.logo, params: ["symbol": ticker])
+            let url = buildUrl(path: API.logo, params: ["symbol": ticker])
 
             if storage != nil {
                 guard !storage!.exists(forKey: "\(ticker)NilImageData") else { return }
@@ -244,8 +255,9 @@ class NetworkService {
         }
     }
 
+    /// Uses when user search (ticker or company name)
     func requestSearch(withText text: String, completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
-        let url = BuildUrl(path: API.search, params: ["q": text])
+        let url = buildUrl(path: API.search, params: ["q": text])
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
                 completion(.failure(error!))
@@ -276,9 +288,11 @@ class NetworkService {
         }.resume()
     }
 
+    /// Request for company candles data
+    /// Эта функция нужна для построения графика акции, можно задать нужный интервал (за день, неделю и тд)
     func requestCompanyCandle(withSymbol symbol: String, resolution: String, from: String, to: String,
                               completion: @escaping (Result<CandlesModel, Error>) -> Void) {
-        let url = BuildUrl(path: API.candle, params: ["symbol": symbol, "resolution": resolution, "from": from, "to": to])
+        let url = buildUrl(path: API.candle, params: ["symbol": symbol, "resolution": resolution, "from": from, "to": to])
         URLSession.shared.dataTask(with: url) { data, _, error in
             if error != nil {
                 completion(.failure(error!))
@@ -304,7 +318,7 @@ class NetworkService {
 
     func requestCompanyNews(withSymbol symbol: String, from: String, to: String,
                             completion: @escaping (Result<[NewsModel], Error>) -> Void) {
-        let url = BuildUrl(path: API.news, params: ["symbol": symbol, "from": from, "to": to])
+        let url = buildUrl(path: API.news, params: ["symbol": symbol, "from": from, "to": to])
 
         URLSession.shared.dataTask(with: url) { data, _, error in
 
@@ -325,8 +339,9 @@ class NetworkService {
         }.resume()
     }
 
+    /// Информация для отображения финансовых показателей акции (Капитализация, P/E, P/S и тд)
     func requestCompanyMetrics(withSymbol symbol: String, completion: @escaping (Result<MetricsModel, Error>) -> Void) {
-        let url = BuildUrl(path: API.metrics, params: ["symbol": symbol, "metric": "all"])
+        let url = buildUrl(path: API.metrics, params: ["symbol": symbol, "metric": "all"])
         print(url)
         URLSession.shared.dataTask(with: url) { data, _, error in
 
@@ -347,7 +362,8 @@ class NetworkService {
         }.resume()
     }
 
-    private func BuildUrl(path: String, params: [String: String]) -> URL { //! Big latter
+    /// Build url from API struct and params
+    private func buildUrl(path: String, params: [String: String]) -> URL {
         var components = URLComponents()
 
         components.scheme = API.scheme

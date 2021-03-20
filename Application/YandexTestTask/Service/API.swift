@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Struct with API paths, allows build URL
 struct API {
     static let scheme = "https"
     static let host = "finnhub.io"

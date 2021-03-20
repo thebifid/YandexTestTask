@@ -8,6 +8,7 @@
 import Foundation
 import Network
 
+/// Class for monitoring Internet Connection status (IC)
 class NetworkMonitor {
     private init() { monitor = NWPathMonitor() }
 

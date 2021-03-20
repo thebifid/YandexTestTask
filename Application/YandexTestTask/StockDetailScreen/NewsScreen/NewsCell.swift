@@ -40,7 +40,7 @@ class NewsCell: UITableViewCell {
         return label
     }()
 
-    // MARK: - Private Methods
+    // MARK: - UI Actions
 
     private func setupUI() {
         addSubview(headlineLabel)

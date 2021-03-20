@@ -83,6 +83,7 @@ class StocksViewModel {
         }
     }
 
+    /// Saving data to display in already searched terms
     func saveSerchRequestTerm(withTerm term: String) -> Bool {
         let defaults = UserDefaults.standard
         var savedTerms = defaults.object(forKey: "SavedTerms") as? [String] ?? []

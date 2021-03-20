@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Button for StockChartViewController. Interval (D, W, M, 6M, 1Y, ALL)
 class IntervalButton: UIButton {
     var isActive: Bool = false {
         didSet {

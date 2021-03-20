@@ -8,6 +8,7 @@
 import Cartography
 import UIKit
 
+/// Custom header for tableView (using in MetricsViewController)
 class HeaderView: UIView {
     private let label: UILabel = {
         let label = UILabel()

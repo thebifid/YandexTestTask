@@ -8,6 +8,7 @@
 import Cartography
 import UIKit
 
+/// Displays when no Internet connection on controllers
 class NoInternetConnectionView: UIView {
     private var actionHander: (() -> Void)?
 

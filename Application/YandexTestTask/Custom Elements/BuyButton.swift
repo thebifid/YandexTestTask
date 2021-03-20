@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// custom Button for StockChartScreen
 class BuyButton: UIButton {
     // MARK: - UI Actions
 

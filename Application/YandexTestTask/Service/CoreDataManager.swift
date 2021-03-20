@@ -13,6 +13,8 @@ class CoreDataManager {
 
     static let sharedInstance = CoreDataManager()
     private var modelsWithStocks: [ViewModelWithSotcks] = []
+
+    /// Подписка на обновления ифнормации в хранилище
     func subscribeModelToCoreDataChanges(viewModel: ViewModelWithSotcks) {
         modelsWithStocks.append(viewModel)
     }

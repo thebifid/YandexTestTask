@@ -15,6 +15,16 @@ class StockDetailViewController: MenuBarViewController {
     private lazy var controllers = [stockChartViewController, metricsViewController, newsViewController]
     private let titles = ["Chart", "Metrics", "News"]
 
+    private lazy var metricsViewController: MetricsViewController = {
+        let controller = MetricsViewController(viewModel: MetricsViewModel(stockInfo: viewModel.stockInfo))
+        return controller
+    }()
+
+    private lazy var newsViewController: NewsViewController = {
+        let controller = NewsViewController(viewModel: NewsViewModel(symbol: viewModel.stockInfo.ticker))
+        return controller
+    }()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -25,7 +35,7 @@ class StockDetailViewController: MenuBarViewController {
         }
     }
 
-    // MARK: - Private Methods
+    // MARK: - UI Actions
 
     private func setupNavBar() {
         navigationController?.navigationBar.topItem?.title = ""
@@ -41,6 +51,8 @@ class StockDetailViewController: MenuBarViewController {
         }
     }
 
+    // MARK: - Private Methods
+
     @objc private func favButtonTapped() {
         viewModel.stocksFavButtonTapped { [weak self] result in
             switch result {
@@ -52,23 +64,11 @@ class StockDetailViewController: MenuBarViewController {
         }
     }
 
-    // MARK: - IntervalDelegate
-
     // MARK: - MenuBarDataSource
 
     private lazy var stockChartViewController: StockChartViewController = {
         let controller = StockChartViewController(barHeight: barCollectionView.frame.height,
                                                   viewModel: StockChartViewModel(stockModel: viewModel.stockInfo))
-        return controller
-    }()
-
-    private lazy var metricsViewController: MetricsViewController = {
-        let controller = MetricsViewController(viewModel: MetricsViewModel(stockInfo: viewModel.stockInfo))
-        return controller
-    }()
-
-    private lazy var newsViewController: NewsViewController = {
-        let controller = NewsViewController(viewModel: NewsViewModel(symbol: viewModel.stockInfo.ticker))
         return controller
     }()
 
@@ -94,6 +94,4 @@ class StockDetailViewController: MenuBarViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Deinit
 }

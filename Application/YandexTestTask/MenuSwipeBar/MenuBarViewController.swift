@@ -18,6 +18,9 @@ protocol MenuBarDelegate: AnyObject {
     func menuBar(didScrolledToIndex to: Int)
 }
 
+/// Reusable ViewController that allows sync barView and contentView
+/// Позволяет сделать карусель из контроллеров (реализация используется на главном экране (акции, избранное) и на
+/// контроллере (график, показатели, новости)
 class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate,
     UICollectionViewDelegateFlowLayout, MenuBarDataSource, MenuBarDelegate {
     func menuBar(_ menuBar: MenuBarViewController, titleForPageAt index: Int) -> String {

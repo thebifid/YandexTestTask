@@ -14,6 +14,8 @@ protocol SearchResControllerDelegate: AnyObject {
 }
 
 class SearchResViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
+    // MARK: - Public Properties
+
     weak var delegate: SearchResControllerDelegate?
 
     // MARK: - UI Controls

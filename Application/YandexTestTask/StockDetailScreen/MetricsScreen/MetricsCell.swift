@@ -9,6 +9,8 @@ import Cartography
 import UIKit
 
 class MetricsCell: UITableViewCell {
+    // MARK: - UI Controls
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = R.font.montserratBold(size: 16)
@@ -33,6 +35,8 @@ class MetricsCell: UITableViewCell {
         view.backgroundColor = R.color.customLightGray()
         return view
     }()
+
+    // MARK: - UI Actions
 
     private func setupUI() {
         addSubview(titleLabel)
@@ -63,6 +67,8 @@ class MetricsCell: UITableViewCell {
         }
     }
 
+    // MARK: - Public Methods
+
     func configure(withTitle title: String, subtitle: String, value: String) {
         titleLabel.text = title
         subTitleLabel.text = subtitle
@@ -73,6 +79,8 @@ class MetricsCell: UITableViewCell {
             valueLabel.text = value
         }
     }
+
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

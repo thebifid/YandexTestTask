@@ -37,17 +37,7 @@ class NewsViewController: UITableViewController {
         setupNoICView()
     }
 
-    // MARK: - Private Methods
-
-    private func setupNoICView() {
-        view.addSubview(noICview)
-        noICview.isHidden = true
-        constrain(noICview) { noICview in
-            noICview.center == noICview.superview!.center
-            noICview.width == Constants.deviceWidth / 1.5
-            noICview.height == 80
-        }
-    }
+    // MARK: - UI Actions
 
     private func setupTableView() {
         tableView.rowHeight = UITableView.automaticDimension
@@ -59,6 +49,18 @@ class NewsViewController: UITableViewController {
         constrain(activityIndicator) { activityIndicator in
             activityIndicator.centerX == activityIndicator.superview!.centerX
             activityIndicator.centerY == activityIndicator.superview!.centerY / 2
+        }
+    }
+
+    // MARK: - Private Methods
+
+    private func setupNoICView() {
+        view.addSubview(noICview)
+        noICview.isHidden = true
+        constrain(noICview) { noICview in
+            noICview.center == noICview.superview!.center
+            noICview.width == Constants.deviceWidth / 1.5
+            noICview.height == 80
         }
     }
 

@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Allows set title and subtitle on navigation bar
 extension UINavigationItem {
     func setTitle(title: String, subtitle: String) {
         let one = UILabel()

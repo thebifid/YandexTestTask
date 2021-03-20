@@ -13,63 +13,8 @@ protocol SearchViewDelegate: AnyObject {
     func refreshButtonClicked(_ searchView: SearchView)
 }
 
+/// Shows when user click on searchBar. Contains 2 subviews (Popular requests and Already searched Terms)
 class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
-    func refreshButtonClicked(_ tagview: TagsView) {
-        delegate?.refreshButtonClicked(self)
-    }
-
-    weak var delegate: SearchViewDelegate?
-
-    func tagDidClicked(_ tagView: TagsView, tagText text: String) {
-        delegate?.searchView(self, didClickTag: text)
-    }
-
-    private var popularTagsArray = [String]() {
-        didSet {
-            popularRequestsTagView.reloadData()
-        }
-    }
-
-    private var searchedTagsArray = [String]() {
-        didSet {
-            searchedRequestsTagView.reloadData()
-        }
-    }
-
-    func titleForHeader(_ tagView: TagsView) -> String {
-        if tagView.tag == 0 {
-            return "Popular requests"
-        } else {
-            return "You've searched for this"
-        }
-    }
-
-    func titlesForButtons(_ tagView: TagsView) -> [String] {
-        if tagView.tag == 0 {
-            return popularTagsArray
-        } else {
-            return searchedTagsArray
-        }
-    }
-
-    // MARK: - Public Methods
-
-    func setPopularTags(tags: [String]) {
-        popularTagsArray = tags
-    }
-
-    func setSearchedTags(tags: [String]) {
-        searchedTagsArray = tags
-    }
-
-    func addTag(withTag tag: String) {
-        searchedRequestsTagView.addTag(withTag: tag)
-    }
-
-    func setICStatus(status: Bool) {
-        popularRequestsTagView.setICStatus(status: status)
-    }
-
     // MARK: - UI Controls
 
     private lazy var popularRequestsTagView: TagsView = {
@@ -88,7 +33,67 @@ class SearchView: UIView, TagsViewDataSource, TagsViewDelegate {
         return tv
     }()
 
-    // MARK: - Private Methods
+    // MARK: - Private Properties
+
+    private var popularTagsArray = [String]() {
+        didSet {
+            popularRequestsTagView.reloadData()
+        }
+    }
+
+    private var searchedTagsArray = [String]() {
+        didSet {
+            searchedRequestsTagView.reloadData()
+        }
+    }
+
+    // MARK: - Public Properties
+
+    weak var delegate: SearchViewDelegate?
+
+    // MARK: - Public Methods
+
+    func tagDidClicked(_ tagView: TagsView, tagText text: String) {
+        delegate?.searchView(self, didClickTag: text)
+    }
+
+    func refreshButtonClicked(_ tagview: TagsView) {
+        delegate?.refreshButtonClicked(self)
+    }
+
+    func titleForHeader(_ tagView: TagsView) -> String {
+        if tagView.tag == 0 {
+            return "Popular requests"
+        } else {
+            return "You've searched for this"
+        }
+    }
+
+    func titlesForButtons(_ tagView: TagsView) -> [String] {
+        if tagView.tag == 0 {
+            return popularTagsArray
+        } else {
+            return searchedTagsArray
+        }
+    }
+
+    func setPopularTags(tags: [String]) {
+        popularTagsArray = tags
+    }
+
+    func setSearchedTags(tags: [String]) {
+        searchedTagsArray = tags
+    }
+
+    func addTag(withTag tag: String) {
+        searchedRequestsTagView.addTag(withTag: tag)
+    }
+
+    func setICStatus(status: Bool) {
+        popularRequestsTagView.setICStatus(status: status)
+    }
+
+    // MARK: - UI Actions
 
     private func setupUI() {
         backgroundColor = .white

@@ -8,6 +8,7 @@
 import Cartography
 import UIKit
 
+/// Bar for MenyBarViewController
 class MenuBarCell: UICollectionViewCell {
     // MARK: - Public Properties
 

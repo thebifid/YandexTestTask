@@ -9,6 +9,9 @@ import AMScrollingNavbar
 import Cartography
 import UIKit
 
+/// ContentCell for MenyBarViewController
+/// Тут я понимаю, что реализация через костыль, но если не добовалять как addChild, то потом возникают утечки памяти,
+/// (не будет указателя на слабую ссылку)
 class MenuContentCell: UICollectionViewCell {
     weak var boss: MenuBarViewController?
     weak var barCV: UICollectionView?

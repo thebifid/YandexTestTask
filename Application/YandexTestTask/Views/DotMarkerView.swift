@@ -8,7 +8,10 @@
 import Cartography
 import Charts
 
+/// Точка для графика (отображется когда пользователь нажимает на график)
 public class DotMarkerView: MarkerView {
+    // MARK: - UI Controls
+
     private lazy var dotView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
@@ -23,9 +26,13 @@ public class DotMarkerView: MarkerView {
         return view
     }()
 
+    // MARK: - Public Methods
+
     override public func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
         layoutIfNeeded()
     }
+
+    // MARK: - Init
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
