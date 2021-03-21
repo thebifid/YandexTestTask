@@ -35,15 +35,24 @@ class NewsViewController: UITableViewController {
         self.requestCompanyNews()
     }
 
+    private lazy var notification = NotificationView(to: self)
+
+    let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.refresh(), for: .normal)
+        return button
+    }()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        requestCompanyNews()
+        requestCompanyNews()
         enableBinding()
         setupTableView()
         setupNoICView()
         setupNoNewsLabel()
+        setupRefreshButton()
     }
 
     // MARK: - UI Actions
@@ -58,6 +67,17 @@ class NewsViewController: UITableViewController {
         constrain(activityIndicator) { activityIndicator in
             activityIndicator.centerX == activityIndicator.superview!.centerX
             activityIndicator.centerY == activityIndicator.superview!.centerY / 2
+        }
+    }
+
+    private func setupRefreshButton() {
+        view.addSubview(refreshButton)
+        refreshButton.isHidden = true
+        refreshButton.addTarget(self, action: #selector(refreshData), for: .touchUpInside)
+        constrain(refreshButton) { refreshButton in
+            refreshButton.center == refreshButton.superview!.center
+            refreshButton.height == 40
+            refreshButton.width == 40
         }
     }
 
@@ -81,18 +101,22 @@ class NewsViewController: UITableViewController {
         noNewsLabel.isHidden = true
     }
 
+    @objc private func refreshData() {
+        requestCompanyNews()
+    }
+
     private func requestCompanyNews() {
         activityIndicator.startAnimating()
         noICview.isHidden = true
+        refreshButton.isHidden = true
         viewModel.requestCompanyNews { [weak self] result in
             switch result {
-            case let .failure(.connected(error)):
-                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
-                    self?.requestCompanyNews()
-                }
+            case .failure(.connected):
                 DispatchQueue.main.async {
-                    self?.present(alert, animated: true, completion: nil)
+                    self?.notification.show(type: .failure)
                     self?.noICview.isHidden = true
+                    self?.refreshButton.isHidden = false
+                    self?.activityIndicator.stopAnimating()
                 }
             case .success:
                 DispatchQueue.main.async {
