@@ -132,6 +132,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        enableBinding()
         setupStockPriceInfoView()
         setupChartView()
         setupButtons()
@@ -139,7 +140,6 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         requestCompanyCandles()
         viewModel.connectWebSocket()
         setNewPrice(withCurrentPrice: viewModel.currentPrice, previousClose: viewModel.previousClose)
-        enableBinding()
     }
 
     // MARK: - UI Actions

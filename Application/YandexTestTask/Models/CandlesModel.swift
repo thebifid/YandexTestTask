@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CandlesModel: Decodable {
+struct CandlesModel: Codable {
     let o: [Double]?
     let h: [Double]?
     let l: [Double]?

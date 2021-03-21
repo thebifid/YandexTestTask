@@ -5,23 +5,15 @@
 //  Created by Vasiliy Matveev on 08.03.2021.
 //
 
+import EasyStash
 import Foundation
 
 class StockChartViewModel: WebSocketConnectionDelegate {
     // MARK: - Private Properties
 
     private var stockInfo: TrendingListFullInfoModel!
-    private var companyCandlesData: CandlesModel? {
-        didSet {
-            didUpdateCandles?()
-        }
-    }
 
-    private var weekCompanyCandles: CandlesModel?
-    private var monthCompanyCandles: CandlesModel?
-    private var sixMonthCompanyCandles: CandlesModel?
-    private var yearCompanyCandles: CandlesModel?
-    private var allCompanyCadles: CandlesModel?
+    private var companyCandlesData: CandlesModel?
 
     private var requestCandlesTimer: Timer?
 
@@ -136,77 +128,44 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         requestCompanyCandles { _ in }
     }
 
+    private let resolutions = ["5", "60", "240", "D", "D", "M"]
+    private lazy var intervalFrom = [
+        dayStartTimestamp,
+        weekBackTimestamp,
+        monthBackTimestamp,
+        sixMonthBackTimestamp,
+        yearBackTimestamp,
+        "0"
+    ]
+
     func requestCompanyCandles(completion: @escaping (Result<Void, Error>) -> Void) {
         guard NetworkMonitor.sharedInstance.isConnected else { return }
-
-        var fromIntervalTime: String!
-        var resolution: String!
-
         let activeInterval = self.activeInterval
+        let resolution = resolutions[activeInterval.rawValue]
+        let intervalFrom = self.intervalFrom[activeInterval.rawValue]
 
-        switch activeInterval {
-        case .day:
-            fromIntervalTime = dayStartTimestamp
-            resolution = "5"
-        case .week:
-            if weekCompanyCandles != nil {
-                companyCandlesData = weekCompanyCandles
-                return
-            }
-            fromIntervalTime = weekBackTimestamp
-            resolution = "60"
-        case .month:
-            if monthCompanyCandles != nil {
-                companyCandlesData = monthCompanyCandles
-                return
-            }
-            fromIntervalTime = monthBackTimestamp
-            resolution = "240"
-        case .sixMonths:
-            if sixMonthCompanyCandles != nil {
-                companyCandlesData = sixMonthCompanyCandles
-                return
-            }
-            fromIntervalTime = sixMonthBackTimestamp
-            resolution = "D"
-        case .year:
-            if yearCompanyCandles != nil {
-                companyCandlesData = yearCompanyCandles
-                return
-            }
-            fromIntervalTime = yearBackTimestamp
-            resolution = "D"
-        case .all:
-            if allCompanyCadles != nil {
-                companyCandlesData = allCompanyCadles
-                return
-            }
-            fromIntervalTime = "0"
-            resolution = "M"
+        var storage: Storage?
+        var options: Options = Options()
+        options.folder = "Cache"
+        storage = try? Storage(options: options)
+
+        if let candles = try? storage?.load(forKey: "\(activeInterval)Candles\(ticker)",
+                                            as: CandlesModel.self, withExpiry: .maxAge(maxAge: 300)) {
+            companyCandlesData = candles
+            didUpdateCandles?()
+            return
         }
 
-        NetworkService.sharedInstance.requestCompanyCandle(withSymbol: ticker, resolution: resolution, from: fromIntervalTime,
-                                                           to: currentTimestamp) { [weak self] result in
-            guard let self = self else { return }
+        NetworkService.sharedInstance.requestCompanyCandle(withSymbol: ticker,
+                                                           resolution: resolution, from: intervalFrom, to: currentTimestamp) { result in
             switch result {
             case let .failure(error):
                 completion(.failure(error))
             case let .success(candles):
                 self.companyCandlesData = candles
-
-                switch activeInterval {
-                case .week:
-                    self.weekCompanyCandles = candles
-                case .month:
-                    self.monthCompanyCandles = candles
-                case .sixMonths:
-                    self.sixMonthCompanyCandles = candles
-                case .year:
-                    self.yearCompanyCandles = candles
-                case .all:
-                    self.allCompanyCadles = candles
-                default:
-                    break
+                try? storage?.save(object: candles, forKey: "\(activeInterval)Candles\(self.ticker)")
+                if activeInterval == self.activeInterval {
+                    self.didUpdateCandles?()
                 }
             }
         }
@@ -215,8 +174,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
     // MARK: - Private Methods
 
     /// Получение информации для графика каждые 5 минут
-    /// Когда приходит новая цена через веб сокет, то обновляется только последнее значение в графике, без удлинения графика по оси х (потому что
-    /// интервал графика = 5 минут
+    /// Когда приходит новая цена через веб сокет, то обновляется только последнее значение в графике, без удлинения
+    /// графика по оси х (потому что интервал графика = 5 минут)
     private func setRequestCandlesTimer() {
         if activeInterval == .day {
             requestCandlesTimer = Timer.scheduledTimer(timeInterval: 300.0, target: self,

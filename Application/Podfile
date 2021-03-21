@@ -13,7 +13,12 @@ target 'YandexTestTask' do
     pod 'EasyStash'
     pod 'AMScrollingNavbar', :inhibit_warnings => true
     pod 'Charts'
-    pod 'MaterialComponents/ActivityIndicator'
+    pod 'MaterialComponents/ActivityIndicator', :inhibit_warnings => true
 
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+      config.build_settings['CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER'] = "NO"
+    end
+end
 
 end

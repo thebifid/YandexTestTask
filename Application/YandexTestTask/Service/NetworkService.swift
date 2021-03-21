@@ -13,8 +13,10 @@ class NetworkService {
     static let sharedInstance = NetworkService()
 
     /// Request companies info needed to display stock cell (image, like ticker, name, price)
-    /// В эту функцию передаётся список тикеров, проверяется есть ли у тикера логотип (В API сервиса не у всех тикеров есть картинка, к сожалению)
-    /// Далее, у тех тикеров, что имеют логотип запрашивается информация, необходмая для отображения ячейки ( requestCompanyProfile() и requestCompanyQuote() )
+    /// В эту функцию передаётся список тикеров, проверяется есть ли у тикера логотип
+    /// (В API сервиса не у всех тикеров есть картинка, к сожалению)
+    /// Далее, у тех тикеров, что имеют логотип запрашивается информация,
+    /// необходмая для отображения ячейки ( requestCompanyProfile() и requestCompanyQuote() )
     /// Когда вся информация загружена вызывается completion
     /// Вся информация, кроме актуальных цен кешируется
     func requestCompaniesInfo(companies: [String], completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
