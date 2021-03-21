@@ -133,6 +133,12 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return ai
     }()
 
+    let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.refresh(), for: .normal)
+        return button
+    }()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -146,6 +152,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         requestCompanyCandles()
         viewModel.connectWebSocket()
         setNewPrice(withCurrentPrice: viewModel.currentPrice, previousClose: viewModel.previousClose)
+        setupRefreshButton()
     }
 
     // MARK: - UI Actions
@@ -224,18 +231,29 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         addOverallLayer?(buyButton, options)
     }
 
+    private func setupRefreshButton() {
+        stockPriceInfoView.addSubview(refreshButton)
+        refreshButton.addTarget(self, action: #selector(refreshButtonDidClicked), for: .touchUpInside)
+        refreshButton.isHidden = true
+        constrain(refreshButton) { refreshButton in
+            refreshButton.centerY == refreshButton.superview!.centerY
+            refreshButton.right == refreshButton.superview!.right - 20
+            refreshButton.height == 40
+            refreshButton.width == 40
+        }
+    }
+
     // MARK: - Private Methods
 
     private func requestCompanyCandles() {
         activityIndicator.startAnimating()
+        refreshButton.isHidden = true
         viewModel.requestCompanyCandles { [weak self] result in
             switch result {
-            case let .failure(error):
-                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
-                    self?.requestCompanyCandles()
-                }
+            case .failure:
                 DispatchQueue.main.async {
-                    self?.present(alert, animated: true, completion: nil)
+                    self?.refreshButton.isHidden = false
+                    self?.activityIndicator.stopAnimating()
                 }
             case .success:
                 break
@@ -252,6 +270,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
                 self.setNewPrice(withCurrentPrice: self.viewModel.currentPrice,
                                  previousClose: self.viewModel.previousClose)
                 self.activityIndicator.stopAnimating()
+                self.refreshButton.isHidden = true
             }
         }
     }
@@ -320,6 +339,10 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         let data = LineChartData(dataSet: set1)
         data.setDrawValues(false)
         lineChartView.data = data
+    }
+
+    @objc private func refreshButtonDidClicked() {
+        requestCompanyCandles()
     }
 
     // MARK: - Selectors

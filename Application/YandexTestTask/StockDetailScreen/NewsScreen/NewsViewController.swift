@@ -39,7 +39,7 @@ class NewsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestCompanyNews()
+//        requestCompanyNews()
         enableBinding()
         setupTableView()
         setupNoICView()

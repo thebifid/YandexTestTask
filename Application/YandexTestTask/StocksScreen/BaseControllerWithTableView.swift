@@ -14,12 +14,19 @@ class BaseControllerWithTableView: UIViewController {
 
     lazy var notification = NotificationView(to: self)
 
+    let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.refresh(), for: .normal)
+        return button
+    }()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupTableView()
+        setupRefreshButton()
     }
 
     weak var cellDidScrollDelegate: CellDidScrollDelegate?
@@ -61,5 +68,15 @@ class BaseControllerWithTableView: UIViewController {
         }
 
         tableView.register(StockCell.self, forCellReuseIdentifier: "cellId")
+    }
+
+    private func setupRefreshButton() {
+        view.addSubview(refreshButton)
+        refreshButton.isHidden = true
+        constrain(refreshButton) { refreshButton in
+            refreshButton.center == refreshButton.superview!.center
+            refreshButton.height == 40
+            refreshButton.width == 40
+        }
     }
 }

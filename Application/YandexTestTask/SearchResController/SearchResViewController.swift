@@ -27,12 +27,6 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         return ai
     }()
 
-    private let refreshButton: UIButton = {
-        let button = UIButton()
-        button.setImage(R.image.refresh(), for: .normal)
-        return button
-    }()
-
     // MARK: - Private Properties
 
     private var searchResult = [TrendingListFullInfoModel]() {
@@ -47,7 +41,7 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         super.viewDidLoad()
         setupTableView()
         setupUI()
-        setupRefreshButton()
+        refreshButton.addTarget(self, action: #selector(refreshButtonDidClicked), for: .touchUpInside)
     }
 
     // MARK: - Private Methods
@@ -74,17 +68,6 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
 
     @objc private func refreshButtonDidClicked() {
         delegate?.refreshButtonClicked()
-    }
-
-    private func setupRefreshButton() {
-        view.addSubview(refreshButton)
-        refreshButton.isHidden = true
-        refreshButton.addTarget(self, action: #selector(refreshButtonDidClicked), for: .touchUpInside)
-        constrain(refreshButton) { refreshButton in
-            refreshButton.center == refreshButton.superview!.center
-            refreshButton.height == 40
-            refreshButton.width == 40
-        }
     }
 
     // MARK: - Public Methods

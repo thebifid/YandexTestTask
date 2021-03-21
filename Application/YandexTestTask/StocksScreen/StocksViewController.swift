@@ -10,8 +10,6 @@ import Cartography
 import UIKit
 
 class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchViewDelegate, SearchResControllerDelegate {
-
-    
     // MARK: - Private Properties
 
     private let viewModel = StocksViewModel()
@@ -134,8 +132,8 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         }
         return true
     }
-    
-    //delegate
+
+    // delegate
     func refreshButtonClicked() {
         searchBarSearchButtonClicked(searchController.searchBar)
     }

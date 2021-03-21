@@ -23,6 +23,7 @@ class MetricsViewController: UITableViewController {
         requestData()
         setupUI()
         setupNoICView()
+        setupRefreshButton()
         view.backgroundColor = .white
     }
 
@@ -36,6 +37,14 @@ class MetricsViewController: UITableViewController {
     private lazy var noICview = NoInternetConnectionView {
         self.requestData()
     }
+
+    private lazy var notification = NotificationView(to: self)
+
+    let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.refresh(), for: .normal)
+        return button
+    }()
 
     // MARK: - UI Actions
 
@@ -70,6 +79,17 @@ class MetricsViewController: UITableViewController {
         tableView.allowsSelection = false
     }
 
+    private func setupRefreshButton() {
+        view.addSubview(refreshButton)
+        refreshButton.isHidden = true
+        refreshButton.addTarget(self, action: #selector(requestDataByRefreshButton), for: .touchUpInside)
+        constrain(refreshButton) { refreshButton in
+            refreshButton.center == refreshButton.superview!.center
+            refreshButton.height == 40
+            refreshButton.width == 40
+        }
+    }
+
     // MARK: - Private Methods
 
     private func enableBinding() {
@@ -83,6 +103,7 @@ class MetricsViewController: UITableViewController {
     private func requestData() {
         activityIndicator.startAnimating()
         noICview.isHidden = true
+        refreshButton.isHidden = true
         viewModel.requestCompanyMetrics { [weak self] result in
             switch result {
             case .failure(.notConnected):
@@ -91,14 +112,12 @@ class MetricsViewController: UITableViewController {
                     self?.activityIndicator.stopAnimating()
                 }
 
-            case let .failure(error):
-                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
-                    self?.requestData()
-                }
+            case .failure:
                 DispatchQueue.main.async {
-                    self?.present(alert, animated: true, completion: nil)
+                    self?.notification.show(type: .failure)
                     self?.activityIndicator.stopAnimating()
                     self?.noICview.isHidden = true
+                    self?.refreshButton.isHidden = false
                 }
 
             case .success:
@@ -108,6 +127,10 @@ class MetricsViewController: UITableViewController {
                 }
             }
         }
+    }
+
+    @objc private func requestDataByRefreshButton() {
+        requestData()
     }
 
     // MARK: - TableView

@@ -24,7 +24,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         requestData()
         activateFollowingNavbar()
         setupNoICView()
-        setupRefreshButton()
+        refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
     }
 
     // MARK: - UI Controls
@@ -43,12 +43,6 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
     private lazy var noICview = NoInternetConnectionView {
         self.requestData()
     }
-
-    private let refreshButton: UIButton = {
-        let button = UIButton()
-        button.setImage(R.image.refresh(), for: .normal)
-        return button
-    }()
 
     // MARK: - Selectors
 
@@ -76,17 +70,6 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         constrain(activityIndicator) { activityIndicator in
             activityIndicator.centerX == activityIndicator.superview!.centerX
             activityIndicator.centerY == activityIndicator.superview!.centerY / 2
-        }
-    }
-
-    private func setupRefreshButton() {
-        view.addSubview(refreshButton)
-        refreshButton.isHidden = true
-        refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
-        constrain(refreshButton) { refreshButton in
-            refreshButton.center == refreshButton.superview!.center
-            refreshButton.height == 40
-            refreshButton.width == 40
         }
     }
 
