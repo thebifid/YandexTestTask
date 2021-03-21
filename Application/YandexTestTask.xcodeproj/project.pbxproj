@@ -11,6 +11,7 @@
 		C11524762604C980009D4402 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C11524742604C977009D4402 /* Montserrat-Medium.ttf */; };
 		C11524782604C983009D4402 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C11524752604C977009D4402 /* Montserrat-Light.ttf */; };
 		C115247B2604CA25009D4402 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C115247A2604CA1F009D4402 /* Montserrat-Bold.ttf */; };
+		C115263A2607367D009D4402 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11526392607367D009D4402 /* NotificationView.swift */; };
 		C11C6CE825DCFB85002F5EB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */; };
 		C11C6CEA25DCFB85002F5EB6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */; };
 		C11C6CF125DCFB87002F5EB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C11C6CF025DCFB87002F5EB6 /* Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		C11524742604C977009D4402 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		C11524752604C977009D4402 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		C115247A2604CA1F009D4402 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		C11526392607367D009D4402 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		C11C6CE425DCFB85002F5EB6 /* YandexTestTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YandexTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11C6CE725DCFB85002F5EB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C11C6CE925DCFB85002F5EB6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				C11C6D8225DD5031002F5EB6 /* Constants.swift */,
 				C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */,
 				C171F1C625F8CF5000932732 /* Calculate.swift */,
+				C11526392607367D009D4402 /* NotificationView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				C17F103725E0F7FC006CCA52 /* StockCell.swift in Sources */,
 				C171F1C725F8CF5000932732 /* Calculate.swift in Sources */,
 				C1526A2E25FA6A8300123673 /* FavouriteListViewModel.swift in Sources */,
+				C115263A2607367D009D4402 /* NotificationView.swift in Sources */,
 				C171F14325F608AF00932732 /* StockChartViewModel.swift in Sources */,
 				C1DADC7325E4F508003AB7E3 /* MenuContentCell.swift in Sources */,
 				C14DB73625FE58940079B960 /* String+Extension.swift in Sources */,

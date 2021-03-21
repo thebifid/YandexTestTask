@@ -24,6 +24,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         requestData()
         activateFollowingNavbar()
         setupNoICView()
+        setupRefreshButton()
     }
 
     // MARK: - UI Controls
@@ -42,6 +43,12 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
     private lazy var noICview = NoInternetConnectionView {
         self.requestData()
     }
+
+    private let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.refresh(), for: .normal)
+        return button
+    }()
 
     // MARK: - Selectors
 
@@ -69,6 +76,17 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         constrain(activityIndicator) { activityIndicator in
             activityIndicator.centerX == activityIndicator.superview!.centerX
             activityIndicator.centerY == activityIndicator.superview!.centerY / 2
+        }
+    }
+
+    private func setupRefreshButton() {
+        view.addSubview(refreshButton)
+        refreshButton.isHidden = true
+        refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
+        constrain(refreshButton) { refreshButton in
+            refreshButton.center == refreshButton.superview!.center
+            refreshButton.height == 40
+            refreshButton.width == 40
         }
     }
 
@@ -102,16 +120,17 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
                     self.activityIndicator.stopAnimating()
                 }
 
-            case let .failure(error):
+            case .failure:
                 DispatchQueue.main.async {
-                    let alert = AlertAssist.AlertWithTryAgainAction(withError: error, action: { _ in
-                        self.requestData()
-                    })
                     self.activityIndicator.stopAnimating()
                     self.refreshControl.endRefreshing()
-                    self.present(alert, animated: true, completion: nil)
                     self.noICview.isHidden = true
+                    self.notification.show(type: .failure)
+                    if self.viewModel.trendingListInfo.isEmpty {
+                        self.refreshButton.isHidden = false
+                    }
                 }
+
             case .success:
                 DispatchQueue.main.async {
                     self.refreshControl.endRefreshing()
@@ -120,6 +139,11 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
                 }
             }
         }
+    }
+
+    @objc private func refreshButtonTapped() {
+        refreshButton.isHidden = true
+        requestData()
     }
 
     // MARK: - TableView

@@ -50,6 +50,7 @@ class FavouriteListViewModel: ViewModelWithSotcks {
                     switch result {
                     case let .failure(error):
                         completion(.failure(error))
+                        self?.favListInfo = info
                     case let .success(model):
                         self?.favListInfo = model
                         completion(.success(()))

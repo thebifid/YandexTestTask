@@ -107,13 +107,10 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
         viewModel.fetchData { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case let .failure(error):
-                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
-                    self.fetchFavs()
-                }
+            case .failure:
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
-                    self.present(alert, animated: true, completion: nil)
+                    self.notification.show(type: .failure)
                 }
             case .success:
                 self.activityIndicator.stopAnimating()

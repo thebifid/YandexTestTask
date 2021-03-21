@@ -65,13 +65,8 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
             case .failure(.notConnected):
                 self?.searchView?.setICStatus(status: NetworkMonitor.sharedInstance.isConnected)
 
-            case let .failure(error):
-                let alert = AlertAssist.AlertWithTryAgainAction(withError: error) { _ in
-                    self?.requestPopularRequests()
-                }
-                DispatchQueue.main.async {
-                    self?.present(alert, animated: true, completion: nil)
-                }
+            case .failure:
+                break
             case .success:
                 break
             }

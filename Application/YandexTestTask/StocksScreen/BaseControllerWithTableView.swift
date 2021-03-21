@@ -10,6 +10,10 @@ import Cartography
 import UIKit
 
 class BaseControllerWithTableView: UIViewController {
+    // MARK: - UI Controls
+
+    lazy var notification = NotificationView(to: self)
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
