@@ -73,6 +73,8 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
 
     func startedSearch() {
         activityIndicator.startAnimating()
+        searchResult = []
+        tableView.reloadData()
     }
 
     // MARK: - StockCellDelegate
