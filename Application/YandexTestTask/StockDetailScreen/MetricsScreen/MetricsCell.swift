@@ -14,6 +14,7 @@ class MetricsCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = R.font.montserratBold(size: 16)
+        label.numberOfLines = 0
         return label
     }()
 
@@ -40,15 +41,17 @@ class MetricsCell: UITableViewCell {
 
     private func setupUI() {
         addSubview(titleLabel)
+
+        addSubview(valueLabel)
+        constrain(valueLabel) { valueLabel in
+            valueLabel.top == valueLabel.superview!.top + 15
+            valueLabel.right == valueLabel.superview!.right - 20
+        }
+
         constrain(titleLabel) { titleLabel in
             titleLabel.top == titleLabel.superview!.top + 15
             titleLabel.left == titleLabel.superview!.left + 20
-        }
-
-        addSubview(valueLabel)
-        constrain(valueLabel, titleLabel) { valueLabel, titleLabel in
-            valueLabel.top == titleLabel.top
-            valueLabel.right == valueLabel.superview!.right - 20
+            titleLabel.width == titleLabel.superview!.width / 1.4
         }
 
         addSubview(subTitleLabel)

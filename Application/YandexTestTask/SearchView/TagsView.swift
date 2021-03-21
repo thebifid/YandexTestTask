@@ -39,8 +39,8 @@ class TagsView: UIView, UIGestureRecognizerDelegate, UIScrollViewDelegate {
 
     private let emptyPlaceholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "List is empty for now"
-        label.font = .boldSystemFont(ofSize: 24)
+        label.text = "You haven't searched for anything yet"
+        label.font = R.font.montserratMedium(size: 18)
         label.textColor = .lightGray
         return label
     }()

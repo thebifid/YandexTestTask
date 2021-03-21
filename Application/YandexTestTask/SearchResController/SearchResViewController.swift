@@ -12,6 +12,7 @@ import UIKit
 protocol SearchResControllerDelegate: AnyObject {
     func favButtonClicked(atIndexPath indexPath: IndexPath)
     func clickedCell(atIndexPath indexPath: IndexPath)
+    func refreshButtonClicked()
 }
 
 class SearchResViewController: BaseControllerWithTableView, UITableViewDataSource, UITableViewDelegate, StockCellDelegate {
@@ -24,6 +25,12 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     private let activityIndicator: MDCActivityIndicator = {
         let ai = MDCActivityIndicator()
         return ai
+    }()
+
+    private let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(R.image.refresh(), for: .normal)
+        return button
     }()
 
     // MARK: - Private Properties
@@ -40,6 +47,7 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         super.viewDidLoad()
         setupTableView()
         setupUI()
+        setupRefreshButton()
     }
 
     // MARK: - Private Methods
@@ -64,6 +72,21 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         impactFeedbackgenerator.impactOccurred()
     }
 
+    @objc private func refreshButtonDidClicked() {
+        delegate?.refreshButtonClicked()
+    }
+
+    private func setupRefreshButton() {
+        view.addSubview(refreshButton)
+        refreshButton.isHidden = true
+        refreshButton.addTarget(self, action: #selector(refreshButtonDidClicked), for: .touchUpInside)
+        constrain(refreshButton) { refreshButton in
+            refreshButton.center == refreshButton.superview!.center
+            refreshButton.height == 40
+            refreshButton.width == 40
+        }
+    }
+
     // MARK: - Public Methods
 
     func setSearchResults(results: [TrendingListFullInfoModel]) {
@@ -72,9 +95,15 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     }
 
     func startedSearch() {
+        refreshButton.isHidden = true
         activityIndicator.startAnimating()
         searchResult = []
         tableView.reloadData()
+    }
+
+    func searchFailed() {
+        activityIndicator.stopAnimating()
+        refreshButton.isHidden = false
     }
 
     // MARK: - StockCellDelegate

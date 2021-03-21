@@ -7,6 +7,7 @@
 
 import Cartography
 import Charts
+import MaterialComponents.MDCActivityIndicator
 import UIKit
 
 protocol IntervalDelegate: AnyObject {
@@ -58,7 +59,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         chartView.legend.enabled = false
         chartView.leftAxis.enabled = false
         chartView.xAxis.enabled = false
-        chartView.noDataText = "Loading..."
+        chartView.noDataText = ""
         chartView.marker = markerView
         let pressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(pressed(sender:)))
         pressRecognizer.delegate = self
@@ -127,6 +128,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return stackView
     }()
 
+    private let activityIndicator: MDCActivityIndicator = {
+        let ai = MDCActivityIndicator()
+        return ai
+    }()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -162,6 +168,11 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
             borderLineView.bottom == borderLineView.superview!.bottom
             borderLineView.height == 0.5
             borderLineView.width == borderLineView.superview!.width
+        }
+
+        lineChartView.addSubview(activityIndicator)
+        constrain(activityIndicator) { activityIndicator in
+            activityIndicator.center == activityIndicator.superview!.center
         }
 
         addOverallLayer?(lineChartView, options)
@@ -216,6 +227,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     // MARK: - Private Methods
 
     private func requestCompanyCandles() {
+        activityIndicator.startAnimating()
         viewModel.requestCompanyCandles { [weak self] result in
             switch result {
             case let .failure(error):
@@ -239,6 +251,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
                              openPrice: self.viewModel.previousClose)
                 self.setNewPrice(withCurrentPrice: self.viewModel.currentPrice,
                                  previousClose: self.viewModel.previousClose)
+                self.activityIndicator.stopAnimating()
             }
         }
     }
@@ -271,6 +284,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     }
 
     private func intervalDidChange(newInterval interval: StockChartViewModel.IntevalTime) {
+        activityIndicator.startAnimating()
         setData(withPrices: [],
                 openPrice: 0)
         setNewPrice(withCurrentPrice: 0,

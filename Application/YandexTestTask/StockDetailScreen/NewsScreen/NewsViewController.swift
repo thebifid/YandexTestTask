@@ -22,6 +22,15 @@ class NewsViewController: UITableViewController {
         return ai
     }()
 
+    private let noNewsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No news for this week"
+        label.textColor = .lightGray
+        label.font = R.font.montserratLight(size: 18)
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var noICview = NoInternetConnectionView {
         self.requestCompanyNews()
     }
@@ -34,6 +43,7 @@ class NewsViewController: UITableViewController {
         enableBinding()
         setupTableView()
         setupNoICView()
+        setupNoNewsLabel()
     }
 
     // MARK: - UI Actions
@@ -61,6 +71,14 @@ class NewsViewController: UITableViewController {
             noICview.width == Constants.deviceWidth / 1.5
             noICview.height == 80
         }
+    }
+
+    private func setupNoNewsLabel() {
+        view.addSubview(noNewsLabel)
+        constrain(noNewsLabel) { noNewsLabel in
+            noNewsLabel.center == noNewsLabel.superview!.center
+        }
+        noNewsLabel.isHidden = true
     }
 
     private func requestCompanyNews() {
@@ -93,8 +111,12 @@ class NewsViewController: UITableViewController {
 
     private func enableBinding() {
         viewModel.didUpdateModel = { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-                self?.tableView.reloadData()
+                if self.viewModel.news.isEmpty {
+                    self.noNewsLabel.isHidden = false
+                }
+                self.tableView.reloadData()
             }
         }
     }

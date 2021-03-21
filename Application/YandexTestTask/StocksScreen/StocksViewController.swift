@@ -22,6 +22,8 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
     private lazy var searchController = UISearchController(searchResultsController: searchResController)
     private var searchView: SearchView?
 
+    private lazy var notification = NotificationView(to: searchResController)
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -131,6 +133,12 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         return true
     }
 
+    // delegate
+    func refreshButtonClicked() {
+        print("ya")
+        searchBarSearchButtonClicked(searchController.searchBar)
+    }
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchController.showsSearchResultsController = true
         if let searchText = searchBar.text {
@@ -140,8 +148,12 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
             searchResController.startedSearch()
             viewModel.searchRequest(withText: searchText.uppercased()) { result in
                 switch result {
-                case let .failure(error):
-                    print(error.localizedDescription)
+                case .failure:
+                    DispatchQueue.main.async {
+                        self.notification.show(type: .failure)
+                        self.searchResController.searchFailed()
+                    }
+
                 case .success:
                     self.searchResController.setSearchResults(results: self.viewModel.searchResult)
                 }

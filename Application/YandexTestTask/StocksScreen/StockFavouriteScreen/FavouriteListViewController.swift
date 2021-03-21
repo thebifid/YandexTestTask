@@ -44,9 +44,9 @@ class FavouriteListViewController: BaseControllerWithTableView, UITableViewDataS
 
     private let emptyFavsPlaceholderLabel: UILabel = {
         let label = UILabel()
-        label.text = "No fav stocks for now"
+        label.text = "The favorites list is empty"
         label.textColor = .lightGray
-        label.font = .boldSystemFont(ofSize: 30)
+        label.font = R.font.montserratMedium(size: 18)
         label.alpha = 0
         return label
     }()
