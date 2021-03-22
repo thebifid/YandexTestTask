@@ -69,6 +69,7 @@ class FavouriteListViewModel: ViewModelWithSotcks {
                 completion(.failure(error))
             case .success:
                 self?.didUpdateFavsList?()
+                completion(.success(()))
             }
         }
     }

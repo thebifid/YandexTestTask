@@ -62,6 +62,7 @@ class StocksListViewModel: ViewModelWithSotcks {
                     completion(.failure(error))
                 case .success:
                     self?.didUpdateStocksList?()
+                    completion(.success(()))
                 }
             }
         } else {
@@ -70,6 +71,7 @@ class StocksListViewModel: ViewModelWithSotcks {
                 case let .failure(error):
                     completion(.failure(error))
                 case .success:
+                    completion(.success(()))
                     self?.didUpdateStocksList?()
                 }
             }
