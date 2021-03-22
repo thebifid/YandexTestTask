@@ -7,6 +7,7 @@
 
 import EasyStash
 import Foundation
+import os.log
 import UIKit
 
 class NetworkService {
@@ -113,7 +114,7 @@ class NetworkService {
         do {
             try storage = Storage(options: options)
         } catch {
-            print(error.localizedDescription)
+            os_log("Failed to create storage. %{public}@", type: .error, error.localizedDescription)
         }
 
         let dispatchGroup = DispatchGroup()
@@ -127,7 +128,9 @@ class NetworkService {
                         let profile = try storage!.load(forKey: "\(ticker)Profile", as: CompanyProfileModel.self)
                         companyProfiles[ticker] = profile
                         return
-                    } catch {}
+                    } catch {
+                        os_log("Failed to load cache tickerProfile. %{public}@", type: .error, error.localizedDescription)
+                    }
                 }
             }
 
@@ -146,7 +149,7 @@ class NetworkService {
                             do {
                                 try storage!.save(object: profile, forKey: "\(ticker)Profile")
                             } catch {
-                                print(error.localizedDescription)
+                                os_log("Failed to save cache tickerProfile. %{public}@", type: .error, error.localizedDescription)
                             }
                         }
 
@@ -212,7 +215,7 @@ class NetworkService {
         do {
             try storage = Storage(options: options)
         } catch {
-            print(error.localizedDescription)
+            os_log("Failed to create storage. %{public}@", type: .error, error.localizedDescription)
         }
 
         let first15 = tickers.prefix(25)
@@ -228,7 +231,7 @@ class NetworkService {
                         tickerDataDict[ticker] = data
                         return
                     } catch {
-                        print(error.localizedDescription)
+                        os_log("Failed to load cache tickerProfile. %{public}@", type: .error, error.localizedDescription)
                     }
                 }
             }
@@ -242,11 +245,15 @@ class NetworkService {
                         do {
                             try storage!.save(object: data, forKey: "\(ticker)ImageData")
                         } catch {
-                            print(error.localizedDescription)
+                            os_log("Failed to save cache tickerImageData. %{public}@", type: .error, error.localizedDescription)
                         }
                     }
                 } else {
-                    try? storage!.save(object: true, forKey: "\(ticker)NilImageData")
+                    do {
+                        try storage!.save(object: true, forKey: "\(ticker)NilImageData")
+                    } catch {
+                        os_log("Failed to save cache tickerNilImageData. %{public}@", type: .error, error.localizedDescription)
+                    }
                 }
 
                 dispatchGroup.leave()

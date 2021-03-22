@@ -7,6 +7,7 @@
 
 import EasyStash
 import Foundation
+import os.log
 
 class StockChartViewModel: WebSocketConnectionDelegate {
     // MARK: - Private Properties
@@ -147,13 +148,21 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         var storage: Storage?
         var options: Options = Options()
         options.folder = "Cache"
-        storage = try? Storage(options: options)
+        do {
+            storage = try Storage(options: options)
+        } catch {
+            os_log("Failed to create storage. %{public}@", type: .error, error.localizedDescription)
+        }
 
-        if let candles = try? storage?.load(forKey: "\(activeInterval)Candles\(ticker)",
-                                            as: CandlesModel.self, withExpiry: .maxAge(maxAge: 300)) {
-            companyCandlesData = candles
-            didUpdateCandles?()
-            return
+        do {
+            if let candles = try storage?.load(forKey: "\(activeInterval)Candles\(ticker)",
+                                               as: CandlesModel.self, withExpiry: .maxAge(maxAge: 300)) {
+                companyCandlesData = candles
+                didUpdateCandles?()
+                return
+            }
+        } catch {
+            os_log("Failed to save cache activeInteralCandles. %{public}@", type: .error, error.localizedDescription)
         }
 
         NetworkService.sharedInstance.requestCompanyCandle(withSymbol: ticker,
@@ -163,7 +172,13 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                 completion(.failure(error))
             case let .success(candles):
                 self.companyCandlesData = candles
-                try? storage?.save(object: candles, forKey: "\(activeInterval)Candles\(self.ticker)")
+
+                do {
+                    try storage?.save(object: candles, forKey: "\(activeInterval)Candles\(self.ticker)")
+                } catch {
+                    os_log("Failed to save cache activeInteralCandles. %{public}@", type: .error, error.localizedDescription)
+                }
+
                 if activeInterval == self.activeInterval {
                     self.didUpdateCandles?()
                 }

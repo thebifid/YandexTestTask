@@ -7,6 +7,7 @@
 
 import CoreData
 import UIKit
+import os.log
 
 class CoreDataManager {
     private init() {}
@@ -36,7 +37,7 @@ class CoreDataManager {
             let count = try context.count(for: request)
             return count != 0
         } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
+            os_log("CoreData fetch error. %{public}@", type: .error, error.localizedDescription)
         }
         return false
     }
@@ -53,7 +54,7 @@ class CoreDataManager {
                 return info
             }
         } catch {
-            print(error) //!
+            os_log("CoreData fetch error. %{public}@", type: .error, error.localizedDescription)
         }
 
         return nil
@@ -70,7 +71,7 @@ class CoreDataManager {
             completion(.success(result))
 
         } catch {
-            completion(.failure(error))
+            os_log("CoreData fetch error. %{public}@", type: .error, error.localizedDescription)
         }
     }
 
@@ -81,7 +82,7 @@ class CoreDataManager {
             (UIApplication.shared.delegate as! AppDelegate).saveContext { [weak self] result in
                 switch result {
                 case let .failure(error):
-                    completion(.failure(error))
+                    os_log("CoreData delete error. %{public}@", type: .error, error.localizedDescription)
                 case .success:
                     self?.notifyViewModels()
                     completion(.success(()))
@@ -121,7 +122,7 @@ class CoreDataManager {
         (UIApplication.shared.delegate as! AppDelegate).saveContext { [weak self] result in
             switch result {
             case let .failure(error):
-                completion(.failure(error))
+                os_log("CoreData save error. %{public}@", type: .error, error.localizedDescription)
             case .success:
                 self?.notifyViewModels()
                 completion(.success(()))
