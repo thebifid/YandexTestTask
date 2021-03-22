@@ -211,6 +211,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                 if companyCandlesData != nil {
                     companyCandlesData!.c![companyCandlesData!.c!.endIndex - 1] = lastPrice
                     stockInfo.c = lastPrice
+                    didUpdateCandles?()
                 }
             }
         } catch {}
