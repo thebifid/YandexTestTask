@@ -6,8 +6,8 @@
 //
 
 import CoreData
-import UIKit
 import os.log
+import UIKit
 
 class CoreDataManager {
     private init() {}

@@ -161,9 +161,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                 didUpdateCandles?()
                 return
             }
-        } catch {
-            os_log("Failed to save cache activeInteralCandles. %{public}@", type: .error, error.localizedDescription)
-        }
+        } catch {}
 
         NetworkService.sharedInstance.requestCompanyCandle(withSymbol: ticker,
                                                            resolution: resolution, from: intervalFrom, to: currentTimestamp) { result in
