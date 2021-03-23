@@ -203,7 +203,7 @@ class NetworkService {
                 } else {
                     CacheManager.sharedInstance.saveBoolValue(value: true, forKey: "\(ticker)NilImageData")
                 }
-                    
+
                 dispatchGroup.leave()
             }.resume()
         }
@@ -286,6 +286,11 @@ class NetworkService {
                             completion: @escaping (Result<[NewsModel], Error>) -> Void) {
         let url = buildUrl(path: API.news, params: ["symbol": symbol, "from": from, "to": to])
 
+        if let news = CacheManager.sharedInstance.loadCache(forKey: "\(symbol)News",
+                                                            as: [NewsModel].self, withExpiry: .maxAge(maxAge: 86400)) {
+            completion(.success(news))
+        }
+
         URLSession.shared.dataTask(with: url) { data, _, error in
 
             if error != nil {
@@ -296,6 +301,7 @@ class NetworkService {
             if let data = data {
                 do {
                     let news = try JSONDecoder().decode([NewsModel].self, from: data)
+                    CacheManager.sharedInstance.saveCache(object: news, forKey: "\(symbol)News")
                     completion(.success(news))
                 } catch {
                     completion(.failure(error))
@@ -308,8 +314,13 @@ class NetworkService {
     /// Информация для отображения финансовых показателей акции (Капитализация, P/E, P/S и тд)
     func requestCompanyMetrics(withSymbol symbol: String, completion: @escaping (Result<MetricsModel, Error>) -> Void) {
         let url = buildUrl(path: API.metrics, params: ["symbol": symbol, "metric": "all"])
-        print(url)
+
         URLSession.shared.dataTask(with: url) { data, _, error in
+
+            if let metrics = CacheManager.sharedInstance.loadCache(forKey: "\(symbol)Metrics",
+                                                                   as: MetricsModel.self, withExpiry: .maxAge(maxAge: 86400)) {
+                completion(.success(metrics))
+            }
 
             if error != nil {
                 completion(.failure(error!))
@@ -319,6 +330,7 @@ class NetworkService {
             if let data = data {
                 do {
                     let model = try JSONDecoder().decode(MetricsModel.self, from: data)
+                    CacheManager.sharedInstance.saveCache(object: model, forKey: "\(symbol)Metrics")
                     completion(.success(model))
                 } catch {
                     completion(.failure(error))

@@ -50,12 +50,15 @@ class NewsViewModel {
 
         NetworkService.sharedInstance.requestCompanyNews(withSymbol: symbol,
                                                          from: weekAgoDateString, to: currentDateString) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case let .failure(error):
-                completion(.failure(.connected(error)))
+                if self.news.isEmpty {
+                    completion(.failure(.connected(error)))
+                }
             case let .success(news):
                 completion(.success(()))
-                self?.news = news
+                self.news = news
             }
         }
     }

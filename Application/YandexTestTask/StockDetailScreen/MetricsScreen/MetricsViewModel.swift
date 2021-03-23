@@ -128,7 +128,9 @@ class MetricsViewModel {
         NetworkService.sharedInstance.requestCompanyMetrics(withSymbol: symbol) { result in
             switch result {
             case let .failure(error):
-                completion(.failure(.connected(error)))
+                if self.metricsData.isEmpty {
+                    completion(.failure(.connected(error)))
+                }
             case let .success(metrics):
                 completion(.success(()))
                 self.metrics = metrics.metric

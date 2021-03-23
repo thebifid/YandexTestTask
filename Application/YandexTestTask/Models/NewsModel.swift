@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NewsModel: Decodable {
+struct NewsModel: Codable {
     let category: String
     let datetime: Double
     let headline: String
