@@ -103,9 +103,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
 
     /// Return stringDate from timestamp
     func dateForCandle(forIndex index: Int) -> String {
-        let timeStamp = companyCandlesData?.t?[index]
-        guard timeStamp != nil else { return "" }
-        let date = Date(timeIntervalSince1970: Double(timeStamp!))
+        guard let timeStamp = companyCandlesData?.t?[index] else { return "" }
+        let date = Date(timeIntervalSince1970: Double(timeStamp))
         let dateFormatter = DateFormatter()
 
         if activeInterval.rawValue < 3 {
@@ -157,12 +156,13 @@ class StockChartViewModel: WebSocketConnectionDelegate {
             switch result {
             case let .failure(error):
                 completion(.failure(.connected(error)))
+                self.isCandlesLoading = false
             case let .success(candles):
                 self.companyCandlesData = candles
                 if activeInterval == self.activeInterval {
                     self.didUpdateCandles?()
+                    self.isCandlesLoading = false
                 }
-                self.isCandlesLoading = false
             }
         }
     }
