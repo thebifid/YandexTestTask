@@ -138,8 +138,11 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         "0"
     ]
 
-    func requestCompanyCandles(completion: @escaping (Result<Void, Error>) -> Void) {
-        guard NetworkMonitor.sharedInstance.isConnected else { return }
+    func requestCompanyCandles(completion: @escaping (Result<Void, NetworkMonitor.ConnectionStatus>) -> Void) {
+        guard NetworkMonitor.sharedInstance.isConnected else {
+            completion(.failure(.notConnected))
+            return
+        }
         let activeInterval = self.activeInterval
         let resolution = resolutions[activeInterval.rawValue]
         let intervalFrom = self.intervalFrom[activeInterval.rawValue]
@@ -148,7 +151,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                                                            resolution: resolution, from: intervalFrom, to: currentTimestamp) { result in
             switch result {
             case let .failure(error):
-                completion(.failure(error))
+                completion(.failure(.connected(error)))
             case let .success(candles):
                 self.companyCandlesData = candles
                 if activeInterval == self.activeInterval {

@@ -250,7 +250,13 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         refreshButton.isHidden = true
         viewModel.requestCompanyCandles { [weak self] result in
             switch result {
-            case .failure:
+            case .failure(.notConnected):
+                DispatchQueue.main.async {
+                    self?.refreshButton.isHidden = false
+                    self?.activityIndicator.stopAnimating()
+                }
+
+            case .failure(.connected):
                 DispatchQueue.main.async {
                     self?.refreshButton.isHidden = false
                     self?.activityIndicator.stopAnimating()
