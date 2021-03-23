@@ -247,9 +247,9 @@ class NetworkService {
 
     /// Request for company candles data
     /// Эта функция нужна для построения графика акции, можно задать нужный интервал (за день, неделю и тд)
-    func requestCompanyCandle(withSymbol symbol: String, resolution: String, from: String, to: String,
+    func requestCompanyCandle(withSymbol symbol: String, resolution: String, from: String, to: String, interval: String,
                               completion: @escaping (Result<CandlesModel, Error>) -> Void) {
-        if let candles = CacheManager.sharedInstance.loadCache(forKey: "\(symbol)Candles\(from)",
+        if let candles = CacheManager.sharedInstance.loadCache(forKey: "\(symbol)Candles\(interval)",
                                                                as: CandlesModel.self, withExpiry: .maxAge(maxAge: 300)) {
             completion(.success(candles))
             return
@@ -271,7 +271,7 @@ class NetworkService {
                         return
                     }
 
-                    CacheManager.sharedInstance.saveCache(object: candles, forKey: "\(symbol)Candles\(from)")
+                    CacheManager.sharedInstance.saveCache(object: candles, forKey: "\(symbol)Candles\(interval)")
 
                     completion(.success(candles))
                 } catch {

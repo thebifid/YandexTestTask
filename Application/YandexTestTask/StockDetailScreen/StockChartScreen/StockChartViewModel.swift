@@ -17,6 +17,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
 
     private var requestCandlesTimer: Timer?
 
+    private var isCandlesLoading: Bool = false
+
     // MARK: - Handlers
 
     var didUpdateCandles: (() -> Void)?
@@ -139,8 +141,10 @@ class StockChartViewModel: WebSocketConnectionDelegate {
     ]
 
     func requestCompanyCandles(completion: @escaping (Result<Void, NetworkMonitor.ConnectionStatus>) -> Void) {
+        isCandlesLoading = true
         guard NetworkMonitor.sharedInstance.isConnected else {
             completion(.failure(.notConnected))
+            isCandlesLoading = false
             return
         }
         let activeInterval = self.activeInterval
@@ -148,7 +152,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         let intervalFrom = self.intervalFrom[activeInterval.rawValue]
 
         NetworkService.sharedInstance.requestCompanyCandle(withSymbol: ticker,
-                                                           resolution: resolution, from: intervalFrom, to: currentTimestamp) { result in
+                                                           resolution: resolution, from: intervalFrom, to: currentTimestamp,
+                                                           interval: String(activeInterval.rawValue)) { result in
             switch result {
             case let .failure(error):
                 completion(.failure(.connected(error)))
@@ -157,6 +162,7 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                 if activeInterval == self.activeInterval {
                     self.didUpdateCandles?()
                 }
+                self.isCandlesLoading = false
             }
         }
     }
@@ -201,7 +207,9 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                 if companyCandlesData != nil {
                     companyCandlesData!.c![companyCandlesData!.c!.endIndex - 1] = lastPrice
                     stockInfo.c = lastPrice
-                    didUpdateCandles?()
+                    if !isCandlesLoading {
+                        didUpdateCandles?()
+                    }
                 }
             }
         } catch {}
