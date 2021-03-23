@@ -107,12 +107,9 @@ class NetworkService {
     private func requestCompanyProfile(tickers: [String], completion: @escaping (Result<[String: CompanyProfileModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var isAnyError: Error?
-
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
-
             let url = buildUrl(path: API.companyProfile, params: ["symbol": ticker])
-
             if CacheManager.sharedInstance.exists(forKey: "\(ticker)Profile") {
                 let profile = CacheManager.sharedInstance.loadCache(forKey: "\(ticker)Profile", as: CompanyProfileModel.self)
                 companyProfiles[ticker] = profile
@@ -188,10 +185,8 @@ class NetworkService {
         let dispatchGroup = DispatchGroup()
 
         let first15 = tickers.prefix(25)
-
         first15.forEach { ticker in
             let url = buildUrl(path: API.logo, params: ["symbol": ticker])
-
             guard !CacheManager.sharedInstance.exists(forKey: "\(ticker)NilImageData") else { return }
             if CacheManager.sharedInstance.exists(forKey: "\(ticker)ImageData") {
                 let data = CacheManager.sharedInstance.loadCache(forKey: "\(ticker)ImageData", as: Data.self)
@@ -208,7 +203,7 @@ class NetworkService {
                 } else {
                     CacheManager.sharedInstance.saveBoolValue(value: true, forKey: "\(ticker)NilImageData")
                 }
-
+                    
                 dispatchGroup.leave()
             }.resume()
         }
