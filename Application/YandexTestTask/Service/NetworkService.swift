@@ -108,30 +108,15 @@ class NetworkService {
         var companyProfiles = [String: CompanyProfileModel]()
         var isAnyError: Error?
 
-        var storage: Storage?
-        var options: Options = Options()
-        options.folder = "Cache"
-        do {
-            try storage = Storage(options: options)
-        } catch {
-            os_log("Failed to create storage. %{public}@", type: .error, error.localizedDescription)
-        }
-
         let dispatchGroup = DispatchGroup()
         tickers.forEach { ticker in
 
             let url = buildUrl(path: API.companyProfile, params: ["symbol": ticker])
 
-            if storage != nil {
-                if storage!.exists(forKey: "\(ticker)Profile") {
-                    do {
-                        let profile = try storage!.load(forKey: "\(ticker)Profile", as: CompanyProfileModel.self)
-                        companyProfiles[ticker] = profile
-                        return
-                    } catch {
-                        os_log("Failed to load cache tickerProfile. %{public}@", type: .error, error.localizedDescription)
-                    }
-                }
+            if CacheManager.sharedInstance.exists(forKey: "\(ticker)Profile") {
+                let profile = CacheManager.sharedInstance.loadCache(forKey: "\(ticker)Profile", as: CompanyProfileModel.self)
+                companyProfiles[ticker] = profile
+                return
             }
 
             dispatchGroup.enter()
@@ -145,14 +130,7 @@ class NetworkService {
                     do {
                         let profile = try JSONDecoder().decode(CompanyProfileModel.self, from: data)
                         companyProfiles[ticker] = profile
-                        if storage != nil {
-                            do {
-                                try storage!.save(object: profile, forKey: "\(ticker)Profile")
-                            } catch {
-                                os_log("Failed to save cache tickerProfile. %{public}@", type: .error, error.localizedDescription)
-                            }
-                        }
-
+                        CacheManager.sharedInstance.saveCache(object: profile, forKey: "\(ticker)Profile")
                     } catch {
                         isAnyError = error
                     }
@@ -208,32 +186,17 @@ class NetworkService {
     private func ifHasImage(tickers: [String], completion: @escaping (Result<[String: Data], Error>) -> Void) {
         var tickerDataDict = [String: Data]()
         let dispatchGroup = DispatchGroup()
-        var storage: Storage?
-        var options = Options()
-        options.folder = "Cache"
-
-        do {
-            try storage = Storage(options: options)
-        } catch {
-            os_log("Failed to create storage. %{public}@", type: .error, error.localizedDescription)
-        }
 
         let first15 = tickers.prefix(25)
 
         first15.forEach { ticker in
             let url = buildUrl(path: API.logo, params: ["symbol": ticker])
 
-            if storage != nil {
-                guard !storage!.exists(forKey: "\(ticker)NilImageData") else { return }
-                if storage!.exists(forKey: "\(ticker)ImageData") {
-                    do {
-                        let data = try storage!.load(forKey: "\(ticker)ImageData", as: Data.self)
-                        tickerDataDict[ticker] = data
-                        return
-                    } catch {
-                        os_log("Failed to load cache tickerProfile. %{public}@", type: .error, error.localizedDescription)
-                    }
-                }
+            guard !CacheManager.sharedInstance.exists(forKey: "\(ticker)NilImageData") else { return }
+            if CacheManager.sharedInstance.exists(forKey: "\(ticker)ImageData") {
+                let data = CacheManager.sharedInstance.loadCache(forKey: "\(ticker)ImageData", as: Data.self)
+                tickerDataDict[ticker] = data
+                return
             }
 
             dispatchGroup.enter()
@@ -241,19 +204,9 @@ class NetworkService {
                 guard data != nil else { return }
                 if UIImage(data: data!) != nil {
                     tickerDataDict[ticker] = data
-                    if storage != nil {
-                        do {
-                            try storage!.save(object: data, forKey: "\(ticker)ImageData")
-                        } catch {
-                            os_log("Failed to save cache tickerImageData. %{public}@", type: .error, error.localizedDescription)
-                        }
-                    }
+                    CacheManager.sharedInstance.saveCache(object: data, forKey: "\(ticker)ImageData")
                 } else {
-                    do {
-                        try storage!.save(object: true, forKey: "\(ticker)NilImageData")
-                    } catch {
-                        os_log("Failed to save cache tickerNilImageData. %{public}@", type: .error, error.localizedDescription)
-                    }
+                    CacheManager.sharedInstance.saveBoolValue(value: true, forKey: "\(ticker)NilImageData")
                 }
 
                 dispatchGroup.leave()
@@ -301,21 +254,30 @@ class NetworkService {
     /// Эта функция нужна для построения графика акции, можно задать нужный интервал (за день, неделю и тд)
     func requestCompanyCandle(withSymbol symbol: String, resolution: String, from: String, to: String,
                               completion: @escaping (Result<CandlesModel, Error>) -> Void) {
+        if let candles = CacheManager.sharedInstance.loadCache(forKey: "\(symbol)Candles\(from)",
+                                                               as: CandlesModel.self, withExpiry: .maxAge(maxAge: 300)) {
+            completion(.success(candles))
+            return
+        }
+
         let url = buildUrl(path: API.candle, params: ["symbol": symbol, "resolution": resolution, "from": from, "to": to])
         URLSession.shared.dataTask(with: url) { data, _, error in
             if error != nil {
                 completion(.failure(error!))
                 return
             }
+
             if let data = data {
                 do {
                     let candles = try JSONDecoder().decode(CandlesModel.self, from: data)
                     if candles.s != "ok" {
                         let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: candles.s])
-                        print(error)
                         completion(.failure(error))
                         return
                     }
+
+                    CacheManager.sharedInstance.saveCache(object: candles, forKey: "\(symbol)Candles\(from)")
+
                     completion(.success(candles))
                 } catch {
                     completion(.failure(error))

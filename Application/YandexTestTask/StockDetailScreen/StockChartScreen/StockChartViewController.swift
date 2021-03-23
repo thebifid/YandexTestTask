@@ -256,7 +256,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
                     self?.activityIndicator.stopAnimating()
                 }
             case .success:
-                break
+                self?.activityIndicator.stopAnimating()
             }
         }
     }

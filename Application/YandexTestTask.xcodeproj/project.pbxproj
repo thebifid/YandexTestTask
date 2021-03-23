@@ -32,6 +32,7 @@
 		C14DB7852600C5E30079B960 /* MetricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB7842600C5E30079B960 /* MetricsViewModel.swift */; };
 		C14DB7882600C6BA0079B960 /* MetricsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB7872600C6BA0079B960 /* MetricsModel.swift */; };
 		C14DB78B260100FC0079B960 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DB78A260100FC0079B960 /* HeaderView.swift */; };
+		C150C54A260A1D4200243A3E /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C150C549260A1D4200243A3E /* CacheManager.swift */; };
 		C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */; };
 		C1526A2E25FA6A8300123673 /* FavouriteListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */; };
 		C1526A3125FA6B3D00123673 /* StoksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1526A3025FA6B3D00123673 /* StoksViewModel.swift */; };
@@ -100,6 +101,7 @@
 		C14DB7842600C5E30079B960 /* MetricsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsViewModel.swift; sourceTree = "<group>"; };
 		C14DB7872600C6BA0079B960 /* MetricsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsModel.swift; sourceTree = "<group>"; };
 		C14DB78A260100FC0079B960 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		C150C549260A1D4200243A3E /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		C1526A2D25FA6A8300123673 /* FavouriteListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteListViewModel.swift; sourceTree = "<group>"; };
 		C1526A3025FA6B3D00123673 /* StoksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoksViewModel.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				C151A13125E8FD5C006EC2E0 /* CoreDataManager.swift */,
 				C171F15A25F6396F00932732 /* WebSocketConntection.swift */,
 				C16591B3260356EA0051CECC /* NetworkMonitor.swift */,
+				C150C549260A1D4200243A3E /* CacheManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				C14DB73625FE58940079B960 /* String+Extension.swift in Sources */,
 				C151A13225E8FD5C006EC2E0 /* CoreDataManager.swift in Sources */,
 				C1DADC8025E65404003AB7E3 /* AlertAssist.swift in Sources */,
+				C150C54A260A1D4200243A3E /* CacheManager.swift in Sources */,
 				C14DB76D25FF53260079B960 /* NewsViewModel.swift in Sources */,
 				C19C956025F27A5D00220CCF /* TagsView.swift in Sources */,
 				C14DB7852600C5E30079B960 /* MetricsViewModel.swift in Sources */,

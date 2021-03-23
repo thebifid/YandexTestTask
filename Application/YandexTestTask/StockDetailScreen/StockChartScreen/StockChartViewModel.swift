@@ -7,7 +7,6 @@
 
 import EasyStash
 import Foundation
-import os.log
 
 class StockChartViewModel: WebSocketConnectionDelegate {
     // MARK: - Private Properties
@@ -145,24 +144,6 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         let resolution = resolutions[activeInterval.rawValue]
         let intervalFrom = self.intervalFrom[activeInterval.rawValue]
 
-        var storage: Storage?
-        var options: Options = Options()
-        options.folder = "Cache"
-        do {
-            storage = try Storage(options: options)
-        } catch {
-            os_log("Failed to create storage. %{public}@", type: .error, error.localizedDescription)
-        }
-
-        do {
-            if let candles = try storage?.load(forKey: "\(activeInterval)Candles\(ticker)",
-                                               as: CandlesModel.self, withExpiry: .maxAge(maxAge: 300)) {
-                companyCandlesData = candles
-                didUpdateCandles?()
-                return
-            }
-        } catch {}
-
         NetworkService.sharedInstance.requestCompanyCandle(withSymbol: ticker,
                                                            resolution: resolution, from: intervalFrom, to: currentTimestamp) { result in
             switch result {
@@ -170,13 +151,6 @@ class StockChartViewModel: WebSocketConnectionDelegate {
                 completion(.failure(error))
             case let .success(candles):
                 self.companyCandlesData = candles
-
-                do {
-                    try storage?.save(object: candles, forKey: "\(activeInterval)Candles\(self.ticker)")
-                } catch {
-                    os_log("Failed to save cache activeInteralCandles. %{public}@", type: .error, error.localizedDescription)
-                }
-
                 if activeInterval == self.activeInterval {
                     self.didUpdateCandles?()
                 }
