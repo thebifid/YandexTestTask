@@ -194,6 +194,7 @@
 		C11524CC2605EEFB009D4402 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C11526392607367D009D4402 /* NotificationView.swift */,
 				C16591B626035C170051CECC /* NoInternetConnectionHeaderView.swift */,
 				C16591BA260363440051CECC /* NoInternetConnectionView.swift */,
 				C14DB78A260100FC0079B960 /* HeaderView.swift */,
@@ -266,10 +267,10 @@
 		C11C6D7125DD3308002F5EB6 /* StocksScreen */ = {
 			isa = PBXGroup;
 			children = (
+				C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */,
 				C11C6D7325DD3325002F5EB6 /* StocksViewController.swift */,
 				C1526A3025FA6B3D00123673 /* StoksViewModel.swift */,
 				C17F103625E0F7FC006CCA52 /* StockCell.swift */,
-				C14C9CB125ECE69E004E9505 /* BaseControllerWithTableView.swift */,
 				C15005E025FA68C300ECC378 /* StockListScreen */,
 				C15005E225FA693900ECC378 /* StockFavouriteScreen */,
 			);
@@ -298,7 +299,6 @@
 				C11C6D8225DD5031002F5EB6 /* Constants.swift */,
 				C1DADC7F25E65404003AB7E3 /* AlertAssist.swift */,
 				C171F1C625F8CF5000932732 /* Calculate.swift */,
-				C11526392607367D009D4402 /* NotificationView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
