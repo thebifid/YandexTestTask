@@ -9,7 +9,8 @@ target 'YandexTestTask' do
     pod 'SwiftFormat/CLI'
     pod 'SwiftLint'
     pod 'R.swift'
-    pod 'Cartography', '~> 3.0'
+    pod 'Cartography', '~> 3.0' , :inhibit_warnings => true
+
     pod 'EasyStash'
     pod 'AMScrollingNavbar', :inhibit_warnings => true
     pod 'Charts'

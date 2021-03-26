@@ -135,7 +135,11 @@ class StockCell: UITableViewCell {
         dayChangeLabel.attributedText = Calculate.calculateDailyChange(currency: companyInfo.currency,
                                                                        currentPrice: companyInfo.c, previousClose: companyInfo.pc)
 
-        stockImageView.image = UIImage(data: companyInfo.logoData)
+        if companyInfo.logoData != nil {
+            stockImageView.image = UIImage(data: companyInfo.logoData!)
+        } else {
+            stockImageView.image = R.image.noImage()
+        }
     }
 
     override func prepareForReuse() {

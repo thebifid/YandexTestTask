@@ -82,6 +82,69 @@ class NetworkService {
         }
     }
 
+    func requestCompaniesInfoEvenWithoutImage(companies: [String],
+                                              completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
+        var companyProfiles = [String: CompanyProfileModel]()
+        var companyQuotes = [String: CompanyQuoteModel]()
+        var companyImages = [String: Data]()
+        var isAnyError: Error?
+
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        requestCompanyProfile(tickers: companies) { result in
+            switch result {
+            case let .success(profiles):
+                companyProfiles = profiles
+            case let .failure(error):
+                isAnyError = error
+            }
+            dispatchGroup.leave()
+
+            dispatchGroup.enter()
+            self.requestCompanyQuote(tickers: companies) { result in
+                switch result {
+                case let .success(quotes):
+                    companyQuotes = quotes
+                case let .failure(error):
+                    isAnyError = error
+                }
+                dispatchGroup.leave()
+            }
+
+            companies.forEach { company in
+                dispatchGroup.enter()
+                let url = self.buildUrl(path: API.logo, params: ["symbol": company])
+                print(url)
+                URLSession.shared.dataTask(with: url) { data, _, error in
+                    if error != nil {
+                        isAnyError = error
+                        return
+                    }
+                    if let data = data {
+                        if UIImage(data: data) != nil {
+                            companyImages[company] = data
+                        }
+                    }
+                    dispatchGroup.leave()
+                }.resume()
+            }
+
+            dispatchGroup.notify(queue: .main) {
+                var trendingListFullInfo = [TrendingListFullInfoModel]()
+                guard isAnyError == nil else {
+                    completion(.failure(isAnyError!))
+                    return
+                }
+                companyProfiles.keys.forEach { key in
+                    trendingListFullInfo.append(TrendingListFullInfoModel(companyProfile: companyProfiles[key]!,
+                                                                          companyQuote: companyQuotes[key]!,
+                                                                          companyImageData: companyImages[key]))
+                }
+                completion(.success(trendingListFullInfo))
+            }
+        }
+    }
+
     /// Эта функция возвращает список, необходимый для отображения акций на начальном экране, в данном случае
     /// Я использовал список Nasdaq 100 ( ^NDX)
     /// Так же используется при поиске для заполнения поля с Popular Requests
@@ -227,7 +290,7 @@ class NetworkService {
                     var tickers = [String]()
                     answer.result.forEach { if $0.type == "Common Stock", !$0.symbol.contains(".") { tickers.append($0.symbol) } }
 
-                    self.requestCompaniesInfo(companies: tickers) { result in
+                    self.requestCompaniesInfoEvenWithoutImage(companies: tickers) { result in
                         switch result {
                         case let .failure(error):
                             print(error)

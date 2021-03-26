@@ -29,9 +29,9 @@ struct TrendingListFullInfoModel {
     let pc: Double
     let t: Double
 
-    let logoData: Data
+    let logoData: Data?
 
-    init(companyProfile: CompanyProfileModel, companyQuote: CompanyQuoteModel, companyImageData: Data) {
+    init(companyProfile: CompanyProfileModel, companyQuote: CompanyQuoteModel, companyImageData: Data?) {
         country = companyProfile.country
         currency = companyProfile.currency
         exchange = companyProfile.exchange
@@ -76,6 +76,6 @@ struct TrendingListFullInfoModel {
         pc = stock.pc
         t = stock.t
 
-        logoData = stock.logoData!
+        logoData = stock.logoData
     }
 }
