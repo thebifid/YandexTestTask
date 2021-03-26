@@ -154,7 +154,7 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
                     }
 
                 case .success:
-                    self.searchResController.setSearchResults(results: self.viewModel.searchResult)
+                    self.searchResController.setSearchResults(results: self.viewModel.searchResult, forSearchRequest: searchText)
                 }
             }
         }

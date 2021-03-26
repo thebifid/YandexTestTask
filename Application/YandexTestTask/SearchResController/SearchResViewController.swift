@@ -27,6 +27,16 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         return ai
     }()
 
+    private let noResultsFoundLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = R.font.montserratMedium(size: 18)
+        label.isHidden = true
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+
     // MARK: - Private Properties
 
     private var searchResult = [TrendingListFullInfoModel]() {
@@ -53,6 +63,12 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
             activityIndicator.centerX == activityIndicator.superview!.centerX
             activityIndicator.centerY == activityIndicator.superview!.centerY / 2
         }
+
+        view.addSubview(noResultsFoundLabel)
+        constrain(noResultsFoundLabel) { noResultsFoundLabel in
+            noResultsFoundLabel.center == noResultsFoundLabel.superview!.center
+            noResultsFoundLabel.width == Constants.deviceWidth / 1.5
+        }
     }
 
     private func setupTableView() {
@@ -72,12 +88,18 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
 
     // MARK: - Public Methods
 
-    func setSearchResults(results: [TrendingListFullInfoModel]) {
+    func setSearchResults(results: [TrendingListFullInfoModel], forSearchRequest term: String) {
         searchResult = results
         activityIndicator.stopAnimating()
+
+        if results.isEmpty {
+            noResultsFoundLabel.isHidden = false
+            noResultsFoundLabel.text = "No results found for '\(term)'"
+        }
     }
 
     func startedSearch() {
+        noResultsFoundLabel.isHidden = true
         refreshButton.isHidden = true
         activityIndicator.startAnimating()
         searchResult = []
