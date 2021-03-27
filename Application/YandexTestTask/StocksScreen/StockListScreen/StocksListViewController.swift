@@ -50,6 +50,11 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         requestData()
     }
 
+    @objc private func refreshButtonTapped() {
+        refreshButton.isHidden = true
+        requestData()
+    }
+
     // MARK: - UI Actions
 
     private func setupNoICView() {
@@ -124,11 +129,6 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         }
     }
 
-    @objc private func refreshButtonTapped() {
-        refreshButton.isHidden = true
-        requestData()
-    }
-
     // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,15 +184,5 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
                 self.vibrate()
             }
         }
-    }
-
-    // MARK: - Init
-
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

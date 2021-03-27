@@ -170,8 +170,6 @@ class StockCell: UITableViewCell {
         }
     }
 
-    // MARK: - Private Methods
-
     // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

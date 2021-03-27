@@ -109,6 +109,10 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         navigationController?.pushViewController(controller, animated: true)
     }
 
+    func refreshButtonClicked() {
+        searchBarSearchButtonClicked(searchController.searchBar)
+    }
+
     // MARK: - SearchBarDelegate
 
     func searchView(_ searchView: SearchView, didClickTag tag: String) {
@@ -131,11 +135,6 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
             searchView.edges == searchView.superview!.edges
         }
         return true
-    }
-
-    // delegate
-    func refreshButtonClicked() {
-        searchBarSearchButtonClicked(searchController.searchBar)
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -10,6 +10,11 @@ import Cartography
 import UIKit
 
 class BaseControllerWithTableView: UIViewController {
+    // MARK: - Public Properties
+
+    weak var cellDidScrollDelegate: CellDidScrollDelegate?
+    weak var barCV: UICollectionView?
+
     // MARK: - UI Controls
 
     lazy var notification = NotificationView(to: self)
@@ -28,9 +33,6 @@ class BaseControllerWithTableView: UIViewController {
         setupTableView()
         setupRefreshButton()
     }
-
-    weak var cellDidScrollDelegate: CellDidScrollDelegate?
-    weak var barCV: UICollectionView?
 
     // MARK: - UI Controls
 
