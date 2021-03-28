@@ -20,21 +20,23 @@ class NetworkService {
     /// необходмая для отображения ячейки ( requestCompanyProfile() и requestCompanyQuote() )
     /// Когда вся информация загружена вызывается completion
     /// Вся информация, кроме актуальных цен кешируется
+    /// Чтобы не превышать лимит запросов API, я искусственно ограничиваю количество
+    /// Акций на главном экране
     func requestCompaniesInfo(companies: [String], completion: @escaping (Result<[TrendingListFullInfoModel], Error>) -> Void) {
         var companyProfiles = [String: CompanyProfileModel]()
         var companyQuotes = [String: CompanyQuoteModel]()
         var companyImages = [String: Data]()
         var isAnyError: Error?
 
-        var first5 = [String]()
+        var first12 = [String]()
         let hasImageDispatchGroup = DispatchGroup()
         hasImageDispatchGroup.enter()
         ifHasImage(tickers: companies) { result in
             switch result {
             case let .success(imagesDataDitct):
-                for index in 0 ..< min(imagesDataDitct.count, 5) {
+                for index in 0 ..< min(imagesDataDitct.count, 12) {
                     companyImages[Array(imagesDataDitct)[index].key] = Array(imagesDataDitct)[index].value
-                    first5.append(Array(imagesDataDitct)[index].key)
+                    first12.append(Array(imagesDataDitct)[index].key)
                 }
             case let .failure(error):
                 completion(.failure(error))
@@ -45,7 +47,7 @@ class NetworkService {
         hasImageDispatchGroup.notify(queue: .global(qos: .background)) {
             let dispatchGroup = DispatchGroup()
             dispatchGroup.enter()
-            self.requestCompanyProfile(tickers: first5) { result in
+            self.requestCompanyProfile(tickers: first12) { result in
                 switch result {
                 case let .success(profiles):
                     companyProfiles = profiles
@@ -56,7 +58,7 @@ class NetworkService {
             }
 
             dispatchGroup.enter()
-            self.requestCompanyQuote(tickers: first5) { result in
+            self.requestCompanyQuote(tickers: first12) { result in
                 switch result {
                 case let .success(quotes):
                     companyQuotes = quotes
@@ -246,8 +248,8 @@ class NetworkService {
         var tickerDataDict = [String: Data]()
         let dispatchGroup = DispatchGroup()
 
-        let first15 = tickers.prefix(25)
-        first15.forEach { ticker in
+        let first24 = tickers.prefix(24)
+        first24.forEach { ticker in
             let url = buildUrl(path: API.logo, params: ["symbol": ticker])
             guard !CacheManager.sharedInstance.exists(forKey: "\(ticker)NilImageData") else { return }
             if CacheManager.sharedInstance.exists(forKey: "\(ticker)ImageData") {
