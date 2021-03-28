@@ -86,12 +86,8 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         return String(Int(Date().timeIntervalSince1970))
     }
 
-    private(set) var activeInterval: IntevalTime = IntevalTime(rawValue: UserDefaults.standard.value(forKey: "activeInterval")
-        as? Int ?? 0)! {
-        didSet {
-            requestCompanyCandles { _ in }
-        }
-    }
+    private(set) var activeInterval: IntevalTime =
+        IntevalTime(rawValue: UserDefaults.standard.value(forKey: "activeInterval") as? Int ?? 0)!
 
     // MARK: - Enums
 

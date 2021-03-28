@@ -133,10 +133,20 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         return ai
     }()
 
-    let refreshButton: UIButton = {
+    private let refreshButton: UIButton = {
         let button = UIButton()
         button.setImage(R.image.refresh(), for: .normal)
         return button
+    }()
+
+    private let noDataLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No data for this period"
+        label.font = R.font.montserratMedium(size: 18)
+        label.isHidden = true
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
     }()
 
     // MARK: - LifeCycle
@@ -187,6 +197,12 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         constrain(chartViewBackgroundLayer, stockPriceInfoView) { chartViewBackgroundLayer, bar in
             chartViewBackgroundLayer.top == bar.bottom
             chartViewBackgroundLayer.height == Constants.deviceHeight / 2
+        }
+
+        lineChartView.addSubview(noDataLabel)
+        constrain(noDataLabel) { noDataLabel in
+            noDataLabel.center == noDataLabel.superview!.center
+            noDataLabel.width == Constants.deviceWidth - 40
         }
     }
 
@@ -246,6 +262,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
     // MARK: - Private Methods
 
     private func requestCompanyCandles() {
+        noDataLabel.isHidden = true
         activityIndicator.startAnimating()
         refreshButton.isHidden = true
         viewModel.requestCompanyCandles { [weak self] result in
@@ -256,15 +273,21 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
                     self?.activityIndicator.stopAnimating()
                 }
 
-            case .failure(.connected):
+            case let .failure(.connected(error)):
                 DispatchQueue.main.async {
                     self?.refreshButton.isHidden = false
                     self?.activityIndicator.stopAnimating()
+                    self?.showNoDataLabel(withText: error.localizedDescription)
                 }
             case .success:
                 self?.activityIndicator.stopAnimating()
             }
         }
+    }
+
+    private func showNoDataLabel(withText text: String) {
+        noDataLabel.text = text
+        noDataLabel.isHidden = false
     }
 
     private func enableBinding() {
@@ -315,6 +338,7 @@ class StockChartViewController: UIViewController, ChartViewDelegate, UIGestureRe
         setNewPrice(withCurrentPrice: 0,
                     previousClose: 0)
         viewModel.setActiveInterval(withNewInterval: interval)
+        requestCompanyCandles()
     }
 
     private func setNewPrice(withCurrentPrice current: Double, previousClose: Double) {
