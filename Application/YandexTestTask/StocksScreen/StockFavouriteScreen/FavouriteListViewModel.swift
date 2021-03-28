@@ -12,7 +12,7 @@ class FavouriteListViewModel: ViewModelWithSotcks {
         CoreDataManager.sharedInstance.fetchFavs { [weak self] result in
             switch result {
             case let .failure(error):
-                print(error)
+                break
             case let .success(model):
                 self?.favListInfo = model
             }

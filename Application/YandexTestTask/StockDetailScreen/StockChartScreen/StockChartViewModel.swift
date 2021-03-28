@@ -203,7 +203,6 @@ class StockChartViewModel: WebSocketConnectionDelegate {
         do {
             jsonData = try JSONDecoder().decode(Trades.self, from: data)
             if let lastPrice = jsonData.data.last?.p {
-                print(lastPrice)
                 if companyCandlesData != nil {
                     companyCandlesData!.c![companyCandlesData!.c!.endIndex - 1] = lastPrice
                     stockInfo.c = lastPrice

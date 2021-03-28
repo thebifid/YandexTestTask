@@ -114,7 +114,6 @@ class NetworkService {
             companies.forEach { company in
                 dispatchGroup.enter()
                 let url = self.buildUrl(path: API.logo, params: ["symbol": company])
-                print(url)
                 URLSession.shared.dataTask(with: url) { data, _, error in
                     if error != nil {
                         isAnyError = error
@@ -293,8 +292,7 @@ class NetworkService {
                     self.requestCompaniesInfoEvenWithoutImage(companies: tickers) { result in
                         switch result {
                         case let .failure(error):
-                            print(error)
-
+                            completion(.failure(error))
                         case let .success(info):
                             completion(.success(info))
                         }
