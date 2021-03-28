@@ -12,7 +12,7 @@ struct MetricsModel: Codable {
 }
 
 struct Metric: Codable {
-    //     financial indicators
+    // Financial indicators
     let marketCapitalization: Double?
     let _freeOperatingCashFlowRevenue5Y: Double?
 
@@ -30,12 +30,12 @@ struct Metric: Codable {
     let _totalDebtTotalEquityAnnyal: Double?
     let netProfitMargin5Y: Double?
 
-    // dividends
+    // Dividends
     let payoutRatioAnnual: Double?
     let dividendYield5Y: Double?
     let currentDividendYieldTTM: Double?
 
-    // trade
+    // Trade
     let _52WeekHigh: Double?
     let _52WeekLow: Double?
     let _10DayAverageTradingVolume: Double?

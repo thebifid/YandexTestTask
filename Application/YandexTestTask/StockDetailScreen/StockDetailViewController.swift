@@ -56,7 +56,7 @@ class StockDetailViewController: MenuBarViewController {
     @objc private func favButtonTapped() {
         viewModel.stocksFavButtonTapped { [weak self] result in
             switch result {
-            case let .failure(error):
+            case .failure:
                 break
             case .success:
                 self?.setupNavBar()

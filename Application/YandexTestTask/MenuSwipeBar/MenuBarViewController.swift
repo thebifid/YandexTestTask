@@ -65,6 +65,8 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
         case top, bottom
     }
 
+    // MARK: - Public Methods
+
     /// Костыль, используется в StockChartDetailController, нужно для того, чтобы добавить график и кнопку купить поверх окна
     /// Если не добавлять поверх, то при взаимодействии с графиком (свайп по графику влево-вправо) прокручивается и сама
     /// коллекция. А так при взаимодействии с графиком всё остаётся на месте
@@ -80,17 +82,6 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
                 view.top == bar.bottom + options.insets.top
             case .bottom:
                 view.bottom == view.superview!.bottom - options.insets.bottom
-            }
-        }
-    }
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        overallViews.forEach { element in
-            element.transform = CGAffineTransform(translationX: -scrollView.contentOffset.x, y: 0)
-            if scrollView.contentOffset.x >= Constants.deviceWidth {
-                overallViews.forEach { $0.alpha = 0 }
-            } else {
-                overallViews.forEach { $0.alpha = 1 }
             }
         }
     }
@@ -207,6 +198,17 @@ class MenuBarViewController: UIViewController, UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         contentCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         delegate?.menuBar(didScrolledToIndex: indexPath.item)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        overallViews.forEach { element in
+            element.transform = CGAffineTransform(translationX: -scrollView.contentOffset.x, y: 0)
+            if scrollView.contentOffset.x >= Constants.deviceWidth {
+                overallViews.forEach { $0.alpha = 0 }
+            } else {
+                overallViews.forEach { $0.alpha = 1 }
+            }
+        }
     }
 
     init(tableMode: Bool = false) {

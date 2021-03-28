@@ -8,6 +8,7 @@
 import Cartography
 import UIKit
 
+/// Уведомление, выезжающее снизу экрана
 class NotificationView: UIViewController {
     // MARK: - UI Controls
 

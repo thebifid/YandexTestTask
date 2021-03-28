@@ -57,10 +57,6 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
         }
     }
 
-    func refreshButtonClicked(_ searchView: SearchView) {
-        requestPopularRequests()
-    }
-
     private func requestPopularRequests() {
         viewModel.requestTrendingList { [weak self] result in
             switch result {
@@ -111,6 +107,10 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
 
     func refreshButtonClicked() {
         searchBarSearchButtonClicked(searchController.searchBar)
+    }
+
+    func refreshButtonClicked(_ searchView: SearchView) {
+        requestPopularRequests()
     }
 
     // MARK: - SearchBarDelegate

@@ -11,7 +11,7 @@ class FavouriteListViewModel: ViewModelWithSotcks {
     func coreDataDidChanges() {
         CoreDataManager.sharedInstance.fetchFavs { [weak self] result in
             switch result {
-            case let .failure(error):
+            case .failure:
                 break
             case let .success(model):
                 self?.favListInfo = model
