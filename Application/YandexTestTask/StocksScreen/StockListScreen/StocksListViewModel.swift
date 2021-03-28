@@ -12,6 +12,8 @@ protocol ViewModelWithSotcks {
 }
 
 class StocksListViewModel: ViewModelWithSotcks {
+    // MARK: - ViewModelWithStocks
+
     func coreDataDidChanges() {
         didUpdateStocksList?()
     }

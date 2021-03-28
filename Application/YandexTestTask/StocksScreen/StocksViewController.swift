@@ -9,7 +9,14 @@ import AMScrollingNavbar
 import Cartography
 import UIKit
 
-class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchViewDelegate, SearchResControllerDelegate {
+class StocksViewController: MenuBarViewController, UISearchBarDelegate,
+    SearchViewDelegate, SearchResControllerDelegate, ViewModelWithSotcks {
+    // MARK: - ViewModelWithStocks
+
+    func coreDataDidChanges() {
+        searchResController.tableView.reloadData()
+    }
+
     // MARK: - Private Properties
 
     private let viewModel = StocksViewModel()
@@ -184,5 +191,16 @@ class StocksViewController: MenuBarViewController, UISearchBarDelegate, SearchVi
 
     override func numberOfPages(in swipeMenu: MenuBarViewController) -> Int {
         tabs.count
+    }
+
+    // MARK: - Init
+
+    override init(tableMode: Bool = false) {
+        super.init(tableMode: tableMode)
+        CoreDataManager.sharedInstance.subscribeModelToCoreDataChanges(viewModel: self)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
