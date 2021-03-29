@@ -24,7 +24,7 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
         requestData()
         activateFollowingNavbar()
         setupNoICView()
-        refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
+        setupRefreshButtonAction()
     }
 
     // MARK: - UI Controls
@@ -127,6 +127,10 @@ class StocksListViewController: BaseControllerWithTableView, UITableViewDataSour
                 }
             }
         }
+    }
+
+    private func setupRefreshButtonAction() {
+        refreshButton.addTarget(self, action: #selector(refreshButtonTapped), for: .touchUpInside)
     }
 
     // MARK: - TableView

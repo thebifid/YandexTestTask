@@ -9,10 +9,11 @@ import Foundation
 
 class FavouriteListViewModel: ViewModelWithSotcks {
     // MARK: - ViewModelWithStocks
+
     func coreDataDidChanges() {
         CoreDataManager.sharedInstance.fetchFavs { [weak self] result in
             switch result {
-            case .failure(_):
+            case .failure:
                 break
             case let .success(model):
                 self?.favListInfo = model

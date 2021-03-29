@@ -51,7 +51,7 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
         super.viewDidLoad()
         setupTableView()
         setupUI()
-        refreshButton.addTarget(self, action: #selector(refreshButtonDidClicked), for: .touchUpInside)
+        setupRefreshButtonAction()
     }
 
     // MARK: - Private Methods
@@ -109,6 +109,10 @@ class SearchResViewController: BaseControllerWithTableView, UITableViewDataSourc
     func searchFailed() {
         activityIndicator.stopAnimating()
         refreshButton.isHidden = false
+    }
+
+    private func setupRefreshButtonAction() {
+        refreshButton.addTarget(self, action: #selector(refreshButtonDidClicked), for: .touchUpInside)
     }
 
     // MARK: - StockCellDelegate
